@@ -8,10 +8,7 @@ const Nav = () => {
     <nav className={navStyle.nav}>
         <ul>
             <li>
-                <Link href='/'>Home</Link>
-            </li>
-            <li>
-                <Link href='/searchMain'>Main Search Page</Link>
+                <Link href='/'>Home/Search</Link>
             </li>
             <li>
                 <Link href='/searchResults'>Search Results</Link>
