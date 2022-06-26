@@ -1,4 +1,6 @@
 import Head from 'next/head'
+import DisplayHotelDetails from '../../components/hotelDetails/displayHotelDetails'
+import { useState } from 'react'
 
 //Nested routes, just name ur folder as the routename that you would like,
 // In this case, it would be localhost:3000/hotelDetails, then index.js in this folder would be the js script called at ../hotelDetails/
@@ -9,12 +11,27 @@ import Head from 'next/head'
 //option1.js will be displayed instead of the dynamic page.
 
 const hotelDetails = () => {
+  //State props
+  const [userInput, setUserInput] = useState([{hotelName:"Hotel A", description:"5-Star Hotel Situated in the Heart of the City.", location:"Orchard", roomType:"Single Room"}]) 
+  
+  const handleChange = (event) => {
+    event.preventDefault() //
+
+    setUserInput(event.target.value)
+  }
+
   return (
+    
     <div>
         <Head>
             <title>Hotel Details</title>
         </Head>
         <h1>Hotel Details Page</h1>
+        <form>
+          <input type='text' onChange={handleChange}></input>
+          <button>Submit</button>
+        </form>
+        <DisplayHotelDetails hotel={userInput[0]}></DisplayHotelDetails>
     </div>
   )
 }
