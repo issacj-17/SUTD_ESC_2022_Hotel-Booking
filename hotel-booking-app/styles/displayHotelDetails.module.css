@@ -1,0 +1,32 @@
+.container {
+    column-count: 3;
+    column-width: 100px;
+}
+
+.body {
+    display: grid;
+    gap: 1em;
+    grid-template-rows: 15em 10em;
+    grid-template-columns: 20em 1fr;
+    min-height: 100vh;
+}
+
+.card {
+    break-inside: avoid;
+    background-color: rgb(241, 217, 217);
+    border: 3px solid black;
+    padding: 10px;
+    margin: 0 0 1em 0;
+}
+
+.hotelName {
+    font-size: larger;
+    font-weight: bold;
+}
+
+.break {
+    display:block;
+    margin: 10px 0;
+}
+
+
