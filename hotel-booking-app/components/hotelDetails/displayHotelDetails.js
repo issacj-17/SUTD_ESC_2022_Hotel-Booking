@@ -5,11 +5,11 @@ import Router,{useRouter} from 'next/router' //Used to pass Props between pages
 
 const hotelDetails = (props) => {
     //Unpack Props received from previous page
-    const hotelName = props.hotel.hotelName;
+    const hotelName = props.hotelMore.name;
     const description = props.hotel.description;
     const location = props.hotel.location;
     const roomType = props.hotel.roomType;
-    //console.log(props.details)
+    console.log(props.hotelMore.description)
     
     //Using Router to receive unpack props received using Router(Next.js module)
     const router = useRouter() //Initialise a router
@@ -38,7 +38,7 @@ const hotelDetails = (props) => {
 
     return (
         <div>
-            <h1 className={styles.hotelName}>Name of Hotel : {hotelName}</h1>
+            <h1 className={styles.hotelName}>Name of Hotel : {hotelName} , this is from API call</h1>
             <div className={styles.body}>
                 <div className={styles.card}>
                     <h1>Description</h1>

@@ -23,8 +23,7 @@ const hotelDetails = (props) => {
   }
 
   //Testing API retrieval, works but needa find out why getServerSideProps not working when used in Component
-  console.log(props.data)
-
+  // console.log(props.data)
 
   return (
     
@@ -38,7 +37,7 @@ const hotelDetails = (props) => {
           <button>Submit</button>
         </form>
         
-        <DisplayHotelDetails hotel={userInput[0]}></DisplayHotelDetails>
+        <DisplayHotelDetails hotel={userInput[0]} hotelMore={props.data}></DisplayHotelDetails>
     </div>
   )
 }
@@ -54,6 +53,7 @@ export async function getServerSideProps(context){
           notFound: true
       }
   }
+  console.log("Fetch Successful!")
   return {
       props: {
           data
