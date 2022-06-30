@@ -13,39 +13,24 @@ import Router from 'next/router'
 //option1.js will be displayed instead of the dynamic page.
 
 const hotelDetails = (props) => {
-  //State props
-  const [userInput, setUserInput] = useState([{hotelName:"Hotel A", description:"5-Star Hotel Situated in the Heart of the City.", location:"Orchard", roomType:"Single Room"}]) 
   
-  const handleChange = (event) => {
-    event.preventDefault() //
-
-    setUserInput(event.target.value)
-  }
-
-  //Testing API retrieval, works but needa find out why getServerSideProps not working when used in Component
-  // console.log(props.data)
-
   return (
-    
     <div style={{margin: '10px'}}>
         <Head>
             <title>Hotel Details</title>
         </Head>
         <h1>Hotel Details Page</h1>
-        <form>
-          <input type='text' onChange={handleChange}></input>
-          <button>Submit</button>
-        </form>
         
-        <DisplayHotelDetails hotel={userInput[0]} hotelMore={props.data}></DisplayHotelDetails>
+        <DisplayHotelDetails hotelMore={props.data}></DisplayHotelDetails>
     </div>
   )
 }
+export default hotelDetails
 
 export async function getServerSideProps(context){
-  const {req, res,query} = context
-  
-  const response = await fetch("https://hotelapi.loyalty.dev/api/hotels/diH7")
+  //Read hotelId attribute from query string
+  const {hotelId} = context.query
+  const response = await fetch(`https://hotelapi.loyalty.dev/api/hotels/${hotelId}`)
   const data = await response.json()
 
   if (!data){
@@ -56,8 +41,8 @@ export async function getServerSideProps(context){
   console.log("Fetch Successful!")
   return {
       props: {
-          data
+          data,
+          hotelId
       }
     }
   }
-export default hotelDetails

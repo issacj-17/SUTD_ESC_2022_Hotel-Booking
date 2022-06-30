@@ -6,10 +6,10 @@ import Router,{useRouter} from 'next/router' //Used to pass Props between pages
 const hotelDetails = (props) => {
     //Unpack Props received from previous page
     const hotelName = props.hotelMore.name;
-    const description = props.hotel.description;
-    const location = props.hotel.location;
-    const roomType = props.hotel.roomType;
-    console.log(props.hotelMore.description)
+    const description =  props.hotelMore.description;
+    const location = props.hotelMore.address;
+    const roomType = "Single Room";
+    // console.log(props.hotelMore)
     
     //Using Router to receive unpack props received using Router(Next.js module)
     const router = useRouter() //Initialise a router
@@ -42,7 +42,7 @@ const hotelDetails = (props) => {
             <div className={styles.body}>
                 <div className={styles.card}>
                     <h1>Description</h1>
-                    <p>{description}</p>
+                    {description}
                 </div>
                 <div className={styles.card}>
                     
@@ -56,32 +56,4 @@ const hotelDetails = (props) => {
         </div>
     );
 }
-
-//Big ass question:
-//If you are passing in props from 
-
-//Retrieving data from
-// export async function getStaticProps(){} --> This fetches data only ONCE, at build time, in dev mode works perfectly fine, each time u refresh it rebuilds?
-//Wheras, getServerSideProps() is called upon every REQ, each time the user refreshes the page
-//Returns a Json 
-
-//For customised datafetching based on user selected hotel : See https://stackoverflow.com/questions/69058259/how-to-access-route-parameter-inside-getserversideprops-in-next-js
-export async function getServerSideProps(context){
-    const {req, res,query} = context
-    console.log(query)
-    // const response = await fetch("https://hotelapi.loyalty.dev/api/hotels/diH7")
-    // const data = await response.json()
-
-    // if (!data){
-    //     return {
-    //         notFound: true
-    //     }
-    // }
-    return {
-        props: {
-            details: "data"
-        }
-    }
-}
-
 export default hotelDetails
