@@ -1,5 +1,6 @@
-import Head from 'next/head'
-import styles from '../styles/Layout.module.css'
+import Head from 'next/head';
+import styles from '../styles/Layout.module.css';
+import Link from 'next/link';
 //<Head> Tag is for the text u see in ur tab or for description of your page, can contain metadata for search engine as well
 //Main point, is for developers to see, not users
 export default function Home() {
@@ -12,6 +13,12 @@ export default function Home() {
       </Head>
 
         <h1>Main Search Page, implement search bar and search feature here...</h1>
+        <Link href={{
+          pathname: "/searchResults",
+          query: {destId: "WD0M"}
+        }}>
+          <a>NEXT PAGE</a>
+        </Link>
     </div>
-  )
+  );
 }
