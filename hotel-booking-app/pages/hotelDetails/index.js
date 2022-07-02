@@ -1,4 +1,8 @@
 import Head from 'next/head'
+import DisplayHotelDetails from '../../components/hotelDetails/displayHotelDetails'
+import { useState } from 'react'
+import styles from '../../styles/displayHotelDetails.module.css'
+import Router from 'next/router'
 
 //Nested routes, just name ur folder as the routename that you would like,
 // In this case, it would be localhost:3000/hotelDetails, then index.js in this folder would be the js script called at ../hotelDetails/
@@ -8,15 +12,37 @@ import Head from 'next/head'
 //Next.js will look for any specific pages before looking at the dynamic pages, so if u have option1 and [optionnumber] and u route to ../hotelDetails/option1,
 //option1.js will be displayed instead of the dynamic page.
 
-const hotelDetails = () => {
+const hotelDetails = (props) => {
+  
   return (
-    <div>
+    <div style={{margin: '10px'}}>
         <Head>
             <title>Hotel Details</title>
         </Head>
         <h1>Hotel Details Page</h1>
+        
+        <DisplayHotelDetails hotelMore={props.data}></DisplayHotelDetails>
     </div>
   )
 }
-
 export default hotelDetails
+
+export async function getServerSideProps(context){
+  //Read hotelId attribute from query string
+  const {hotelId} = context.query
+  const response = await fetch(`https://hotelapi.loyalty.dev/api/hotels/${hotelId}`)
+  const data = await response.json()
+
+  if (!data){
+      return {
+          notFound: true
+      }
+  }
+  console.log("Fetch Successful!")
+  return {
+      props: {
+          data,
+          hotelId
+      }
+    }
+  }
