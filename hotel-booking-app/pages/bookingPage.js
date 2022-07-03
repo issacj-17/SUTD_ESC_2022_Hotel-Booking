@@ -94,14 +94,12 @@ const schema = Yup.object().shape({
   specialRequest: Yup.string(),
   bankCard: Yup.number()
     .typeError("Your bank card is not valid")
-    .min(16, "Your bank card is not valid")
-    .max(16, "Your bank card is not valid")
+    .test('len', 'Must be exactly 16 characters', val => val && val.toString().length === 16 )
     .required("Required"),
   expiryDate: Yup.date().required("Required"),
   CVV: Yup.number()
     .typeError("Invalid CVV/CVC")
-    .min(3, "Your CVV/CVC is not valid")
-    .max(3, "Your CVV/CVC is not valid")
+    .test('len', 'Must be exactly 3 characters', val => val && val.toString().length === 3 )
     .required("Required"),
   billingAddress: Yup.string()
     .typeError("Your address is not valid")
