@@ -8,22 +8,25 @@ import styled from 'styled-components';
 
 const CONTAINER = styled.div`
   background: #f7f9fa;
-  height: 100%;
-  width: 100%;
+  height: auto;
+  width: 90%;
   color: snow;
+  -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.4);
 
-  @media (min-width: 786px) {
+  @media (min-width: 1200px) {
     width: 100%;
   }
 
-  @media (min-height: 786px) {
+  @media (min-height: 1400px) {
     height: 100%;
   }
 
   label {
     color: #24b9b6;
     font-size: 1.2em;
-    font-weight: 400;
+    font-weight: 300;
   }
 
   h1 {
@@ -33,12 +36,19 @@ const CONTAINER = styled.div`
   }
 
   .form-group {
-    margin-bottom: 5em;
+    margin-top: 2.5em;
+    margin-bottom: 2.5em;
   }
 
   .error {
     border: 2px solid #ff6565;
   }
+    .error-message {
+    color: #FF6565;
+    padding: .5em .2em;
+    height: 1em;
+    position: absolute;
+    font-size: .8em;
   }
 `;
 
@@ -89,6 +99,7 @@ const schema = Yup.object().shape({
     .required("Required"),
   expiryDate: Yup.date().required("Required"),
   CVV: Yup.number()
+    .typeError("Invalid CVV/CVC")
     .min(3, "Your CVV/CVC is not valid")
     .max(3, "Your CVV/CVC is not valid")
     .required("Required"),
@@ -147,11 +158,11 @@ function bookingPage() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.firstName}
-                  isInvalid={touched.firstName && !!errors.firstName}
-                />
-                <Form.Control.Feedback type = "invalid" tooltip>
-                  {errors.firstName}
-                </Form.Control.Feedback>
+                  className={touched.firstName && errors.firstName ? "error" : null}
+                  />
+                  {touched.firstName && errors.firstName ? (
+                    <div className="error-message">{errors.firstName}</div>
+                  ): null}
               </Form.Group>
               <Form.Group controlId="lastName">
                 <Form.Label> Last Name</Form.Label>
@@ -162,11 +173,11 @@ function bookingPage() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.lastName}
-                  isInvalid={touched.lastName && !!errors.lastName}
-                />
-                <Form.Control.Feedback type = "invalid" tooltip>
-                  {errors.lastName}
-                </Form.Control.Feedback>
+                  className={touched.lastName && errors.lastName ? "error" : null}
+                  />
+                  {touched.lastName && errors.lastName ? (
+                    <div className="error-message">{errors.firstName}</div>
+                  ): null}
               </Form.Group>
               <Form.Group controlId="phoneNumber">
                 <Form.Label> Phone Number </Form.Label>
@@ -177,11 +188,11 @@ function bookingPage() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.phoneNumber}
-                  isInvalid={touched.phoneNumber && !!errors.phoneNumber}
-                />
-                <Form.Control.Feedback type = "invalid" tooltip>
-                  {errors.phoneNumber}
-                </Form.Control.Feedback>
+                  className={touched.phoneNumber && errors.phoneNumber ? "error" : null}
+                  />
+                  {touched.phoneNumber && errors.phoneNumber ? (
+                    <div className="error-message">{errors.phoneNumber}</div>
+                  ): null}
               </Form.Group>
               <Form.Group controlId="email">
                 <Form.Label> Email </Form.Label>
@@ -192,11 +203,11 @@ function bookingPage() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.email}
-                  isInvalid={touched.email && !!errors.email}
-                />
-                <Form.Control.Feedback type = "invalid" tooltip>
-                  {errors.email}
-                </Form.Control.Feedback>
+                  className={touched.email && errors.email ? "error" : null}
+                  />
+                  {touched.email && errors.email ? (
+                    <div className="error-message">{errors.email}</div>
+                  ): null}
               </Form.Group>
               <Form.Group controlId="specialRequest">
                 <Form.Label> Special Request </Form.Label>
@@ -206,27 +217,22 @@ function bookingPage() {
                   placeholder="Special Request"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.specialRequest}
-                  isInvalid={touched.specialRequest && !!errors.specialRequest}
-                />
-                <Form.Control.Feedback type = "invalid" tooltip>
-                  {errors.specialRequest}
-                </Form.Control.Feedback>
+                  value={values.specialRequest}/>
               </Form.Group>
               <Form.Group controlId="bankCard">
                 <Form.Label> Bank Card Number </Form.Label>
                 <Form.Control
                   type="text"
-                  name="bandCard"
+                  name="bankCard"
                   placeholder="Bank Card Number"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.bankCard}
-                  isInvalid={touched.bankCard && !!errors.bankCard}
-                />
-                <Form.Control.Feedback type = "invalid" tooltip>
-                  {errors.bankCard}
-                </Form.Control.Feedback>
+                  className={touched.bankCard && errors.bankCard ? "error" : null}
+                  />
+                  {touched.bankCard && errors.bankCard ? (
+                    <div className="error-message">{errors.bankCard}</div>
+                  ): null}
               </Form.Group>
               <Form.Group controlId="expiryDate">
                 <Form.Label> Expiry Date </Form.Label>
@@ -236,11 +242,11 @@ function bookingPage() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.expiryDate}
-                  isInvalid={touched.expiryDate && !!errors.expiryDate}
-                />
-                <Form.Control.Feedback type = "invalid" tooltip>
-                  {errors.expiryDate}
-                </Form.Control.Feedback>
+                  className={touched.expiryDate && errors.expiryDate ? "error" : null}
+                  />
+                  {touched.expiryDate && errors.expiryDate ? (
+                    <div className="error-message">{errors.expiryDate}</div>
+                  ): null}
               </Form.Group>
               <Form.Group controlId="CVV">
                 <Form.Label> CVV/CVC </Form.Label>
@@ -251,11 +257,11 @@ function bookingPage() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.CVV}
-                  isInvalid={touched.CVV && !!errors.CVV}
-                />
-                <Form.Control.Feedback type = "invalid" tooltip>
-                  {errors.CVV}
-                </Form.Control.Feedback>
+                  className={touched.CVV && errors.CVV ? "error" : null}
+                  />
+                  {touched.CVV && errors.CVV ? (
+                    <div className="error-message">{errors.CVV}</div>
+                  ): null}
               </Form.Group>
               <Form.Group controlId="billingAddress">
                 <Form.Label> Billing Address </Form.Label>
@@ -266,11 +272,11 @@ function bookingPage() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.billingAddress}
-                  isInvalid={touched.billingAddress && !!errors.billingAddress}
-                />
-                <Form.Control.Feedback type = "invalid" tooltip>
-                  {errors.billingAddress}
-                </Form.Control.Feedback>
+                  className={touched.billingAddress && errors.billingAddress ? "error" : null}
+                  />
+                  {touched.billingAddress && errors.billingAddress ? (
+                    <div className="error-message">{errors.billingAddress}</div>
+                  ): null}
               </Form.Group>
               <MYBUTTON variant="primary" type="submit" disabled={isSubmitting}>
                 Submit
