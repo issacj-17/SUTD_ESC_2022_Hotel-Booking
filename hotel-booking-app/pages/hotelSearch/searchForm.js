@@ -12,14 +12,22 @@ import DestinationSearch from "./destinationSearch";
 export default function SearchForm() {
     let numOfDays = 3
     let minCheckInDate = new Date(Date.now() + numOfDays*86400000);
-    minCheckInDate.setHours(0, 0, 0, 0)
-    let minCheckOutDate = new Date(Date.now() + (numOfDays+1)*86400000);
-    minCheckOutDate.setHours(0, 0, 0, 0)
+    let minCheckOutDate = new Date(minCheckInDate + 86400000);
 
     const SearchSchema = Yup.object().shape({
         destination: Yup.string().required("Destination is required"),
-        checkInDate: Yup.date().min(minCheckInDate.toDateString(), `Booking has to be made ${numOfDays} in advance`).required("Date is required"),
-        checkOutDate: Yup.date().min(minCheckOutDate.toDateString(), "Check Out has to be after Check In").required("Date is required"),
+        checkInDate: Yup.date().min(minCheckInDate.toDateString(), `Must be at least ${numOfDays} days in advance`).required("Date is required"),
+        checkOutDate: Yup.date().min(minCheckOutDate, `Must be at least ${numOfDays + 1} days in advance`).required("Date is required")
+            .test('OK', "Must be after Check In",
+            (val, props) => {
+                const endDate = new Date(val)
+                const startDate = new Date(new Date(props.parent.checkInDate) + 86400000);
+
+                if (endDate > startDate || !props.parent.checkInDate) {
+                    return true;
+                }
+            }
+        ),
         rooms: Yup.number().integer().min(1, "At least 1 Room is Required").max(4).required("Room is required"),
         adults: Yup.number().integer().min(1, "At least 1 Adult is Required").max(4).required("Adult is required"),
         children: Yup.number().integer().min(0, "Value must be greater than 0").max(4),
@@ -33,12 +41,13 @@ export default function SearchForm() {
             justify="end"
             rounded="md"
             p={8}
-            h="full">
+            width="full">
             <Box
                 bg="white"
                 p={8}
                 rounded="md"
-                h="fit-content"
+                width="30%"
+                height="fit-content"
                 >
                 <Formik
                     initialValues={{
@@ -53,6 +62,7 @@ export default function SearchForm() {
                     onSubmit={(values) => {
                         alert(JSON.stringify(values, null, 2));
                     }}>
+
                     {({ handleSubmit, errors, touched }) => (
                         <form
                             onSubmit={handleSubmit}>
@@ -60,7 +70,6 @@ export default function SearchForm() {
                                 spacing={4}
                                 align="flex-start"
                                 width="100%">
-
                                 <FormControl
                                     isInvalid={!!errors.destination && touched.destination}
                                     isRequired>
@@ -83,7 +92,6 @@ export default function SearchForm() {
                                     spacing={4}
                                     align="flex-start"
                                     width="100%">
-
                                     <FormControl
                                         isInvalid={!!errors.checkInDate && touched.checkInDate}
                                         isRequired>
@@ -119,13 +127,12 @@ export default function SearchForm() {
                                             {errors.checkOutDate}
                                         </FormErrorMessage>
                                     </FormControl>
-
                                 </HStack>
+
                                 <HStack
                                     spacing={4}
                                     align="flex-start"
                                     width="100%">
-
                                     <FormControl
                                         isInvalid={!!errors.rooms && touched.rooms}
                                         isRequired>
@@ -194,8 +201,8 @@ export default function SearchForm() {
                                             {errors.children}
                                         </FormErrorMessage>
                                     </FormControl>
-
                                 </HStack>
+
                                 <Button
                                     type="submit"
                                     colorScheme="purple"

@@ -36,9 +36,11 @@ export default function DestinationSearch({field, form, ...props}) {
 
     return (<AsyncSelect
         name={field.name}
+        id="destination-select"
         size="md"
         getOptionLabel={(option)=>option.term}
         getOptionValue={(option)=>option.uid}
+        instanceId="destination-select"
         chakraStyles={{
             control: base => ({
                 ...base,
