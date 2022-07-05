@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Field, Formik} from 'formik';
 import * as Yup from 'yup';
 import {
@@ -7,6 +7,7 @@ import {
     FormControl, FormLabel, Input,
     Button, FormErrorMessage, Select,
 } from "@chakra-ui/react";
+import DestinationSearch from "./destinationSearch";
 
 export default function SearchForm() {
     let numOfDays = 3
@@ -68,11 +69,10 @@ export default function SearchForm() {
                                         Destination
                                     </FormLabel>
                                     <Field
-                                        as={Input}
+                                        component={DestinationSearch}
                                         id="destination"
                                         name="destination"
                                         type="text"
-                                        variant="filled"
                                         placeholder="Enter Your Destination"/>
                                     <FormErrorMessage>
                                         {errors.destination}
