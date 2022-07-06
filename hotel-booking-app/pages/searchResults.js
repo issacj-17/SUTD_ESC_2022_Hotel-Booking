@@ -10,20 +10,22 @@ returns the HTML elements, mapping each hotel in hotels to a HotelElem, and othe
 @returns - HTML to be displayed
 */
 
-function searchResults ({ hotels, destId }) {
+function searchResults ({ hotels, searchDetails }) {
+  
+
   return (
     <div>
         <Head>
             <title>Search Results</title>
         </Head>
 
-        <h3 className={styles.resultsHeader}>Search Results for {destId}</h3>
+        <h3 className={styles.resultsHeader}>Search Results for {searchDetails.destination}</h3>
 
         {/* iterate through hotels, creating a HotelElem component for each hotel */}
         {hotels.map((hotelDis) => {
           return (
             // React component imported
-            <HotelElem hotel={hotelDis} key={hotelDis.id}></HotelElem>
+            <HotelElem hotel={hotelDis} searchDetails={searchDetails} key={hotelDis.id}></HotelElem>
           );
         })}
     </div>
@@ -42,17 +44,20 @@ then returns props to the searchResults function
 
 export async function getServerSideProps(context) {
   // object destructuring
-  const { destId } = context.query;
+  const searchDetails = context.query;
+  const { destination,checkInDate,checkOutDate,rooms,adults,children } = searchDetails;
+  
+  
 
   // fetch all hotels for destination
-  const response = await fetch(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${destId}`); // WD0M default
+  const response = await fetch(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${destination}`); // WD0M default
   const data = await response.json();
 
   // return data as prop
   return {
     props: {
       hotels: data,
-      destId,
+      searchDetails
     },
   };
 }

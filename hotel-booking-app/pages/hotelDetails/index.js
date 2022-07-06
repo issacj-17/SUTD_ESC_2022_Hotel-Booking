@@ -14,6 +14,7 @@ import Router from 'next/router'
 
 const hotelDetails = (props) => {
   
+  
   return (
     <div style={{margin: '10px'}}>
         <Head>
@@ -21,7 +22,7 @@ const hotelDetails = (props) => {
         </Head>
         <h1>Hotel Details Page</h1>
         
-        <DisplayHotelDetails hotelMore={props.data}></DisplayHotelDetails>
+        <DisplayHotelDetails hotelMore={props.data} searchDetails={props.searchDetails}></DisplayHotelDetails>
     </div>
   )
 }
@@ -29,7 +30,9 @@ export default hotelDetails
 
 export async function getServerSideProps(context){
   //Read hotelId attribute from query string
-  const {hotelId} = context.query
+  const searchDetails= context.query
+  const {hotelId} = searchDetails;
+  console.log(searchDetails)
   const response = await fetch(`https://hotelapi.loyalty.dev/api/hotels/${hotelId}`)
   const data = await response.json()
 
@@ -42,7 +45,8 @@ export async function getServerSideProps(context){
   return {
       props: {
           data,
-          hotelId
+          hotelId,
+          searchDetails
       }
     }
   }

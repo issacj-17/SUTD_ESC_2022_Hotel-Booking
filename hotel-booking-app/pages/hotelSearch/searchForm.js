@@ -9,10 +9,32 @@ import {
 } from "@chakra-ui/react";
 import DestinationSearch from "./destinationSearch";
 
+import { useRouter } from "next/router";
+import { checkTargetForNewValues } from 'framer-motion';
+
+// configure props
+function sendProps(router, values){
+    console.log(values);
+    router.push({
+    pathname:"/searchResults",
+    query: {destination:values.destination,
+        checkInDate: values.checkInDate,
+        checkOutDate: values.checkOutDate,
+        rooms: values.rooms,
+        adults: values.adults,
+        children: values.children
+            }
+    })
+    console.log("Props sent!");
+}
+
 export default function SearchForm() {
     let numOfDays = 3
     let minCheckInDate = new Date(Date.now() + numOfDays*86400000);
     let minCheckOutDate = new Date(Date.now() + (numOfDays+1)*86400000);
+
+    // Router initialization
+    let router = useRouter();
 
     const SearchSchema = Yup.object().shape({
         destination: Yup.string().required("Destination is required"),
@@ -40,11 +62,13 @@ export default function SearchForm() {
             justify="end"
             rounded="md"
             p={8}
+            minWidth="fit-content"
             width="full">
             <Box
                 bg="white"
                 p={8}
                 rounded="md"
+                minWidth="fit-content"
                 width="30%"
                 height="fit-content"
                 >
@@ -59,7 +83,12 @@ export default function SearchForm() {
                     }}
                     validationSchema={SearchSchema}
                     onSubmit={(values) => {
-                        alert(JSON.stringify(values, null, 2));
+                        // alert(JSON.stringify(values, null, 2));
+
+                        // routing 
+                        sendProps(router, values);
+
+
                     }}>
 
                     {({ handleSubmit, errors, touched }) => (
