@@ -10,7 +10,6 @@ import {
 import DestinationSearch from "./destinationSearch";
 
 import { useRouter } from "next/router";
-import { checkTargetForNewValues } from 'framer-motion';
 
 // configure props
 function sendProps(router, values){
@@ -42,9 +41,10 @@ export default function SearchForm() {
         checkOutDate: Yup.date().min(minCheckOutDate.toDateString(), `Must be at least ${numOfDays + 1} days in advance`).required("Date is required").test('OK', "Must be after Check In",
             (val, props) => {
                 const endDate = new Date(val)
-                const startDate = new Date(new Date(props.parent.checkInDate) + 86400000);
+                const startDate = new Date(props.parent.checkInDate);
+                // console.log(endDate, startDate);
 
-                if (endDate > startDate || !props.parent.checkInDate) {
+                if (endDate.getTime() > startDate.getTime() || !props.parent.checkInDate) {
                     return true;
                 }
             }
