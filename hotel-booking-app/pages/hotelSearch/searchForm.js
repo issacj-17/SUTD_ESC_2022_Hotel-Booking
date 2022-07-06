@@ -12,13 +12,12 @@ import DestinationSearch from "./destinationSearch";
 export default function SearchForm() {
     let numOfDays = 3
     let minCheckInDate = new Date(Date.now() + numOfDays*86400000);
-    let minCheckOutDate = new Date(minCheckInDate + 86400000);
+    let minCheckOutDate = new Date(Date.now() + (numOfDays+1)*86400000);
 
     const SearchSchema = Yup.object().shape({
         destination: Yup.string().required("Destination is required"),
         checkInDate: Yup.date().min(minCheckInDate.toDateString(), `Must be at least ${numOfDays} days in advance`).required("Date is required"),
-        checkOutDate: Yup.date().min(minCheckOutDate, `Must be at least ${numOfDays + 1} days in advance`).required("Date is required")
-            .test('OK', "Must be after Check In",
+        checkOutDate: Yup.date().min(minCheckOutDate.toDateString(), `Must be at least ${numOfDays + 1} days in advance`).required("Date is required").test('OK', "Must be after Check In",
             (val, props) => {
                 const endDate = new Date(val)
                 const startDate = new Date(new Date(props.parent.checkInDate) + 86400000);
