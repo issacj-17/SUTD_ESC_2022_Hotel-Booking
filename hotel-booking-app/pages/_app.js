@@ -2,6 +2,7 @@
 //You put in here
 
 import Layout from '../components/Layout'
+import Nav from '../components/Nav'
 import '../styles/globals.css'
 
 function MyApp({ Component, pageProps }) {
