@@ -7,10 +7,9 @@ import '../styles/globals.css'
 
 function MyApp({ Component, pageProps }) {
   return (
-    <>
-      <Nav/>
+    <Layout>
       <Component {...pageProps} />
-    </>
+    </Layout>
   )
 }
 
