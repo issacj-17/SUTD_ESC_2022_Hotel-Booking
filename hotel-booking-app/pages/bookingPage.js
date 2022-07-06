@@ -15,14 +15,6 @@ const CONTAINER = styled.div`
   -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.4);
   box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.4);
 
-  @media (min-width: 1200px) {
-    width: 100%;
-  }
-
-  @media (min-height: 1400px) {
-    height: 100%;
-  }
-
   label {
     color: #24b9b6;
     font-size: 1.2em;
@@ -45,9 +37,8 @@ const CONTAINER = styled.div`
   }
     .error-message {
     color: #FF6565;
-    padding: .5em .2em;
+    padding: .2em .3em;
     height: 1em;
-    position: absolute;
     font-size: .8em;
   }
 `;
@@ -78,7 +69,7 @@ const schema = Yup.object().shape({
     .typeError("Invalid name")
     .min(2, "*Names must have at least 2 characters")
     .max(100, "*Names can't be longer than 100 characters")
-    .required("*Name is required"),
+    .required("Required"),
   lastName: Yup.string()
     .typeError("Invalid name")
     .max(20, "Must be 20 characters or less")
@@ -174,7 +165,7 @@ function bookingPage() {
                   className={touched.lastName && errors.lastName ? "error" : null}
                   />
                   {touched.lastName && errors.lastName ? (
-                    <div className="error-message">{errors.firstName}</div>
+                    <div className="error-message">{errors.lastName}</div>
                   ): null}
               </Form.Group>
               <Form.Group controlId="phoneNumber">
