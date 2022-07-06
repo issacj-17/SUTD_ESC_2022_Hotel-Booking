@@ -39,12 +39,14 @@ export default function SearchForm() {
             align="center"
             justify="end"
             rounded="md"
-            p={8}
+            p={4}
+            minWidth='fit-content'
             width="full">
             <Box
                 bg="white"
                 p={8}
                 rounded="md"
+                minWidth='fit-content'
                 width="30%"
                 height="fit-content"
                 >
