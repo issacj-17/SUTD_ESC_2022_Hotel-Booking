@@ -11,7 +11,7 @@ returns the HTML elements, mapping each hotel in hotels to a HotelElem, and othe
 */
 
 function searchResults ({ hotels, searchDetails }) {
-  
+  console.log(searchDetails)
 
   return (
     <div>
@@ -25,7 +25,7 @@ function searchResults ({ hotels, searchDetails }) {
         {hotels.map((hotelDis) => {
           return (
             // React component imported
-            <HotelElem hotel={hotelDis} searchDetails={searchDetails} key={hotelDis.id}></HotelElem>
+            <HotelElem hotel={hotelDis} searchDetails={searchDetails}key={hotelDis.id}></HotelElem>
           );
         })}
     </div>
@@ -57,7 +57,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       hotels: data,
-      searchDetails
+      searchDetails: searchDetails
     },
   };
 }
