@@ -1,4 +1,4 @@
-import styles from '../../styles/displayHotelDetails.module.css'
+import styles from '../../../styles/displayHotelDetails.module.css'
 import Link from 'next/link' //this is how to route in next.js instead of <a></a>
 import Router,{useRouter} from 'next/router' //Used to pass Props between pages
 //Pass in a props object (essentially the hotel_detail object)

@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import DisplayHotelDetails from '../../components/hotelDetails/displayHotelDetails'
+import DisplayHotelDetails from '../../modules/hotelDetails/components/displayHotelDetails'
 import { useState } from 'react'
 import styles from '../../styles/displayHotelDetails.module.css'
 import Router from 'next/router'

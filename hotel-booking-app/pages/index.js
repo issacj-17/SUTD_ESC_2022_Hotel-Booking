@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import styles from '../styles/Layout.module.css';
 import {ChakraProvider, CSSReset, Box} from '@chakra-ui/react';
-import SearchForm from './hotelSearch/searchForm';
+import SearchForm from '../modules/hotelSearch/components/searchForm';
 
 //<Head> Tag is for the text u see in ur tab or for description of your page, can contain metadata for search engine as well
 //Main point, is for developers to see, not users

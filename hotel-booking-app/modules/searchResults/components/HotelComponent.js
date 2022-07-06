@@ -1,6 +1,6 @@
 // React Component for individual hotels from results
 import Link from 'next/link';
-import styles from '../../styles/searchResultsPage.module.css';
+import styles from '../../../styles/searchResultsPage.module.css';
 
 /* 
 returns the HTML elements, displaying the information of each hotel, link to allow the hotel to be selected

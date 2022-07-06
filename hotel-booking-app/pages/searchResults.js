@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import HotelElem from '../components/SearchResults/HotelComponent';
+import HotelElem from '../modules/searchResults/components/HotelComponent';
 import styles from '../styles/searchResultsPage.module.css';
 
 /* 
