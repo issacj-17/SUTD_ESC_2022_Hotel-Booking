@@ -8,7 +8,7 @@ const Nav = () => {
     <nav className={navStyle.nav}>
         <ul>
             <li>
-                <Link href='/pages'>Home/Search</Link>
+                <Link href='/'>Home/Search</Link>
             </li>
             <li>
                 <Link href={{
@@ -22,7 +22,7 @@ const Nav = () => {
                 <Link href='/hotelDetails'>Hotel Details</Link>
             </li>
             <li>
-                <Link href='/pages/bookingPage'>Booking Page</Link>
+                <Link href='/bookingPage'>Booking Page</Link>
             </li>
         </ul>
     </nav>
