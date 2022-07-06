@@ -267,6 +267,7 @@ function bookingPage() {
                     <div className="error-message">{errors.billingAddress}</div>
                   ): null}
               </Form.Group>
+              <h1> </h1>
               <MYBUTTON variant="primary" type="submit" disabled={isSubmitting}>
                 Submit
               </MYBUTTON>
