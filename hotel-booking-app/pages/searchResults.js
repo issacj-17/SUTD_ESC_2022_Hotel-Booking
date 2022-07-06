@@ -1,21 +1,58 @@
-import Head from 'next/head'
-import Link from 'next/link';
+import Head from 'next/head';
+import HotelElem from '../components/SearchResults/HotelComponent';
+import styles from '../styles/searchResultsPage.module.css';
 
-const searchResults = () => {
+/* 
+returns the HTML elements, mapping each hotel in hotels to a HotelElem, and other UI
+
+@param {Object} props - hotels is an array of Object containing hotel information from the API,
+                        destID is the destination ID of the current search
+@returns - HTML to be displayed
+*/
+
+function searchResults ({ hotels, destId }) {
   return (
     <div>
         <Head>
             <title>Search Results</title>
         </Head>
-        <h1>Search Results here!</h1>
-        <Link href={{
-          pathname: "/hotelDetails",
-          query: {hotelId:"diH7"}
-        }}>
-          <a>Click This Shit</a>
-        </Link>
+
+        <h3 className={styles.resultsHeader}>Search Results for {destId}</h3>
+
+        {/* iterate through hotels, creating a HotelElem component for each hotel */}
+        {hotels.map((hotelDis) => {
+          return (
+            // React component imported
+            <HotelElem hotel={hotelDis} key={hotelDis.id}></HotelElem>
+          );
+        })}
     </div>
   )
 }
 
 export default searchResults
+
+/* 
+Retrieves destId from query in URL, performs an API call with destId,
+then returns props to the searchResults function
+
+@param {Object} context - context.query.destId
+@returns {Object} props - data is stored in hotels, destID contains the Destination ID
+*/
+
+export async function getServerSideProps(context) {
+  // object destructuring
+  const { destId } = context.query;
+
+  // fetch all hotels for destination
+  const response = await fetch(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${destId}`); // WD0M default
+  const data = await response.json();
+
+  // return data as prop
+  return {
+    props: {
+      hotels: data,
+      destId,
+    },
+  };
+}

@@ -11,7 +11,12 @@ const Nav = () => {
                 <Link href='/'>Home/Search</Link>
             </li>
             <li>
-                <Link href='/searchResults'>Search Results</Link>
+                <Link href={{
+                    pathname: "/searchResults",
+                    query: {destId: "WD0M"}
+                }}>
+                    Search Results
+                </Link>
             </li>
             <li>
                 <Link href='/hotelDetails'>Hotel Details</Link>
