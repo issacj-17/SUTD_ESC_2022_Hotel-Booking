@@ -9,6 +9,8 @@ const hotelDetails = (props) => {
     const description =  props.hotelMore.description;
     const location = props.hotelMore.address;
     const roomType = "Single Room";
+    const searchDetails = props.searchDetails;
+    console.log(searchDetails);
     // console.log(props.hotelMore)
     
     //Using Router to receive unpack props received using Router(Next.js module)

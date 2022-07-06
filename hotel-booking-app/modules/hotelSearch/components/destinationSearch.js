@@ -20,7 +20,7 @@ const renderResults = (q, callback) => {
         if (q.length >= 3) {
             const params = new URLSearchParams({q});
 
-            const res = await fetch('/api/search?' + params);
+            const res = await fetch('/api/hotelSearch/search?' + params);
             const result = await res.json();
 
             const data = result['destinations']
