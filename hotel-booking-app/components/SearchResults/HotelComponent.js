@@ -10,7 +10,6 @@ returns the HTML elements, displaying the information of each hotel, link to all
 */
 
 function hotelElem({ hotel,searchDetails }) {
-  console.log(searchDetails)
     return (
       <>
         <div className={styles.hotelElemDiv}>
@@ -19,7 +18,15 @@ function hotelElem({ hotel,searchDetails }) {
           {/* link to hotel details page with relevant hotelId */}
           <Link href={{
             pathname: "/hotelDetails",
-            query: {hotelId: hotel.id,searchDetails:JSON.stringify(searchDetails)}
+            query: {hotelId: hotel.id,
+              destination:searchDetails.destination,
+              checkInDate: searchDetails.checkInDate,
+              checkOutDate: searchDetails.checkOutDate,
+              rooms: searchDetails.rooms,
+              adults: searchDetails.adults,
+              children: searchDetails.children
+                  
+            }
           }}>
             <a className={styles.selectButton}>Select</a>
           </Link>
