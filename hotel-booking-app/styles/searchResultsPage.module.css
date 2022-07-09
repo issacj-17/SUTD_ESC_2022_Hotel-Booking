@@ -1,18 +1,62 @@
 .selectButton {
+    display: inline !important;
+    width: fit-content;
     float: right;
-    border: 2px solid black;
+    color: white;
+    border-color: #805ad5;
+    background-color: #805ad5;
+    margin-top: 50px;
 }
 
-.hotelName {
-    display: inline;
+.selectButton:hover {
+    border-color: #6B46C1;
+    background-color: #6B46C1;
+    box-shadow: 5px 10px 20px 1px rgba(85, 60, 154,0.253);
 }
 
-.hotelElemDiv {
+.selectButton:active {
+    border-color: #553C9A;
+    background-color: #553C9A;
+    box-shadow: 0 0 0 .2rem rgba(85, 60, 154, 0.5)
+}
+
+.hotelBody {
+    margin-top: 10px;
+    display: inline-block !important;
+}
+
+.hotelCard {
     padding-bottom: 10px;
+    background-color: #f7f9fa;
+    margin: 10px 10%;
+}
+
+.hotelCard:hover {
+    box-shadow: 1px 2px 5px 1px rgba(0,0,0,0.253);
 }
 
 .resultsHeader {
+    color: #0B3837;
     width: fit-content;
     margin: auto;
     padding-bottom: 20px;
+}
+
+.page {
+    width: 100% !important;
+}
+
+.hotelPicture {
+    height: 150px;
+    width: 150px;
+    box-sizing: border-box;
+}
+
+.hotelContent {
+    color: #0B3837;
+    margin: 0;
+    display: inline-block;
+}
+#hotelName {
+    color: #24b9b6;
 }

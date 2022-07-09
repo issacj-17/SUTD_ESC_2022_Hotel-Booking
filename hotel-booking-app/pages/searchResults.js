@@ -12,7 +12,7 @@ returns the HTML elements, mapping each hotel in hotels to a HotelElem, and othe
 
 function searchResults ({ hotels, searchDetails }) {
   return (
-    <div>
+    <div className={styles.page}>
         <Head>
             <title>Search Results</title>
         </Head>
