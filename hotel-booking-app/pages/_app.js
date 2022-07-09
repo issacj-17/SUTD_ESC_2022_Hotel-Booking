@@ -3,6 +3,7 @@
 
 import Layout from '../common/components/Layout'
 import Nav from '../common/components/Nav'
+import "bootstrap/dist/css/bootstrap.min.css";
 import '../styles/globals.css'
 
 function MyApp({ Component, pageProps }) {

@@ -2,7 +2,6 @@ import Head from "next/head";
 import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import "bootstrap/dist/css/bootstrap.min.css";
 import {Form, Button} from "react-bootstrap";
 import styled from 'styled-components';
 
