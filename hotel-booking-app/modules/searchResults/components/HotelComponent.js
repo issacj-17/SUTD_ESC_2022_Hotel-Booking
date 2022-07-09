@@ -18,14 +18,14 @@ function hotelElem({ hotel,searchDetails }) {
           {/* link to hotel details page with relevant hotelId */}
           <Link href={{
             pathname: "/hotelDetails",
-            query: {hotelId: hotel.id,
+            query: {
+              hotelId: hotel.id,
               destination:searchDetails.destination,
               checkInDate: searchDetails.checkInDate,
               checkOutDate: searchDetails.checkOutDate,
               rooms: searchDetails.rooms,
               adults: searchDetails.adults,
               children: searchDetails.children
-                  
             }
           }}>
             <a className={styles.selectButton}>Select</a>

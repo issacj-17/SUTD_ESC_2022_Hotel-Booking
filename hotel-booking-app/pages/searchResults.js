@@ -11,8 +11,6 @@ returns the HTML elements, mapping each hotel in hotels to a HotelElem, and othe
 */
 
 function searchResults ({ hotels, searchDetails }) {
-  console.log(searchDetails)
-
   return (
     <div>
         <Head>

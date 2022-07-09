@@ -13,7 +13,6 @@ import { useRouter } from "next/router";
 
 // configure props
 function sendProps(router, values){
-    console.log(values);
     router.push({
     pathname:"/searchResults",
     query: {destination:values.destination,

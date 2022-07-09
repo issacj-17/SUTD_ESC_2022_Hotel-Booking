@@ -13,13 +13,31 @@ const Nav = () => {
             <li>
                 <Link href={{
                     pathname: "/searchResults",
-                    query: {destId: "WD0M"}
+                    query: {
+                        destination:"RsBU",
+                        checkInDate: "2022-07-28",
+                        checkOutDate: "2022-07-31",
+                        rooms: 1,
+                        adults: 2,
+                        children: 0
+                    }
                 }}>
                     Search Results
                 </Link>
             </li>
             <li>
-                <Link href='/hotelDetails'>Hotel Details</Link>
+                <Link href={{
+                    pathname: "/hotelDetails",
+                    query: {
+                        hotelId: "050G",
+                        destination:"RsBU",
+                        checkInDate: "2022-07-28",
+                        checkOutDate: "2022-07-31",
+                        rooms: 1,
+                        adults: 2,
+                        children: 0
+                    }
+                }}>Hotel Details</Link>
             </li>
             <li>
                 <Link href='/bookingPage'>Booking Page</Link>
