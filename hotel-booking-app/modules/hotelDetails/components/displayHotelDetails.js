@@ -8,7 +8,9 @@ const hotelDetailsComp = (props) => {
     const hotelName = props.selectedHotelData.name;
     const description =  props.selectedHotelData.description;
     const location = props.selectedHotelData.address;
-    const roomType = "Single Room";
+    const roomType = props.roomData.rooms[0].roomNormalizedDescription;
+    const price = props.roomData.rooms[0].lowest_price;
+    const img_url = props.roomData.rooms[0].images[0].url;
     const searchDetails = props.searchDetails;
     
     
@@ -46,11 +48,15 @@ const hotelDetailsComp = (props) => {
                     {description}
                 </div>
                 <div className={styles.card}>
+                    <h1>{roomType}</h1>
                     
-                    <a onClick={() => sendProps()}>{roomType}</a>
+                    <img className={styles.roomImage} src={img_url}></img>
+                    <p>Price of {roomType} is : {price}</p>
+                    <a onClick={() => sendProps()}>Select</a>
                     
                 </div>
                 <div className={styles.card}>
+                    <h1>Location</h1>
                     <p>{location}</p>
                 </div>
             </div>

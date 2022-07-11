@@ -29,4 +29,13 @@
     margin: 10px 0;
 }
 
+.roomImage{
+    height: auto;
+    width: auto;
+    max-width: 150px;
+    max-height: 150px;
+    box-sizing: border-box;
+    transform: scale(1);
+}
+
 

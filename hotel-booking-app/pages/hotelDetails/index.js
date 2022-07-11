@@ -12,7 +12,7 @@ import Router from 'next/router'
 //Next.js will look for any specific pages before looking at the dynamic pages, so if u have option1 and [optionnumber] and u route to ../hotelDetails/option1,
 //option1.js will be displayed instead of the dynamic page.
 
-const hotelDetails = ({hotelDetailData,searchDetails,hotelId}) => {
+const hotelDetails = ({hotelDetailData,searchDetails,hotelId,roomDetailData}) => {
   
   
   return (
@@ -22,7 +22,7 @@ const hotelDetails = ({hotelDetailData,searchDetails,hotelId}) => {
         </Head>
         <h1>Hotel Details Page</h1>
         
-        <DisplayHotelDetails selectedHotelData={hotelDetailData} searchDetails={searchDetails}></DisplayHotelDetails>
+        <DisplayHotelDetails selectedHotelData={hotelDetailData} searchDetails={searchDetails} roomData={roomDetailData}></DisplayHotelDetails>
     </div>
   )
 }
@@ -39,7 +39,7 @@ export async function getServerSideProps(context){
   const roomDetailData = await response2.json()
   console.log(roomDetailData)
 
-  console.log(roomDetailData.completed)
+  // console.log(roomDetailData.completed)
   
   if (!hotelDetailData){
       return {
