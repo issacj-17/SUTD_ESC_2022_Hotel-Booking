@@ -87,8 +87,6 @@ export default function SearchForm() {
 
                         // routing 
                         sendProps(router, values);
-
-
                     }}>
 
                     {({ handleSubmit, errors, touched }) => (

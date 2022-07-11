@@ -2,20 +2,12 @@ import React from "react";
 import {AsyncSelect} from "chakra-react-select";
 import destinations from './destinations.json';
 
-// const renderResults = (input, callback) => {
-//     setTimeout(() => {
-//         if (input.length >= 3) {
-//             const values = destinations.filter((json) =>
-//                 json.term.toLowerCase().includes(input.toLowerCase()));
-//             callback(values);
-//         }
-//         // else {
-//         //     callback()
-//         // }
-//     }, 300);
-// }
-
-const renderResults = (q, callback) => {
+/**
+ *   Fetches Destination Search Results from RedisSearch API
+ *   @param {string} q - Input from Destination Search Text Field
+ *   @param {function} callback - Function to Load Results from JSON Response into Dropdown Options
+ */
+const getResults = (q, callback) => {
     setTimeout(async () => {
         if (q.length >= 3) {
             const params = new URLSearchParams({q});
@@ -31,6 +23,15 @@ const renderResults = (q, callback) => {
         }
     }, 1500);
 }
+
+/**
+ *
+ * @param {Formik<FieldAttributes>} field - Field Attributes
+ * @param {form} form - Form Attributes
+ * @param {props} props - Formik Props
+ * @returns {JSX.Element} - Destination Search AutoComplete
+ * @constructor
+ */
 
 export default function DestinationSearch({field, form, ...props}) {
 
@@ -78,7 +79,7 @@ export default function DestinationSearch({field, form, ...props}) {
             })
         }}
         loadOptions={(inputValue, callback) => {
-                renderResults(inputValue, callback);
+                getResults(inputValue, callback);
             }
         }
         onChange={(option) =>
