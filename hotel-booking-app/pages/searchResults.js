@@ -10,11 +10,10 @@ returns the HTML elements, mapping each hotel in hotels to a HotelElem, and othe
 @returns - HTML to be displayed
 */
 
-function searchResults ({ hotels, searchDetails }) {
-  console.log(searchDetails)
-
+function searchResults ({ hotels, prices, searchDetails }) {
+  console.log(prices);
   return (
-    <div>
+    <div className={styles.page}>
         <Head>
             <title>Search Results</title>
         </Head>
@@ -47,17 +46,32 @@ export async function getServerSideProps(context) {
   const searchDetails = context.query;
   const { destination,checkInDate,checkOutDate,rooms,adults,children } = searchDetails;
   
-  
+  // begin fetching from prices API
 
-  // fetch all hotels for destination
+  const responsePrice = await fetch(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${destination}&checkin=${checkInDate}&checkout=${checkOutDate}&lang=en_US&currency=SGD&country_code=SG&guests=${getGuestReqString(rooms, adults+children)}&partner_id=1`);
+  const prices = await responsePrice.json();
+
+  // fetch all hotels for destination from static API
   const response = await fetch(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${destination}`); // WD0M default
   const data = await response.json();
+  console.log(prices)
 
   // return data as prop
   return {
     props: {
       hotels: data,
+      prices: prices,
       searchDetails: searchDetails
     },
   };
+}
+
+
+function getGuestReqString(rooms, guests) {
+  let res = '';
+  for (let i=1; i<rooms; i++) {
+    res += Math.floor(guests/rooms) + "|";
+  }
+  res += guests % rooms;
+  return res;
 }

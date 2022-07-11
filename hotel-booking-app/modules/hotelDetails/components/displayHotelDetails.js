@@ -3,15 +3,15 @@ import Link from 'next/link' //this is how to route in next.js instead of <a></a
 import Router,{useRouter} from 'next/router' //Used to pass Props between pages
 //Pass in a props object (essentially the hotel_detail object)
 
-const hotelDetails = (props) => {
+const hotelDetailsComp = (props) => {
     //Unpack Props received from previous page
-    const hotelName = props.hotelMore.name;
-    const description =  props.hotelMore.description;
-    const location = props.hotelMore.address;
+    const hotelName = props.selectedHotelData.name;
+    const description =  props.selectedHotelData.description;
+    const location = props.selectedHotelData.address;
     const roomType = "Single Room";
     const searchDetails = props.searchDetails;
-    console.log(searchDetails);
-    // console.log(props.hotelMore)
+    
+    
     
     //Using Router to receive unpack props received using Router(Next.js module)
     const router = useRouter() //Initialise a router
@@ -35,7 +35,6 @@ const hotelDetails = (props) => {
             roomType
             }
         })
-        console.log("Props sent!");
     }
 
     return (
@@ -58,4 +57,4 @@ const hotelDetails = (props) => {
         </div>
     );
 }
-export default hotelDetails
+export default hotelDetailsComp
