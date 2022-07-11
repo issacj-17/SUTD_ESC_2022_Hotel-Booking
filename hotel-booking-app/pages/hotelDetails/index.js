@@ -35,8 +35,8 @@ export async function getServerSideProps(context){
   const {hotelId} = searchDetails;
   const response = await fetch(`https://hotelapi.loyalty.dev/api/hotels/${hotelId}`)
   const hotelDetailData = await response.json()
-  const response2 = fetch(`https://hotelapi.loyalty.dev/api/hotels/diH7/price?destination_id=RsBU&checkin=2022-08-28&checkout=2022-09-01&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=2`)
-  const roomDetailData = response2.json()
+  const response2 = await fetch(`https://hotelapi.loyalty.dev/api/hotels/diH7/price?destination_id=RsBU&checkin=2022-08-28&checkout=2022-09-01&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=2`)
+  const roomDetailData = await response2.json()
   console.log(roomDetailData)
 
   console.log(roomDetailData.completed)
