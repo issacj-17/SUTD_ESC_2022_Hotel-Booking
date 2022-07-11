@@ -34,7 +34,8 @@ const hotelDetailsComp = (props) => {
             hotelName,
             description,
             location,
-            roomType
+            roomType,
+            price
             }
         })
     }
