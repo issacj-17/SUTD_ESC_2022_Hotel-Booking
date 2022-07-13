@@ -12,7 +12,7 @@ import Router from 'next/router'
 //Next.js will look for any specific pages before looking at the dynamic pages, so if u have option1 and [optionnumber] and u route to ../hotelDetails/option1,
 //option1.js will be displayed instead of the dynamic page.
 
-const hotelDetails = (props) => {
+const hotelDetails = ({hotelDetailData,searchDetails,hotelId,roomDetailData}) => {
   
   
   return (
@@ -22,7 +22,7 @@ const hotelDetails = (props) => {
         </Head>
         <h1>Hotel Details Page</h1>
         
-        <DisplayHotelDetails hotelMore={props.data} searchDetails={props.searchDetails}></DisplayHotelDetails>
+        <DisplayHotelDetails selectedHotelData={hotelDetailData} searchDetails={searchDetails} roomData={roomDetailData}></DisplayHotelDetails>
     </div>
   )
 }
@@ -30,13 +30,18 @@ export default hotelDetails
 
 export async function getServerSideProps(context){
   //Read hotelId attribute from query string
-  const searchDetails= context.query
+  
+  const searchDetails= context.query //Taking all query and storing it into searchDetails
   const {hotelId} = searchDetails;
-  console.log(searchDetails)
   const response = await fetch(`https://hotelapi.loyalty.dev/api/hotels/${hotelId}`)
-  const data = await response.json()
+  const hotelDetailData = await response.json()
+  const response2 = await fetch(`https://hotelapi.loyalty.dev/api/hotels/diH7/price?destination_id=RsBU&checkin=2022-08-28&checkout=2022-09-01&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=2`)
+  const roomDetailData = await response2.json()
+  console.log(roomDetailData)
 
-  if (!data){
+  // console.log(roomDetailData.completed)
+  
+  if (!hotelDetailData){
       return {
           notFound: true
       }
@@ -44,9 +49,10 @@ export async function getServerSideProps(context){
   console.log("Fetch Successful!")
   return {
       props: {
-          data,
+          hotelDetailData,
           hotelId,
-          searchDetails
+          searchDetails,
+          roomDetailData
       }
     }
   }

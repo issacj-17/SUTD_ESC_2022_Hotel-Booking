@@ -3,15 +3,17 @@ import Link from 'next/link' //this is how to route in next.js instead of <a></a
 import Router,{useRouter} from 'next/router' //Used to pass Props between pages
 //Pass in a props object (essentially the hotel_detail object)
 
-const hotelDetails = (props) => {
+const hotelDetailsComp = (props) => {
     //Unpack Props received from previous page
-    const hotelName = props.hotelMore.name;
-    const description =  props.hotelMore.description;
-    const location = props.hotelMore.address;
-    const roomType = "Single Room";
+    const hotelName = props.selectedHotelData.name;
+    const description =  props.selectedHotelData.description;
+    const location = props.selectedHotelData.address;
+    const roomType = props.roomData.rooms[0].roomNormalizedDescription;
+    const price = props.roomData.rooms[0].lowest_price;
+    const img_url = props.roomData.rooms[0].images[0].url;
     const searchDetails = props.searchDetails;
-    console.log(searchDetails);
-    // console.log(props.hotelMore)
+    
+    
     
     //Using Router to receive unpack props received using Router(Next.js module)
     const router = useRouter() //Initialise a router
@@ -32,10 +34,10 @@ const hotelDetails = (props) => {
             hotelName,
             description,
             location,
-            roomType
+            roomType,
+            price
             }
         })
-        console.log("Props sent!");
     }
 
     return (
@@ -47,15 +49,19 @@ const hotelDetails = (props) => {
                     {description}
                 </div>
                 <div className={styles.card}>
+                    <h1>{roomType}</h1>
                     
-                    <a onClick={() => sendProps()}>{roomType}</a>
+                    <img className={styles.roomImage} src={img_url}></img>
+                    <p>Price of {roomType} is : {price}</p>
+                    <a onClick={() => sendProps()}>Select</a>
                     
                 </div>
                 <div className={styles.card}>
+                    <h1>Location</h1>
                     <p>{location}</p>
                 </div>
             </div>
         </div>
     );
 }
-export default hotelDetails
+export default hotelDetailsComp
