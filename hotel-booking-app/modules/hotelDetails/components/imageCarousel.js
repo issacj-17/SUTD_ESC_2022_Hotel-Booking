@@ -2,7 +2,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import styles from '../../../styles/displayHotelDetails.module.css'
 
 function imageCarousel({listOfImagesUrl}) {
-  console.log(listOfImagesUrl)
+  // console.log(listOfImagesUrl)
   return (
     <Carousel variant="dark">
       {listOfImagesUrl.map((listOfUrl,index) => {

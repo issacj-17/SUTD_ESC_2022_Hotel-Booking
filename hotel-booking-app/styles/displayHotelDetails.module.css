@@ -78,10 +78,9 @@
 }
 
 .roomImage{
-    height: auto;
-    width: auto;
-    max-width: 150px;
-    max-height: 150px;
+    height: 220px;
+    width: 400px;
+
     box-sizing: border-box;
     transform: scale(1);
 }
