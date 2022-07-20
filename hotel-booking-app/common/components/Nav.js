@@ -42,6 +42,9 @@ const Nav = () => {
             <li>
                 <Link href='/bookingPage'>Booking Page</Link>
             </li>
+            <li>
+                <Link href='/userAuth/login'>Login</Link>
+            </li>
         </ul>
     </nav>
 
