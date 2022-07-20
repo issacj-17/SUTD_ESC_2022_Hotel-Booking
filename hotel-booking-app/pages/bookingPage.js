@@ -10,7 +10,7 @@ import valid from 'card-validator';
 const CONTAINER = styled.div`
   background: #f7f9fa;
   height: auto;
-  width: 90%;
+  width: 100%;
   color: snow;
   -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.4);
