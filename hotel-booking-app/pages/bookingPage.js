@@ -336,10 +336,7 @@ function bookingPage() {
                     <div className="error-message">{errors.billingAddress}</div>
                   ): null}
               </Form.Group>
-<<<<<<< Updated upstream
-=======
               </Row>
->>>>>>> Stashed changes
               <MYBUTTON variant="primary" type="submit" disabled={isSubmitting}>
                 Submit
               </MYBUTTON>
