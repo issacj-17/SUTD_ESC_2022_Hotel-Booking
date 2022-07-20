@@ -3,11 +3,13 @@ import Carousel from 'react-bootstrap/Carousel';
 import styles from '../../../styles/displayHotelDetails.module.css'
 import Router,{useRouter} from 'next/router' //Used to pass Props between pages
 
-export default function roomDetails({Room}) {
+export default function roomDetails({Room,searchDetails}) {
     
     const roomType = Room.roomNormalizedDescription;
     const price = Room.lowest_price;
     const imagesUrl = Room.images;
+
+    
     
     //Using Router to receive unpack props received using Router(Next.js module)
     const router = useRouter() //Initialise a router
@@ -26,7 +28,14 @@ export default function roomDetails({Room}) {
         pathname:"/bookingPage",
         query: {
             roomType,
-            price
+            price,
+            hotelId:searchDetails.hotelId,
+            destination: searchDetails.destination,
+            checkInDate: searchDetails.checkInDate,
+            checkOutDate: searchDetails.checkOutDate,
+            rooms: searchDetails.rooms,
+            adults: searchDetails.adults,
+            children: searchDetails.children
             }
         })
     }

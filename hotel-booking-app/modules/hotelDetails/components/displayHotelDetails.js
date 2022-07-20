@@ -89,7 +89,7 @@ const hotelDetailsComp = (props) => {
                     {
                         listOfAvailableRooms.map((room)=>{
                             return(
-                                <RoomDetails Room={room}></RoomDetails>
+                                <RoomDetails Room={room} searchDetails={searchDetails}></RoomDetails>
                             )
                         })
                     }
