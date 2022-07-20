@@ -1,66 +1,103 @@
 import styles from '../../../styles/displayHotelDetails.module.css'
 import Link from 'next/link' //this is how to route in next.js instead of <a></a>
-import Router,{useRouter} from 'next/router' //Used to pass Props between pages
+
+import Slider from './imageCarousel'
+import RoomDetails from './roomDetails'
+
+import dynamic from 'next/dynamic'
+
+const MapDisplay = dynamic(() => import('./mapDisplay'), {
+  ssr: false,
+})
+
+
 //Pass in a props object (essentially the hotel_detail object)
 
 const hotelDetailsComp = (props) => {
-    //Unpack Props received from previous page
+    //Unpack Props received from previous pages
     const hotelName = props.selectedHotelData.name;
     const description =  props.selectedHotelData.description;
     const location = props.selectedHotelData.address;
-    const roomType = props.roomData.rooms[0].roomNormalizedDescription;
-    const price = props.roomData.rooms[0].lowest_price;
-    const img_url = props.roomData.rooms[0].images[0].url;
+    const listOfAvailableRooms = props.roomData.rooms
+    
     const searchDetails = props.searchDetails;
-    
-    
-    
-    //Using Router to receive unpack props received using Router(Next.js module)
-    const router = useRouter() //Initialise a router
-    //Use the initialised router to unpack the props
-    const {
-        query: {/*fill in with whatever attributes you expecting*/}
-    } = router
-    //Assign the all the values retrieved from the query to a prop (not sure why this step exist) haha
-    /*
-    const props = {fill in with whatever attributes you expecting} 
-    */
 
-    //To handle passing of selected room type to checkout page
-    function sendProps(){
-        Router.push({
-        pathname:"/bookingPage",
-        query: {
-            hotelName,
-            description,
-            location,
-            roomType,
-            price
-            }
-        })
+    const latitude = props.selectedHotelData.latitude
+    const longitude = props.selectedHotelData.longitude
+    
+    
+    //Unpack Image url
+    const hotelImageJson = props.selectedHotelData.image_details
+    const numOfHotelImages = props.selectedHotelData.image_details.count;
+    let listOfHotelImagesUrl = [];
+    
+    //Method: For loop to obtain extract the imageurl in batches of 5 and pushing them into
+    // listOfHotelImagesUrl as a list of 5 Strings, each corresponding to an HotelImageUrl
+    for (let i=0; i<numOfHotelImages-(numOfHotelImages%5); i+=5){
+        let setOfHotelImagesUrl = [];
+        let prefix = hotelImageJson.prefix
+        let suffix = hotelImageJson.suffix
+        for (let j=i;j<i+5;j++){
+            setOfHotelImagesUrl.push(prefix+j+suffix)
+        }
+        listOfHotelImagesUrl.push(setOfHotelImagesUrl)
     }
+   
+    
+    
+    
+    
+
+    
 
     return (
         <div>
             <h1 className={styles.hotelName}>Name of Hotel : {hotelName} , this is from API call</h1>
-            <div className={styles.body}>
-                <div className={styles.card}>
-                    <h1>Description</h1>
-                    {description}
-                </div>
-                <div className={styles.card}>
-                    <h1>{roomType}</h1>
+            
+            
+            <Slider listOfImagesUrl={ listOfHotelImagesUrl }></Slider>
+            <div className='container-fluid'>
+                
+                <div className='row'>
+                    <div className='col'>
+                        <div className={styles.card +" card"} id="description">
+                            
+                            <h1 >Description</h1>
+                            <div className='card-body' dangerouslySetInnerHTML={{__html: description}}/>
+                            
+                        </div>
+
+                    </div>
+
+                    <div className='col-3'> 
+
+                    <div className={styles.locationCard +" card w-100 h-75"}>
+                        <div className="card-body">
+            
+                                <h5 className="card-title">Location</h5>
+                                <p className="card-text">{location}</p>
+                            <MapDisplay latitude={latitude} longitude={longitude}></MapDisplay>
+                            
+                            
+                        </div>
+                    </div>
                     
-                    <img className={styles.roomImage} src={img_url}></img>
-                    <p>Price of {roomType} is : {price}</p>
-                    <a onClick={() => sendProps()}>Select</a>
-                    
+                    </div>
                 </div>
-                <div className={styles.card}>
-                    <h1>Location</h1>
-                    <p>{location}</p>
+                <div className='row'>
+                    <div className={styles.card + ' col w-100'}> 
+                    {
+                        listOfAvailableRooms.map((room)=>{
+                            return(
+                                <RoomDetails Room={room} searchDetails={searchDetails}></RoomDetails>
+                            )
+                        })
+                    }
+                    
+                    </div>
                 </div>
             </div>
+            
         </div>
     );
 }
