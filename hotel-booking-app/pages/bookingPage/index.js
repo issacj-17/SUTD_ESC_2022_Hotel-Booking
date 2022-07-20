@@ -6,6 +6,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {Form, Button, Row, Col} from "react-bootstrap";
 import styled from 'styled-components';
 import valid from 'card-validator';
+import Router,{useRouter} from 'next/router';
+
+
 
 const CONTAINER = styled.div`
   background: #f7f9fa;
@@ -157,6 +160,20 @@ const schema = Yup.object().shape({
 });
 
 function bookingPage() {
+  
+// const{
+//   query:{}
+// } = router
+function sendProps(values){
+  Router.push({pathname:"/bookingPage/hotelReceipt",
+query:{
+  firstName:values.firstName,
+  lastName: values.lastName,
+  phoneNumber: values.phoneNumber,
+  email: values.email,
+  specialRequest: values.specialRequest,
+}})
+}
   return (
       <CONTAINER>
         <h1> Guest Information Collection Form </h1>
@@ -182,6 +199,7 @@ function bookingPage() {
               alert(JSON.stringify(values, null, 2));
               resetForm();
               setSubmitting(false);
+              sendProps(values);
             }, 500);
           }}
         >
@@ -196,7 +214,6 @@ function bookingPage() {
             errors,
           }) => (
             <MYFORM onSubmit={handleSubmit} className="mx-auto">
-              {console.log(values)}
               <Row className = "mb-4">
               <Form.Group as={Col} md="4" controlId="firstName">
                 <Form.Label> First Name</Form.Label>
