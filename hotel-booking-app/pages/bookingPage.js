@@ -2,8 +2,10 @@ import Head from "next/head";
 import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import {Form, Button} from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import {Form, Button, Row, Col} from "react-bootstrap";
 import styled from 'styled-components';
+import valid from 'card-validator';
 
 const CONTAINER = styled.div`
   background: #f7f9fa;
@@ -60,8 +62,7 @@ const MYBUTTON = styled(Button)`
     background: #1d3461;
   }
 `;
-const phoneRegExp =
-  /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
+
 
 const schema = Yup.object().shape({
   firstName: Yup.string()
@@ -84,9 +85,68 @@ const schema = Yup.object().shape({
   specialRequest: Yup.string(),
   bankCard: Yup.number()
     .typeError("Your bank card is not valid")
-    .test('len', 'Must be exactly 16 characters', val => val && val.toString().length === 16 )
-    .required("Required"),
-  expiryDate: Yup.date().required("Required"),
+    .required("Required")
+    .test('test-number', // this is used internally by yup
+    'Credit Card number is invalid', //validation message
+     value => valid.number(value).isValid), // return true false based on validation
+  expiryDate: Yup.string()
+  .required("Required")
+  .typeError('Not a valid expiration date. Example: MM/YY')
+  .max(5, 'Not a valid expiration date. Example: MM/YY')
+  .matches(
+    /([0-9]{2})\/([0-9]{2})/,
+    'Not a valid expiration date. Example: MM/YY'
+  )
+  .test(
+    'test-credit-card-expiration-date',
+    'Invalid Expiration Date has past',
+    expirationDate => {
+      if (!expirationDate) {
+        return false
+      }
+
+      const today = new Date()
+      const monthToday = today.getMonth() + 1
+      const yearToday = today
+        .getFullYear()
+        .toString()
+        .substr(-2)
+
+      const [expMonth, expYear] = expirationDate.split('/')
+
+      if (Number(expYear) < Number(yearToday)) {
+        return false
+      } else if (
+        Number(expMonth) < monthToday &&
+        Number(expYear) <= Number(yearToday)
+      ) {
+        return false
+      }
+
+      return true
+    }
+  )
+  .test(
+    'test-credit-card-expiration-date',
+    'Invalid Expiration Month',
+    expirationDate => {
+      if (!expirationDate) {
+        return false
+      }
+      const today = new Date()
+        .getFullYear()
+        .toString()
+        .substr(-2)
+
+      const [expMonth] = expirationDate.split('/')
+
+      if (Number(expMonth) > 12) {
+        return false
+      }
+
+      return true
+    }
+  ),
   CVV: Yup.number()
     .typeError("Invalid CVV/CVC")
     .test('len', 'Must be exactly 3 characters', val => val && val.toString().length === 3 )
@@ -137,7 +197,8 @@ function bookingPage() {
           }) => (
             <MYFORM onSubmit={handleSubmit} className="mx-auto">
               {console.log(values)}
-              <Form.Group controlId="firstName">
+              <Row className = "mb-4">
+              <Form.Group as={Col} md="4" controlId="firstName">
                 <Form.Label> First Name</Form.Label>
                 <Form.Control
                   type="text"
@@ -152,7 +213,7 @@ function bookingPage() {
                     <div className="error-message">{errors.firstName}</div>
                   ): null}
               </Form.Group>
-              <Form.Group controlId="lastName">
+              <Form.Group as={Col} md="4" controlId="lastName">
                 <Form.Label> Last Name</Form.Label>
                 <Form.Control
                   type="text"
@@ -167,7 +228,9 @@ function bookingPage() {
                     <div className="error-message">{errors.lastName}</div>
                   ): null}
               </Form.Group>
-              <Form.Group controlId="phoneNumber">
+              </Row>
+              <Row className = "mb-4">
+              <Form.Group as={Col} md="5" controlId="phoneNumber">
                 <Form.Label> Phone Number </Form.Label>
                 <Form.Control
                   type="text"
@@ -182,7 +245,7 @@ function bookingPage() {
                     <div className="error-message">{errors.phoneNumber}</div>
                   ): null}
               </Form.Group>
-              <Form.Group controlId="email">
+              <Form.Group as={Col} md="7" controlId="email">
                 <Form.Label> Email </Form.Label>
                 <Form.Control
                   type="text"
@@ -197,7 +260,9 @@ function bookingPage() {
                     <div className="error-message">{errors.email}</div>
                   ): null}
               </Form.Group>
-              <Form.Group controlId="specialRequest">
+              </Row>
+              <Row className = "mb-4">
+              <Form.Group as={Col} md="12" controlId="specialRequest">
                 <Form.Label> Special Request </Form.Label>
                 <Form.Control
                   type="text"
@@ -207,7 +272,9 @@ function bookingPage() {
                   onBlur={handleBlur}
                   value={values.specialRequest}/>
               </Form.Group>
-              <Form.Group controlId="bankCard">
+              </Row>
+              <Row className = "mb-4">
+              <Form.Group as={Col} md="6" controlId="bankCard">
                 <Form.Label> Bank Card Number </Form.Label>
                 <Form.Control
                   type="text"
@@ -222,11 +289,12 @@ function bookingPage() {
                     <div className="error-message">{errors.bankCard}</div>
                   ): null}
               </Form.Group>
-              <Form.Group controlId="expiryDate">
+              <Form.Group as={Col} md="3" controlId="expiryDate">
                 <Form.Label> Expiry Date </Form.Label>
                 <Form.Control
-                  type="date"
+                  type="text"
                   name="expiryDate"
+                  placeholder="MM/YY"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.expiryDate}
@@ -236,7 +304,7 @@ function bookingPage() {
                     <div className="error-message">{errors.expiryDate}</div>
                   ): null}
               </Form.Group>
-              <Form.Group controlId="CVV">
+              <Form.Group as={Col} md="3" controlId="CVV">
                 <Form.Label> CVV/CVC </Form.Label>
                 <Form.Control
                   type="text"
@@ -251,7 +319,9 @@ function bookingPage() {
                     <div className="error-message">{errors.CVV}</div>
                   ): null}
               </Form.Group>
-              <Form.Group controlId="billingAddress">
+              </Row>
+              <Row className = "mb-4">
+              <Form.Group as={Col} md="12" controlId="billingAddress">
                 <Form.Label> Billing Address </Form.Label>
                 <Form.Control
                   type="text"
@@ -266,7 +336,7 @@ function bookingPage() {
                     <div className="error-message">{errors.billingAddress}</div>
                   ): null}
               </Form.Group>
-              <h1> </h1>
+              </Row>
               <MYBUTTON variant="primary" type="submit" disabled={isSubmitting}>
                 Submit
               </MYBUTTON>
