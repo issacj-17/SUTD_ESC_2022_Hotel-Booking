@@ -39,6 +39,8 @@ export async function createIndex() {
 }
 
 export async function searchDestinations(q) {
+    await connect();
+
     const repository = new JsonRepository(schema, client);
 
     const destinations = await repository.searchRaw(`(${q}*|%${q}%)`)
