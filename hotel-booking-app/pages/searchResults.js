@@ -54,7 +54,7 @@ export async function getServerSideProps(context) {
   // fetch all hotels for destination from static API
   const response = await fetch(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${destination}`); // WD0M default
   const data = await response.json();
-  console.log(prices)
+  // console.log(prices)
 
   // return data as prop
   return {
