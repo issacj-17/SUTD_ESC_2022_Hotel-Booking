@@ -10,6 +10,7 @@ import Router,{useRouter} from 'next/router';
 
 
 
+
 const CONTAINER = styled.div`
   background: #f7f9fa;
   height: auto;
@@ -159,8 +160,8 @@ const schema = Yup.object().shape({
     .required("Required"),
 });
 
-function bookingPage() {
-  
+function bookingPage(props) {
+  console.log(props)  
 // const{
 //   query:{}
 // } = router
@@ -364,3 +365,14 @@ query:{
   );
 };
 export default bookingPage;
+
+
+export async function getServerSideProps(context){
+    const queryResult = context.query;
+    console.log(queryResult);
+    return {
+      props: {
+          queryResult
+      }
+    }
+}
