@@ -1,7 +1,7 @@
 import Table from 'react-bootstrap/Table';
 import React from "react";
 
-function hotelReceipt(){
+function hotelReceipt(data){
     return(
         <Table striped>
             <thead>
@@ -61,3 +61,12 @@ function hotelReceipt(){
     );
 }
 export default hotelReceipt;
+
+export async function getServerSideProps(context){
+    const data = context.query
+}
+return{
+    props:{
+        data
+    }
+}
