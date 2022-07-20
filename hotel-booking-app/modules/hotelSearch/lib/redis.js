@@ -17,9 +17,15 @@ const schema = new Schema(
     }
 );
 
-async function connect() {
+export async function connect() {
     if (!client.isOpen()) {
         await client.open(process.env.REDIS_URL);
+    }
+}
+
+export async function disconnect() {
+    if (client.isOpen()) {
+        await client.close();
     }
 }
 
@@ -28,11 +34,11 @@ export async function createIndex() {
 
     const repository = new JsonRepository(schema, client);
     await repository.createIndex();
+
+    await disconnect();
 }
 
 export async function searchDestinations(q) {
-    await connect();
-
     const repository = new JsonRepository(schema, client);
 
     const destinations = await repository.searchRaw(`(${q}*|%${q}%)`)
