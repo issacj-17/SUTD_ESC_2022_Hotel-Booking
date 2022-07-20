@@ -3,10 +3,18 @@ import Link from 'next/link' //this is how to route in next.js instead of <a></a
 
 import Slider from './imageCarousel'
 import RoomDetails from './roomDetails'
+
+import dynamic from 'next/dynamic'
+
+const MapDisplay = dynamic(() => import('./mapDisplay'), {
+  ssr: false,
+})
+
+
 //Pass in a props object (essentially the hotel_detail object)
 
 const hotelDetailsComp = (props) => {
-    //Unpack Props received from previous page
+    //Unpack Props received from previous pages
     const hotelName = props.selectedHotelData.name;
     const description =  props.selectedHotelData.description;
     const location = props.selectedHotelData.address;
@@ -14,8 +22,8 @@ const hotelDetailsComp = (props) => {
     
     const searchDetails = props.searchDetails;
 
-    console.log(props.selectedHotelData.latitude)
-    console.log(props.selectedHotelData.longitude)
+    const latitude = props.selectedHotelData.latitude
+    const longitude = props.selectedHotelData.longitude
     
     
     //Unpack Image url
@@ -61,13 +69,16 @@ const hotelDetailsComp = (props) => {
 
                     </div>
 
-                    <div className='col-2'> 
+                    <div className='col-3'> 
 
-                    <div className={styles.card+" card w-100 h-50"}>
-                        <div className="card-body mx-auto my-auto">
-                            <h5 class="card-title">Location</h5>
-                            <p class="card-text">{location}</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <div className={styles.locationCard +" card w-100 h-75"}>
+                        <div className="card-body">
+            
+                                <h5 className="card-title">Location</h5>
+                                <p className="card-text">{location}</p>
+                            <MapDisplay latitude={latitude} longitude={longitude}></MapDisplay>
+                            
+                            
                         </div>
                     </div>
                     
