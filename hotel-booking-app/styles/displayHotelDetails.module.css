@@ -1,7 +1,4 @@
-.container {
-    column-count: 3;
-    column-width: 100px;
-}
+
 
 .body {
     display: grid;
@@ -13,10 +10,37 @@
 
 .card {
     break-inside: avoid;
-    background-color: rgb(241, 217, 217);
-    border: 3px solid black;
+    background-color: #f7f9fa;
+    border: 1px solid black;
     padding: 10px;
     margin: 0 0 1em 0;
+    height: auto;
+    width: auto;
+    box-shadow: 5px 5px 5px 0px rgba(0 ,0, 0, 0.4);
+}
+
+.locationCard{
+    break-inside: avoid;
+    background-color: #f7f9fa;
+    border: 1px solid black;
+    padding: 1px;
+    margin: 0 0 0 0;
+    height: auto;
+    width: auto;
+    box-shadow: 5px 5px 5px 0px rgba(0 ,0, 0, 0.4);
+    
+}
+
+
+
+.hotelImageBox{
+    height: 450px;
+    width: auto;
+    
+    background-color: transparent;
+    border: 3px solid black;
+    margin: 0 0 1em 0;
+    padding: 1em 1em 1em 1em;
 }
 
 .hotelName {
@@ -29,13 +53,58 @@
     margin: 10px 0;
 }
 
-.roomImage{
-    height: auto;
-    width: auto;
-    max-width: 150px;
-    max-height: 150px;
+.hotelImage_0 {
+    height: 400px;
+    width: 100%;
+    max-width: 100%;
     box-sizing: border-box;
     transform: scale(1);
 }
 
+.hotelImage_1 { 
+    height: 200px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border  -box;
+    transform: scale(1);
+}
+.hotelImage_2 {
+    height: 200px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border  -box;
+    transform: scale(1);
+}
+.hotelImage_3 {
+    height: 200px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border  -box;
+    transform: scale(1);
+}
+.hotelImage_4 {
+    height: 200px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border  -box;
+    transform: scale(1);
+}
+
+.roomImage{
+    height: 220px;
+    width: 400px;
+
+    box-sizing: border-box;
+    transform: scale(1);
+}
+
+.mapContainer{
+    height:1000px;
+    width:1000px;
+}
+
+.leaflet-container{
+    height:1000px;
+    width: 100vh;
+}
 

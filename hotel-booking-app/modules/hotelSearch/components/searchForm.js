@@ -8,9 +8,7 @@ import {
     Button, FormErrorMessage, Select,
 } from "@chakra-ui/react";
 import DestinationSearch from "./destinationSearch";
-
 import { useRouter } from "next/router";
-import {connect, disconnect} from "../lib/redis";
 
 // configure props
 function sendProps(router, values){
@@ -31,8 +29,6 @@ export default function SearchForm() {
     let numOfDays = 3
     let minCheckInDate = new Date(Date.now() + numOfDays*86400000);
     let minCheckOutDate = new Date(Date.now() + (numOfDays+1)*86400000);
-
-    connect().then(r => {console.log("Connection Success!")});
 
     // Router initialization
     let router = useRouter();
@@ -86,7 +82,7 @@ export default function SearchForm() {
                     validationSchema={SearchSchema}
                     onSubmit={(values) => {
                         // alert(JSON.stringify(values, null, 2));
-                        disconnect().then(r => {console.log("Connection Closed!")});
+                        fetch('/api/hotelSearch/disconnect').then(r => console.log("Connection Closed!"));
 
                         // routing 
                         sendProps(router, values);

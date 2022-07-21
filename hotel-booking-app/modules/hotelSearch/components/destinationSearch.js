@@ -16,6 +16,7 @@ const getResults = (q, callback) => {
             const result = await res.json();
 
             const data = result['destinations']
+            console.log(data);
             callback(data);
         }
         else {
