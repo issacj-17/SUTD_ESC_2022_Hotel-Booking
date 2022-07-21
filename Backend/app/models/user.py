@@ -2,9 +2,9 @@ from beanie import Document, Link, Indexed
 from fastapi.security import HTTPBasicCredentials
 from typing import List, Optional
 from pydantic import BaseModel, EmailStr, SecretStr, Field
-from server.models.booking import BookingModel
+from models.booking import BookingModel
 from datetime import datetime
-
+import orjson as json
 
 class UserAuth(BaseModel):
     email: EmailStr
@@ -14,6 +14,8 @@ class UserAuth(BaseModel):
         json_encoders = {
             SecretStr: lambda val: val.get_secret_value()
         }
+        json_loads = json.loads
+        json_dumps = json.dumps
 
 
 class UserUpdate(BaseModel):
@@ -21,18 +23,37 @@ class UserUpdate(BaseModel):
     lastName: Optional[str] = None
     email: Optional[EmailStr] = None
 
+    class Config:
+        json_loads = json.loads
+        json_dumps = json.dumps
+
 
 class UserOut(UserUpdate):
     email: Indexed(EmailStr, unique=True)
     disabled: bool = False
 
+    class Config:
+        json_loads = json.loads
+        json_dumps = json.dumps
 
-class UserModel(Document, UserOut):
+class UserCreate(BaseModel):
     firstName: str = Field(...)
     lastName: str = Field(...)
 
-    email: Indexed(EmailStr, unique=True) = Field(...)
-    password: SecretStr = Field(...)
+    email: EmailStr = Field(...)
+    password: str = Field(...)
+
+    class Config:
+        json_loads = json.loads
+        json_dumps = json.dumps
+
+
+class UserModel(Document):
+    firstName: str
+    lastName: str
+
+    email: Indexed(EmailStr, unique=True)
+    password: SecretStr
     disabled: bool = False
 
     bookings: List[Link[BookingModel]] = []
@@ -56,11 +77,11 @@ class UserModel(Document, UserOut):
         return self.id.generation_time
 
     @classmethod
-    async def by_email(cls, email: str) -> "User":
+    async def by_email(cls, email: str) -> "UserModel":
         return await cls.find_one(cls.email == email)
 
     class Settings:
         name = "Users"
         bson_encoders = {
-            SecretStr: lambda val: val.get_secret_value()
+            SecretStr: lambda val: val.get_secret_value(),
         }
