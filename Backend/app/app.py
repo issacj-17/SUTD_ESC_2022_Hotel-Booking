@@ -6,6 +6,7 @@ from config import CONFIG, initiate_database
 from models.user import UserModel, UserOut, UserCreate
 from models.booking import BookingModel
 from routes.users import router as UserRouter
+from routes.bookings import router as BookingRouter
 
 app = FastAPI()
 
@@ -22,7 +23,7 @@ app.add_middleware(
 )
 
 app.include_router(UserRouter, prefix="/users", tags=["Users"])
-
+app.include_router(BookingRouter, prefix="/booking", tags=["Booking"])
 
 @app.on_event("startup")
 async def app_init():
