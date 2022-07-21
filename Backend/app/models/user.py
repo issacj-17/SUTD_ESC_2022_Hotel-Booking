@@ -21,7 +21,7 @@ class UserAuth(BaseModel):
 class UserUpdate(BaseModel):
     firstName: Optional[str] = None
     lastName: Optional[str] = None
-    email: Optional[EmailStr] = None
+    email: EmailStr
 
     class Config:
         json_loads = json.loads
@@ -30,11 +30,13 @@ class UserUpdate(BaseModel):
 
 class UserOut(UserUpdate):
     email: Indexed(EmailStr, unique=True)
-    disabled: bool = False
+    bookings: List[Link[BookingModel]]
+    disabled: bool
 
     class Config:
         json_loads = json.loads
         json_dumps = json.dumps
+
 
 class UserCreate(BaseModel):
     firstName: str = Field(...)
@@ -42,21 +44,6 @@ class UserCreate(BaseModel):
 
     email: EmailStr = Field(...)
     password: str = Field(...)
-
-    class Config:
-        json_loads = json.loads
-        json_dumps = json.dumps
-
-
-class UserModel(Document):
-    firstName: str
-    lastName: str
-
-    email: Indexed(EmailStr, unique=True)
-    password: SecretStr
-    disabled: bool = False
-
-    bookings: List[Link[BookingModel]] = []
 
     def __repr__(self) -> str:
         return f"<User {self.email}>"
@@ -72,6 +59,18 @@ class UserModel(Document):
             return self.email == other.email
         return False
 
+    class Config:
+        json_loads = json.loads
+        json_dumps = json.dumps
+
+
+class UserModel(Document, UserCreate):
+    email: Indexed(EmailStr, unique=True) = Field(..., allow_mutation=False)
+    password: SecretStr
+    disabled: bool = False
+
+    bookings: List[Link[BookingModel]] = []
+
     @property
     def created(self) -> datetime:
         return self.id.generation_time
@@ -85,3 +84,6 @@ class UserModel(Document):
         bson_encoders = {
             SecretStr: lambda val: val.get_secret_value(),
         }
+
+    class Config(Document.Config):
+        validate_assignment = True
