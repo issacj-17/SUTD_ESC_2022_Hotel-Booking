@@ -1,7 +1,7 @@
 import os
 from datetime import date
 from beanie import Document, Indexed
-from pydantic import BaseModel, Field, EmailStr, validator, ValidationError
+from pydantic import BaseModel, Field, EmailStr, SecretStr, validator, ValidationError
 from bson import ObjectId
 from typing import Optional, List
 from datetime import datetime
@@ -21,53 +21,69 @@ class DisplayInfo(BaseModel):
         validate_assignment = True
         json_loads = json.loads
         json_dumps = json.dumps
+        json_encoders = {
+            datetime.date: lambda dt: dt.date()
+        }
 
 
 class PaymentInfo(BaseModel):
-    paymentID: str = Field(..., allow_mutation=False)
-    payeeID: str = Field(..., allow_mutation=False)
+    paymentID: SecretStr = Field(..., allow_mutation=False)
+    payeeID: SecretStr = Field(..., allow_mutation=False)
 
     class Config:
         validate_assignment = True
         json_loads = json.loads
         json_dumps = json.dumps
+        json_encoders = {
+            SecretStr: lambda val: val.get_secret_value()
+        }
 
+class GuestInfo(BaseModel):
+    salutation: Optional[str]
+    firstName: SecretStr = Field(...)
+    lastName: SecretStr = Field(...)
+    phone: SecretStr = Field(...)
+    email: EmailStr = Field(...)
+
+    class Config:
+        validate_assignment = True
+        json_loads = json.loads
+        json_dumps = json.dumps
+        json_encoders = {
+            SecretStr: lambda val: val.get_secret_value()
+        }
 
 class BookingOut(BaseModel):
     destID: str
     hotelID: str
-    displayInfo: DisplayInfo
     price: float
+
+    display: DisplayInfo
 
     supplierID: str
     supplierRes: List
 
     bookingRef: Indexed(str, unique=True)
-    guests: List
-    paymentInfo: PaymentInfo
+    guest: GuestInfo
+    payment: PaymentInfo
 
     class Config:
         json_loads = json.loads
         json_dumps = json.dumps
 
 
-class BookingModel(Document):
-    firstName: str = Field(...)
-    lastName: str = Field(...)
-    phone: str = Field(...)
-    email: EmailStr = Field(...)
+class BookingCreate(BaseModel):
+    destID: str = Field(..., max_length=4)
+    hotelID: str = Field(..., max_length=4)
+    price: float = Field(..., gt=0.0)
+    bookingRef: str = Field(...)
 
-    destID: str = Field(..., allow_mutation=False, max_length=4)
-    hotelID: str = Field(..., allow_mutation=False, max_length=4)
-    displayInfo: DisplayInfo
-    price: float = Field(..., allow_mutation=False, gt=0.0)
-
-    supplierID: str = Field(..., allow_mutation=False)
+    supplierID: str = Field(...)
     supplierRes: List = []
 
-    bookingRef: Indexed(str, unique=True) = Field(..., allow_mutation=False)
-    guests: List = []
-    paymentInfo: PaymentInfo
+    display: DisplayInfo
+    guest: GuestInfo
+    payment: PaymentInfo
 
     def __repr__(self) -> str:
         return f"<Booking {self.bookingRef}>"
@@ -82,6 +98,25 @@ class BookingModel(Document):
         if isinstance(other, User):
             return self.bookingRef == other.bookingRef
         return False
+
+    class Config:
+        validate_assignment = True
+        json_loads = json.loads
+        json_dumps = json.dumps
+
+
+class BookingModel(Document, BookingCreate):
+    destID: str = Field(..., allow_mutation=False, max_length=4)
+    hotelID: str = Field(..., allow_mutation=False, max_length=4)
+    display: DisplayInfo
+    price: float = Field(..., allow_mutation=False, gt=0.0)
+
+    supplierID: str = Field(..., allow_mutation=False)
+    supplierRes: List = []
+
+    bookingRef: Indexed(str, unique=True) = Field(..., allow_mutation=False)
+    guest: GuestInfo
+    payment: PaymentInfo
 
     @property
     def created(self) -> datetime:
