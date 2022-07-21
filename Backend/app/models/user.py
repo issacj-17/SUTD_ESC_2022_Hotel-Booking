@@ -87,3 +87,5 @@ class UserModel(Document, UserCreate):
 
     class Config(Document.Config):
         validate_assignment = True
+        json_loads = json.loads
+        json_dumps = json.dumps

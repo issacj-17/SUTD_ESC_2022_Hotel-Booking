@@ -31,7 +31,3 @@ async def update_user(update: UserUpdate, user: UserAuth):
 async def delete_user(email: str):
     await UserModel.find_one(UserModel.email == email).delete()
     return Response(status_code=204)
-
-@router.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Hello {name}"}

@@ -1,11 +1,11 @@
 import os
-from datetime import date
+from datetime import date, datetime
 from beanie import Document, Indexed
 from pydantic import BaseModel, Field, EmailStr, SecretStr, validator, ValidationError
 from bson import ObjectId
 from typing import Optional, List
-from datetime import datetime
 import orjson as json
+
 
 class DisplayInfo(BaseModel):
     numOfNights: int = Field(..., allow_mutation=False)
@@ -22,7 +22,7 @@ class DisplayInfo(BaseModel):
         json_loads = json.loads
         json_dumps = json.dumps
         json_encoders = {
-            datetime.date: lambda dt: dt.date()
+            date: repr
         }
 
 
@@ -37,6 +37,7 @@ class PaymentInfo(BaseModel):
         json_encoders = {
             SecretStr: lambda val: val.get_secret_value()
         }
+
 
 class GuestInfo(BaseModel):
     salutation: Optional[str]
@@ -125,7 +126,15 @@ class BookingModel(Document, BookingCreate):
 
     class Settings:
         name: str = "Bookings"
+        bson_encoders = {
+            date: lambda dt: datetime(year=dt.year, month=dt.month, day=dt.day, hour=0, minute=0, second=0),
+            SecretStr: lambda val: val.get_secret_value(),
+        }
 
     class Config(Document.Config):
         validate_assignment = True
-        # arbitrary_types_allowed = True
+        json_loads = json.loads
+        json_dumps = json.dumps
+        json_encoders = {
+            SecretStr: lambda val: val.get_secret_value()
+        }
