@@ -10,39 +10,46 @@ returns the HTML elements, displaying the information of each hotel, link to all
 
 function hotelElem({ hotel,searchDetails }) {
     return (
-      <>
-        <div className={styles.hotelCard+ " card text-left"}>
-          <div className={styles.hotelBody+" card-body"}>
+      <><div className='col-12 col-md-6 col-lg-4'>
+          <div className={styles.hotelCard+ " card text-left"}>
+          
+          <img className={styles.hotelPicture + " card-img-top"} src={hotel.image_details.prefix + "0" + hotel.image_details.suffix} alt="Failed to Load"/>
             
-            <img className={styles.hotelPicture} src={hotel.image_details.prefix + "0" + hotel.image_details.suffix} alt="Failed to Load"></img>
+            <div className={styles.hotelBody+" card-body"}>
+              
+              
 
-            <span className={styles.hotelContent+' card-body'}>
-              <h4 id={styles.hotelName}>{hotel.name}</h4>
-              <div>{hotel.address}</div>
-              <div>Rated {hotel.trustyou.score.overall}/100</div>
-              <span className="fa fa-star checked"></span>
-            </span>
+              <div className={styles.hotelContent}>
+                <h4 className='card-title' id={styles.hotelName}>{hotel.name}</h4>
+                <div className='card-text'>{hotel.address}</div>
+                <div className='card-text'>Rated {hotel.trustyou.score.overall}/100</div>
+              </div>
 
-            {/* link to hotel details page with relevant hotelId */}
-            <Link href={{
-              pathname: "/hotelDetails",
-              query: {
-                hotelId: hotel.id,
-                destination:searchDetails.destination,
-                checkInDate: searchDetails.checkInDate,
-                checkOutDate: searchDetails.checkOutDate,
-                rooms: searchDetails.rooms,
-                adults: searchDetails.adults,
-                children: searchDetails.children
-              }
-            }}>
-              <a className={styles.selectButton+ " btn btn-outline-primary btn-lg"}>Select</a>
-            </Link>
-            
+              {/* link to hotel details page with relevant hotelId */}
+              <div className={styles.buttonPrice+' card-text'}>
+                <span className='card-text'>
+                  Rooms from SGD 20.99
+                </span>
+                <Link href={{
+                  pathname: "/hotelDetails",
+                  query: {
+                    hotelId: hotel.id,
+                    destination:searchDetails.destination,
+                    checkInDate: searchDetails.checkInDate,
+                    checkOutDate: searchDetails.checkOutDate,
+                    rooms: searchDetails.rooms,
+                    adults: searchDetails.adults,
+                    children: searchDetails.children
+                  }
+                }}>
+                  <a className={styles.selectButton+ " btn btn-outline-primary btn-lg"}>Select</a>
+                </Link>
+              </div>
+              
+            </div>
+
           </div>
-
         </div>
-        
       </>
     );
 }

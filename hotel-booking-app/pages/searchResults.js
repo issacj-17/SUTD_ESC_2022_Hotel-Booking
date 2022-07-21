@@ -1,6 +1,9 @@
 import Head from 'next/head';
 import HotelElem from '../modules/searchResults/components/HotelComponent';
 import styles from '../styles/searchResultsPage.module.css';
+// import useSWRInfinite from 'swr/infinite';
+import useSWR from 'swr';
+
 
 /* 
 returns the HTML elements, mapping each hotel in hotels to a HotelElem, and other UI
@@ -10,8 +13,31 @@ returns the HTML elements, mapping each hotel in hotels to a HotelElem, and othe
 @returns - HTML to be displayed
 */
 
-function searchResults ({ hotels, prices, searchDetails }) {
-  console.log(prices);
+function searchResults ({ hotels, searchDetails }) {
+  const testURL = "https://hotelapi.loyalty.dev/api/hotels/prices?destination_id=RsBU&checkin=2022-07-31&checkout=2022-09-01&lang=en_US&currency=SGD&landing_page=&partner_id=16&country_code=SG&guests=2";
+
+  const { destination,checkInDate,checkOutDate,rooms,adults,children } = searchDetails;
+
+  function getKey(pageIndex, previousPageData) {
+    // if (previousPageData.completed) return null;
+    return testURL;
+    // return `https://hotelapi.loyalty.dev/api/hotels?destination_id=${destination}&checkin=${checkInDate}&checkout=${checkOutDate}&lang=en_US&currency=SGD&country_code=SG&guests=${getGuestReqString(rooms, adults+children)}&partner_id=1`;
+  }
+
+  // const { data:stuff, size, setSize } = useSWRInfinite(getKey);
+  const {data:newStuff, error} = useSWR(testURL);
+  console.log(newStuff);
+  console.log(error);
+
+  // if (!data.completed) setSize(size+1);
+  
+  
+
+
+
+
+
+
   return (
     <div className={styles.page}>
         <Head>
@@ -21,12 +47,14 @@ function searchResults ({ hotels, prices, searchDetails }) {
         <h3 className={styles.resultsHeader}>Search Results for {searchDetails.destination}</h3>
 
         {/* iterate through hotels, creating a HotelElem component for each hotel */}
-        {hotels.map((hotelDis) => {
-          return (
-            // React component imported
-            <HotelElem hotel={hotelDis} searchDetails={searchDetails}key={hotelDis.id}></HotelElem>
-          );
-        })}
+        <div className='container'><div className='row g-3'>
+          {hotels.map((hotelDis,index) => {
+            return (
+              // React component imported
+              <HotelElem hotel={hotelDis} searchDetails={searchDetails}key={hotelDis.id}></HotelElem>
+            );
+          })}
+        </div></div>
     </div>
   )
 }
@@ -48,19 +76,17 @@ export async function getServerSideProps(context) {
   
   // begin fetching from prices API
 
-  const responsePrice = await fetch(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${destination}&checkin=${checkInDate}&checkout=${checkOutDate}&lang=en_US&currency=SGD&country_code=SG&guests=${getGuestReqString(rooms, adults+children)}&partner_id=1`);
-  const prices = await responsePrice.json();
+  // const responsePrice = await fetch(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${destination}&checkin=${checkInDate}&checkout=${checkOutDate}&lang=en_US&currency=SGD&country_code=SG&guests=${getGuestReqString(rooms, adults+children)}&partner_id=1`);
+  // const prices = await responsePrice.json();
 
   // fetch all hotels for destination from static API
   const response = await fetch(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${destination}`); // WD0M default
   const data = await response.json();
-  console.log(prices)
 
   // return data as prop
   return {
     props: {
       hotels: data,
-      prices: prices,
       searchDetails: searchDetails
     },
   };
@@ -75,3 +101,4 @@ function getGuestReqString(rooms, guests) {
   res += guests % rooms;
   return res;
 }
+

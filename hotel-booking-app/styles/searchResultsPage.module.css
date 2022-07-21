@@ -28,7 +28,7 @@
 .hotelCard {
     padding-bottom: 10px;
     background-color: #f7f9fa;
-    margin: 10px 10%;
+    margin: 10px 5px;
 }
 
 .hotelCard:hover {
@@ -47,8 +47,8 @@
 }
 
 .hotelPicture {
-    height: 150px;
-    width: 150px;
+    height: 200px;
+    /* width: 150px; */
     box-sizing: border-box;
     transform: scale(1);
 }
@@ -66,4 +66,8 @@
 }
 #hotelName {
     color: #24b9b6;
+}
+
+.buttonPrice {
+    display: inline !important;
 }
