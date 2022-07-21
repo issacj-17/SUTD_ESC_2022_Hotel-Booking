@@ -8,7 +8,6 @@ import {
     Button, FormErrorMessage, Select,
 } from "@chakra-ui/react";
 import DestinationSearch from "./destinationSearch";
-
 import { useRouter } from "next/router";
 
 // configure props
@@ -83,6 +82,7 @@ export default function SearchForm() {
                     validationSchema={SearchSchema}
                     onSubmit={(values) => {
                         // alert(JSON.stringify(values, null, 2));
+                        fetch('/api/hotelSearch/disconnect').then(r => console.log("Connection Closed!"));
 
                         // routing 
                         sendProps(router, values);

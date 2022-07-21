@@ -13,38 +13,14 @@ returns the HTML elements, mapping each hotel in hotels to a HotelElem, and othe
 @returns - HTML to be displayed
 */
 
-function searchResults ({ hotels, searchDetails }) {
-  const testURL = "https://hotelapi.loyalty.dev/api/hotels/prices?destination_id=RsBU&checkin=2022-07-31&checkout=2022-09-01&lang=en_US&currency=SGD&landing_page=&partner_id=16&country_code=SG&guests=2";
-
-  const { destination,checkInDate,checkOutDate,rooms,adults,children } = searchDetails;
-
-  function getKey(pageIndex, previousPageData) {
-    // if (previousPageData.completed) return null;
-    return testURL;
-    // return `https://hotelapi.loyalty.dev/api/hotels?destination_id=${destination}&checkin=${checkInDate}&checkout=${checkOutDate}&lang=en_US&currency=SGD&country_code=SG&guests=${getGuestReqString(rooms, adults+children)}&partner_id=1`;
-  }
-
-  // const { data:stuff, size, setSize } = useSWRInfinite(getKey);
-  const {data:newStuff, error} = useSWR(testURL);
-  console.log(newStuff);
-  console.log(error);
-
-  // if (!data.completed) setSize(size+1);
-  
-  
-
-
-
-
-
-
+function searchResults ({ hotels, prices, searchDetails }) {
   return (
     <div className={styles.page}>
         <Head>
             <title>Search Results</title>
         </Head>
 
-        <h3 className={styles.resultsHeader}>Search Results for {searchDetails.destination}</h3>
+        <h3 className={styles.resultsHeader} data-testid="header">Search Results for {searchDetails.destination}</h3>
 
         {/* iterate through hotels, creating a HotelElem component for each hotel */}
         <div className='container'><div className='row g-3'>
@@ -94,11 +70,10 @@ export async function getServerSideProps(context) {
 
 
 function getGuestReqString(rooms, guests) {
-  let res = '';
+  let res = `${guests}`;
   for (let i=1; i<rooms; i++) {
-    res += Math.floor(guests/rooms) + "|";
+    res += "|" + guests;
   }
-  res += guests % rooms;
   return res;
 }
 
