@@ -10,7 +10,7 @@ function imageCarousel({listOfImagesUrl}) {
               
                 <Carousel.Item>
                 
-                <div className={styles.hotelImageBox}>
+                <div className={styles.hotelImageBox} data-testId="hotelImageBox">
                     <div className='container-fluid'>
                       <div className='row'>
                         <div className='col'>

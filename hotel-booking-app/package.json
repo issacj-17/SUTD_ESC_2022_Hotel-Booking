@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --watch"
+    "test": "jest --watch --transformIgnorePatterns \"node_modules/(?!react-leaflet)/\""
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.2",
@@ -41,7 +41,9 @@
     "@testing-library/react": "^13.3.0",
     "eslint": "8.17.0",
     "eslint-config-next": "12.1.6",
+    "isomorphic-fetch": "^3.0.0",
     "jest": "^28.1.1",
+    "jest-fetch-mock": "^3.0.3",
     "react-test-renderer": "^18.1.0",
     "sass": "^1.52.2"
   }
