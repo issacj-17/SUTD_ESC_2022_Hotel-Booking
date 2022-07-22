@@ -17,8 +17,8 @@ export default function mapDisplay({latitude,longitude}) {
     return null;
   }
   return (
-    <div className="col" data-testId="MapContainer">
-    <MapContainer className={styles.MapContainer} center={position} zoom={13} scrollWheelZoom={false} style={{width:'auto' ,height:'300px'}}>
+    <div className=" col" data-testId="MapContainer">
+    <MapContainer center={position} zoom={15} scrollWheelZoom={false} style={{width:'auto' ,height:'300px'}}>
       <TileLayer data-testId="TileLayer" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
       attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>
       contributors'/>

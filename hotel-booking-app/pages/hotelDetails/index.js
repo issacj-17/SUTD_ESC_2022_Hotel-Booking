@@ -67,7 +67,7 @@ export async function getServerSideProps(context){
   
   //For future use
   //console.log(`https://hotelapi.loyalty.dev/api/hotels/diH7/price?destination_id=RsBU&checkin=2022-08-28&checkout=2022-09-01&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=2`)
-  //console.log(`https://hotelapi.loyalty.dev/api/hotels/${hotelId}/price?destination_id=${destination}&checkin=${checkInDate}&checkout=${checkOutDate}&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=${guestString}`)
+  console.log(`https://hotelapi.loyalty.dev/api/hotels/${hotelId}/price?destination_id=${destination}&checkin=${checkInDate}&checkout=${checkOutDate}&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=${guestString}`)
 
   // console.log(roomDetailData.completed)
   

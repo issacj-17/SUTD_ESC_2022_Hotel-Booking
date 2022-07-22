@@ -66,12 +66,12 @@ const hotelDetailsComp = (props) => {
 
                     <div className='col-3'> 
 
-                    <div className={styles.locationCard +" card w-100 h-75"} data-testId="locationBox">
-                        <div className="card-body">
+                    <div className={styles.locationCard +" card w-100"} data-testId="locationBox">
+                        <div className=" card-body">
             
                                 <h5 className="card-title">Location</h5>
                                 <p className="card-text" data-testId="location">{location}</p>
-                            <MapDisplay latitude={latitude} longitude={longitude}></MapDisplay>
+                                <MapDisplay latitude={latitude} longitude={longitude}></MapDisplay>
                             
                             
                         </div>
