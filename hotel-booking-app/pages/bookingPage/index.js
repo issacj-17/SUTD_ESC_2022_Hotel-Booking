@@ -8,7 +8,6 @@ import valid from 'card-validator';
 import Router,{useRouter} from 'next/router';
 
 
-
 const CONTAINER = styled.div`
   background: #f7f9fa;
   height: auto;
@@ -158,8 +157,7 @@ const schema = Yup.object().shape({
     .required("Required"),
 });
 
-function bookingPage() {
-  
+function bookingPage(props) {
 // const{
 //   query:{}
 // } = router
@@ -171,6 +169,16 @@ query:{
   phoneNumber: values.phoneNumber,
   email: values.email,
   specialRequest: values.specialRequest,
+  billingAddress: values.billingAddress,
+  roomType: props.queryResult.roomType,
+  price: props.queryResult.price,
+  hotelId: props.queryResult.hotelId,
+  destination: props.queryResult.destination,
+  checkInDate: props.queryResult.checkInDate,
+  checkoutDate: props.queryResult.checkoutDate,
+  rooms: props.queryResult.rooms,
+  adults: props.queryResult.adults,
+  children: props.queryResult.children,
 }})
 }
   return (
@@ -363,3 +371,13 @@ query:{
   );
 };
 export default bookingPage;
+
+
+export async function getServerSideProps(context){
+    const queryResult = context.query;
+    return {
+      props: {
+          queryResult
+      }
+    }
+}
