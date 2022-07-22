@@ -1,4 +1,3 @@
-import Head from "next/head";
 import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -7,8 +6,6 @@ import {Form, Button, Row, Col} from "react-bootstrap";
 import styled from 'styled-components';
 import valid from 'card-validator';
 import Router,{useRouter} from 'next/router';
-
-
 
 
 const CONTAINER = styled.div`
@@ -161,7 +158,6 @@ const schema = Yup.object().shape({
 });
 
 function bookingPage(props) {
-  console.log(props)  
 // const{
 //   query:{}
 // } = router
@@ -173,6 +169,16 @@ query:{
   phoneNumber: values.phoneNumber,
   email: values.email,
   specialRequest: values.specialRequest,
+  billingAddress: values.billingAddress,
+  roomType: props.queryResult.roomType,
+  price: props.queryResult.price,
+  hotelId: props.queryResult.hotelId,
+  destination: props.queryResult.destination,
+  checkInDate: props.queryResult.checkInDate,
+  checkoutDate: props.queryResult.checkoutDate,
+  rooms: props.queryResult.rooms,
+  adults: props.queryResult.adults,
+  children: props.queryResult.children,
 }})
 }
   return (
@@ -369,7 +375,6 @@ export default bookingPage;
 
 export async function getServerSideProps(context){
     const queryResult = context.query;
-    console.log(queryResult);
     return {
       props: {
           queryResult
