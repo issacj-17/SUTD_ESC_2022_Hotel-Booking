@@ -48,7 +48,7 @@ function hotelReceipt(props){
                 </tr>
                 <tr>
                 <td>Number of People Staying </td>
-                <td>{queryData.adults} {queryData.children}</td>
+                <td>{queryData.adults} adult(s) {queryData.children} child(ren)</td>
                 </tr>
                 <tr>
                 <td>Room Type </td>
