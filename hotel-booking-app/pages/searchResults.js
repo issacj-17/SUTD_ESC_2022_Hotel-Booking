@@ -75,7 +75,7 @@ export async function getServerSideProps(context) {
 }
 
 
-function getGuestReqString(rooms, guests) {
+export function getGuestReqString(rooms, guests) {
   let res = `${guests}`;
   for (let i=1; i<rooms; i++) {
     res += "|" + guests;

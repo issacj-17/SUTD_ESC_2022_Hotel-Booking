@@ -13,14 +13,16 @@ export default function mapDisplay({latitude,longitude}) {
   console.log(latitude,longitude)
   const position = [latitude,longitude]
   
-  
+  if(latitude===null || longitude===null){
+    return null;
+  }
   return (
-    <div className="col">
+    <div className="col" data-testId="MapContainer">
     <MapContainer className={styles.MapContainer} center={position} zoom={13} scrollWheelZoom={false} style={{width:'auto' ,height:'300px'}}>
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
+      <TileLayer data-testId="TileLayer" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
       attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>
       contributors'/>
-      <Marker position={position}></Marker>
+      <Marker position={position} data-testId="Marker"></Marker>
     </MapContainer>
     </div>
     

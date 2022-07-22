@@ -3,6 +3,7 @@ import DisplayHotelDetails from '../../modules/hotelDetails/components/displayHo
 import { useState } from 'react'
 import styles from '../../styles/displayHotelDetails.module.css'
 import Router from 'next/router'
+import {getGuestReqString} from '../searchResults.js'
 
 //Nested routes, just name ur folder as the routename that you would like,
 // In this case, it would be localhost:3000/hotelDetails, then index.js in this folder would be the js script called at ../hotelDetails/
@@ -32,22 +33,44 @@ export async function getServerSideProps(context){
   //Read hotelId attribute from query string
   
   const searchDetails= context.query //Taking all query and storing it into searchDetails
+  console.log(searchDetails)
   const {hotelId,destination,checkInDate,checkOutDate,rooms,adults,children} = searchDetails;
-  const response = await fetch(`https://hotelapi.loyalty.dev/api/hotels/${hotelId}`)
-  const hotelDetailData = await response.json()
-  const response2 = await fetch(`https://hotelapi.loyalty.dev/api/hotels/diH7/price?destination_id=RsBU&checkin=2022-08-28&checkout=2022-09-01&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=2`)
-  const roomDetailData = await response2.json()
-
+  console.log(hotelId)
+  let guest = parseInt(adults)+parseInt(children)
+  console.log(guest)
+  let guestString = getGuestReqString(rooms,guest)
+  let hotelDetailData;
+  let roomDetailData;
+  try{
+     hotelDetailData = await fetch(`https://hotelapi.loyalty.dev/api/hotels/${hotelId}`).then((response) => {
+    if (response.ok){
+      return response.json();
+      }
+      throw new Error("Unable to fetch Hotel Endpoint");
+    })
+  } catch(err){
+     hotelDetailData = null;
+  }
+  
+  try{
+     roomDetailData = await fetch(`https://hotelapi.loyalty.dev/api/hotels/${hotelId}/price?destination_id=${destination}&checkin=${checkInDate}&checkout=${checkOutDate}&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=${guestString}`).then((response)=>{
+      if(response.ok){
+        return response.json();
+      }
+      throw new Error("Unable to fetch from Price Endpoint");
+    })
+  } catch(err){
+    roomDetailData=null;
+  }
+  
+  
+  
   //For future use
-  console.log(`https://hotelapi.loyalty.dev/api/hotels/${hotelId}/price?destination_id=${destination}&checkin=${checkInDate}&checkout=${checkOutDate}&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=2`)
+  //console.log(`https://hotelapi.loyalty.dev/api/hotels/diH7/price?destination_id=RsBU&checkin=2022-08-28&checkout=2022-09-01&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=2`)
+  //console.log(`https://hotelapi.loyalty.dev/api/hotels/${hotelId}/price?destination_id=${destination}&checkin=${checkInDate}&checkout=${checkOutDate}&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=${guestString}`)
 
   // console.log(roomDetailData.completed)
   
-  if (!hotelDetailData){
-      return {
-          notFound: true
-      }
-  }
   console.log("Fetch Successful!")
   return {
       props: {
