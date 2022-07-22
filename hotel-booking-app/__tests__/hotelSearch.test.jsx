@@ -18,7 +18,7 @@ describe('Search Form', () => {
         const rooms = screen.getByTestId('rooms');
         const adults = screen.getByTestId('adults');
         const children = screen.getByTestId('children');
-        const submit = screen.getByRole('button', {name: /submit/i});
+        const submit = screen.getByTestId('submitButton');
 
         expect(checkIn).toBeInTheDocument();
         expect(checkOut).toBeInTheDocument();
