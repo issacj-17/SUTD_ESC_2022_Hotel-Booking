@@ -28,7 +28,7 @@ function hotelElem({ hotel,searchDetails }) {
               {/* link to hotel details page with relevant hotelId */}
               <div className={styles.buttonPrice+' card-text'}>
                 <span className='card-text'>
-                  Rooms from SGD 20.99
+                  Rooms from SGD $$.$$
                 </span>
                 <Link href={{
                   pathname: "/hotelDetails",
