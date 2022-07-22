@@ -2,7 +2,6 @@ import Head from 'next/head'
 import DisplayHotelDetails from '../../modules/hotelDetails/components/displayHotelDetails'
 import { useState } from 'react'
 import styles from '../../styles/displayHotelDetails.module.css'
-import Router from 'next/router'
 import {getGuestReqString} from '../searchResults.js'
 
 //Nested routes, just name ur folder as the routename that you would like,
@@ -33,16 +32,12 @@ export async function getServerSideProps(context){
   //Read hotelId attribute from query string
   
   const searchDetails= context.query //Taking all query and storing it into searchDetails
-  console.log(searchDetails)
   const {hotelId,destination,checkInDate,checkOutDate,rooms,adults,children} = searchDetails;
-  console.log(hotelId)
+  
   let guest = parseInt(adults)+parseInt(children)
-  console.log(guest)
   let guestString = getGuestReqString(rooms,guest)
-  let hotelDetailData;
-  let roomDetailData;
   try{
-     hotelDetailData = await fetch(`https://hotelapi.loyalty.dev/api/hotels/${hotelId}`).then((response) => {
+    var hotelDetailData = await fetch(`https://hotelapi.loyalty.dev/api/hotels/${hotelId}`).then((response) => {
     if (response.ok){
       return response.json();
       }
@@ -53,7 +48,7 @@ export async function getServerSideProps(context){
   }
   
   try{
-     roomDetailData = await fetch(`https://hotelapi.loyalty.dev/api/hotels/${hotelId}/price?destination_id=${destination}&checkin=${checkInDate}&checkout=${checkOutDate}&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=${guestString}`).then((response)=>{
+      var roomDetailData = await fetch(`https://hotelapi.loyalty.dev/api/hotels/diH7/price?destination_id=RsBU&checkin=2022-09-14&checkout=2022-09-22&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=2`).then((response)=>{
       if(response.ok){
         return response.json();
       }
@@ -62,12 +57,12 @@ export async function getServerSideProps(context){
   } catch(err){
     roomDetailData=null;
   }
-  
+
   
   
   //For future use
   //console.log(`https://hotelapi.loyalty.dev/api/hotels/diH7/price?destination_id=RsBU&checkin=2022-08-28&checkout=2022-09-01&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=2`)
-  console.log(`https://hotelapi.loyalty.dev/api/hotels/${hotelId}/price?destination_id=${destination}&checkin=${checkInDate}&checkout=${checkOutDate}&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=${guestString}`)
+  //console.log(`https://hotelapi.loyalty.dev/api/hotels/${hotelId}/price?destination_id=${destination}&checkin=${checkInDate}&checkout=${checkOutDate}&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=${guestString}`)
 
   // console.log(roomDetailData.completed)
   

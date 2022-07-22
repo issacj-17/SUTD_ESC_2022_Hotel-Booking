@@ -18,9 +18,9 @@ describe('Test for HotelDetails Page', () => {
                 destination: 'RsBU' ,
                 checkInDate: '2022-09-14',
                 checkOutDate: '2022-09-22',
-                rooms: '2',
+                rooms: '1',
                 adults: '2',
-                children: '1',
+                children: '0',
             }
         })
     
@@ -28,7 +28,7 @@ describe('Test for HotelDetails Page', () => {
         expect(response.props.roomDetailData).toEqual({id:124})
         expect(fetch).toHaveBeenCalledTimes(2);
         expect(fetch).toHaveBeenCalledWith(`https://hotelapi.loyalty.dev/api/hotels/diH7`)
-        expect(fetch).toHaveBeenCalledWith(`https://hotelapi.loyalty.dev/api/hotels/diH7/price?destination_id=RsBU&checkin=2022-09-14&checkout=2022-09-22&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=3|3`)
+        expect(fetch).toHaveBeenCalledWith(`https://hotelapi.loyalty.dev/api/hotels/diH7/price?destination_id=RsBU&checkin=2022-09-14&checkout=2022-09-22&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=2`)
     })
 
     it("Checks getServerSideProps catches error and returns null", async ()=>{
@@ -39,16 +39,16 @@ describe('Test for HotelDetails Page', () => {
                 destination: 'RsBU' ,
                 checkInDate: '2022-09-14',
                 checkOutDate: '2022-09-22',
-                rooms: '2',
+                rooms: '1',
                 adults: '2',
-                children: '1',
+                children: '0',
                 
             }
         })
     
         expect(fetch).toHaveBeenCalledTimes(2);
         expect(fetch).toHaveBeenCalledWith(`https://hotelapi.loyalty.dev/api/hotels/diH7`)
-        expect(fetch).toHaveBeenCalledWith(`https://hotelapi.loyalty.dev/api/hotels/diH7/price?destination_id=RsBU&checkin=2022-09-14&checkout=2022-09-22&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=3|3`)
+        expect(fetch).toHaveBeenCalledWith(`https://hotelapi.loyalty.dev/api/hotels/diH7/price?destination_id=RsBU&checkin=2022-09-14&checkout=2022-09-22&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=2`)
         expect(response.props.hotelDetailData).toEqual(null)
         expect(response.props.roomDetailData).toEqual(null)
     })
