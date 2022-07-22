@@ -129,7 +129,8 @@ export default function SearchForm() {
                                             id="checkInDate"
                                             name="checkInDate"
                                             type="date"
-                                            variant="filled"/>
+                                            variant="filled"
+                                            data-testid='checkIn'/>
                                         <FormErrorMessage>
                                             {errors.checkInDate}
                                         </FormErrorMessage>
@@ -147,7 +148,8 @@ export default function SearchForm() {
                                             id="checkOutDate"
                                             name="checkOutDate"
                                             type="date"
-                                            variant="filled"/>
+                                            variant="filled"
+                                            data-testid='checkOut'/>
                                         <FormErrorMessage>
                                             {errors.checkOutDate}
                                         </FormErrorMessage>
@@ -170,7 +172,8 @@ export default function SearchForm() {
                                             id="rooms"
                                             name="rooms"
                                             type="number"
-                                            variant="filled">
+                                            variant="filled"
+                                            data-testid='rooms'>
                                             <option value={1}>1</option>
                                             <option value={2}>2</option>
                                             <option value={3}>3</option>
@@ -193,7 +196,8 @@ export default function SearchForm() {
                                             id="adults"
                                             name="adults"
                                             type="number"
-                                            variant="filled">
+                                            variant="filled"
+                                            data-testid='adults'>
                                             <option value={1}>1</option>
                                             <option value={2}>2</option>
                                             <option value={3}>3</option>
@@ -215,7 +219,8 @@ export default function SearchForm() {
                                             id="children"
                                             name="children"
                                             type="number"
-                                            variant="filled">
+                                            variant="filled"
+                                            data-testid='children'>
                                             <option value={0}>0</option>
                                             <option value={1}>1</option>
                                             <option value={2}>2</option>
@@ -227,11 +232,12 @@ export default function SearchForm() {
                                         </FormErrorMessage>
                                     </FormControl>
                                 </HStack>
-
+                                
                                 <Button
                                     type="submit"
                                     colorScheme="purple"
-                                    width="100%">
+                                    width="100%"
+                                    data-testid='submitButton'>
                                     Search
                                 </Button>
                             </VStack>
