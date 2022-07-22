@@ -9,6 +9,7 @@ describe('BookingForm tests ', () => {
         const handleSubmit = jest.fn()
         render(<BookingForm onSubmit={handleSubmit}/>)
         const user = userEvent.setup()
+
         await user.type(screen.getByLabelText(/first name/i), 'John')
         await user.type(screen.getByLabelText(/last name/i), 'Lee')
         await user.type(screen.getByLabelText(/phone number/i), '12345678')
@@ -23,6 +24,7 @@ describe('BookingForm tests ', () => {
         await user.click(screen.getByRole('button', {name: /submit/i}))
 
         await waitFor(() =>
+          expect(handleSubmit).toHaveBeenCalledTimes(1),
           expect(handleSubmit).toHaveBeenCalledWith({
             firstName: 'John',
             lastName: 'Lee',
