@@ -331,6 +331,7 @@ query:{
               <Form.Group as={Col} md="3" controlId="CVV">
                 <Form.Label> CVV/CVC </Form.Label>
                 <Form.Control
+                  data-testid="CVV"
                   type="text"
                   name="CVV"
                   placeholder="CVV/CVC"
