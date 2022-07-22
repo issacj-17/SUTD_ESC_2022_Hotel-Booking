@@ -13,16 +13,16 @@ function hotelElem({ hotel,searchDetails }) {
       <><div className='col-12 col-md-6 col-lg-4'>
           <div className={styles.hotelCard+ " card text-left"}>
           
-          <img className={styles.hotelPicture + " card-img-top"} src={hotel.image_details.prefix + "0" + hotel.image_details.suffix} alt="Failed to Load"/>
+          <img className={styles.hotelPicture + " card-img-top"} src={hotel.image_details.prefix + hotel.default_image_index + hotel.image_details.suffix} alt="Failed to Load" data-testid='image'/>
             
             <div className={styles.hotelBody+" card-body"}>
               
               
 
               <div className={styles.hotelContent}>
-                <h4 className='card-title' id={styles.hotelName}>{hotel.name}</h4>
-                <div className='card-text'>{hotel.address}</div>
-                <div className='card-text'>Rated {hotel.trustyou.score.overall}/100</div>
+                <h4 className='card-title' id={styles.hotelName} data-testid='hotelName'>{hotel.name}</h4>
+                <div className='card-text' data-testid='hotelAddr'>{hotel.address}</div>
+                <div className='card-text' data-testid='rating'>Rated {hotel.trustyou.score.overall}/100</div>
               </div>
 
               {/* link to hotel details page with relevant hotelId */}
@@ -42,7 +42,7 @@ function hotelElem({ hotel,searchDetails }) {
                     children: searchDetails.children
                   }
                 }}>
-                  <a className={styles.selectButton+ " btn btn-outline-primary btn-lg"}>Select</a>
+                  <a className={styles.selectButton+ " btn btn-outline-primary btn-lg"} data-testid='selectButton'>Select</a>
                 </Link>
               </div>
               

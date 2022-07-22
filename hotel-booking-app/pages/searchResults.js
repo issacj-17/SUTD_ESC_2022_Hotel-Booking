@@ -13,7 +13,7 @@ returns the HTML elements, mapping each hotel in hotels to a HotelElem, and othe
 @returns - HTML to be displayed
 */
 
-function searchResults ({ hotels, prices, searchDetails }) {
+function searchResults ({ hotels, searchDetails }) {
   return (
     <div className={styles.page}>
         <Head>
@@ -24,7 +24,7 @@ function searchResults ({ hotels, prices, searchDetails }) {
 
         {/* iterate through hotels, creating a HotelElem component for each hotel */}
         <div className='container'><div className='row g-3'>
-          {hotels.map((hotelDis,index) => {
+          {hotels.map((hotelDis) => {
             return (
               // React component imported
               <HotelElem hotel={hotelDis} searchDetails={searchDetails}key={hotelDis.id}></HotelElem>
@@ -56,8 +56,14 @@ export async function getServerSideProps(context) {
   // const prices = await responsePrice.json();
 
   // fetch all hotels for destination from static API
-  const response = await fetch(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${destination}`); // WD0M default
-  const data = await response.json();
+  let data;
+  try {
+    data = await fetch(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${destination}`).then((response) => {
+      if (response.ok) return response.json();
+      throw new Error("Unable to fetch");
+    });
+  } catch (error) {data = null;}
+  
 
   // return data as prop
   return {
