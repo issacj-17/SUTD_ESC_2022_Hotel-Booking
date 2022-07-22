@@ -15,8 +15,8 @@ const Nav = () => {
                     pathname: "/searchResults",
                     query: {
                         destination:"RsBU",
-                        checkInDate: "2022-09-14",
-                        checkOutDate: "2022-09-19",
+                        checkInDate: "2022-07-28",
+                        checkOutDate: "2022-07-31",
                         rooms: 1,
                         adults: 2,
                         children: 0
@@ -29,10 +29,10 @@ const Nav = () => {
                 <Link href={{
                     pathname: "/hotelDetails",
                     query: {
-                        hotelId: "diH7",
+                        hotelId: "050G",
                         destination:"RsBU",
-                        checkInDate: "2022-09-14",
-                        checkOutDate: "2022-09-19",
+                        checkInDate: "2022-07-28",
+                        checkOutDate: "2022-07-31",
                         rooms: 1,
                         adults: 2,
                         children: 0
@@ -41,6 +41,9 @@ const Nav = () => {
             </li>
             <li>
                 <Link href='/bookingPage'>Booking Page</Link>
+            </li>
+            <li>
+                <Link href='/loginPage'>Login Page</Link>
             </li>
         </ul>
     </nav>
