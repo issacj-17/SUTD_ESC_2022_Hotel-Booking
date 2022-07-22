@@ -175,7 +175,7 @@ query:{
   hotelId: props.queryResult.hotelId,
   destination: props.queryResult.destination,
   checkInDate: props.queryResult.checkInDate,
-  checkoutDate: props.queryResult.checkoutDate,
+  checkOutDate: props.queryResult.checkOutDate,
   rooms: props.queryResult.rooms,
   adults: props.queryResult.adults,
   children: props.queryResult.children,
