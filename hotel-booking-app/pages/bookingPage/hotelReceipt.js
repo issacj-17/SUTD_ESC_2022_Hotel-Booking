@@ -13,7 +13,7 @@ import React from "react";
     const hotelId = props.queryData.hotelId;
     const destination = props.queryData.destination;
     const checkInDate = props.queryData.checkInDate;
-    const checkoutDate = props.queryData.checkoutDate;
+    const checkOutDate = props.queryData.checkOutDate;
     const rooms = props.queryData.rooms;
     const adults = props.queryData.adults;
     const children = props.queryData.children;
@@ -44,7 +44,7 @@ function hotelReceipt(props){
                 </tr>
                 <tr>
                 <td>End Date </td>
-                <td>{queryData.checkoutDate}</td>
+                <td>{queryData.checkOutDate}</td>
                 </tr>
                 <tr>
                 <td>Number of People Staying </td>
