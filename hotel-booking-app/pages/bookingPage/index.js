@@ -203,7 +203,6 @@ query:{
 
             // Simulate submitting to database, shows us values submitted, resets form
               setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
               resetForm();
               setSubmitting(false);
               sendProps(values);
