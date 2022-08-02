@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import HotelElem from '../modules/searchResults/components/HotelComponent';
 import styles from '../styles/searchResultsPage.module.css';
-// import useSWRInfinite from 'swr/infinite';
+import useSWRInfinite from 'swr/infinite';
 import useSWR from 'swr';
 
 
@@ -12,8 +12,37 @@ returns the HTML elements, mapping each hotel in hotels to a HotelElem, and othe
                         destID is the destination ID of the current search
 @returns - HTML to be displayed
 */
+async function fetcher(url) {
+  let response = await fetch(url);
+  return await response.json();
+}
+
+
 
 function searchResults ({ hotels, searchDetails }) {
+
+  searchDetails.guestQuery = getGuestReqString(searchDetails.rooms, searchDetails.adults+searchDetails.children)
+
+
+  const { data } = useSWR(`http://localhost:8000/api/prices?destination=${searchDetails.destination}&checkInDate=${searchDetails.checkInDate}&checkOutDate=${searchDetails.checkOutDate}&guestString=${searchDetails.guestQuery}`, fetcher, {refreshInterval: 200})
+  //
+  if(!data || data.hotels.length===0){
+    console.log("Revalidating")
+    return <h1>Loading...</h1>; 
+  } else if(data.hotels.length!=0) {
+    console.log(data.hotels.length);
+  }
+
+
+  // const button = () => {setSize(size+1)}
+  
+  console.log(data)
+  // if (data.hotels.length!=10){
+  //   setSize(size+1);
+  // }
+  // if (!data.completed) setSize(size+1);
+  // console.log(data)
+
   return (
     <div className={styles.page}>
         <Head>
@@ -27,12 +56,12 @@ function searchResults ({ hotels, searchDetails }) {
           {hotels.map((hotelDis) => {
             return (
               // React component imported
-              <HotelElem hotel={hotelDis} searchDetails={searchDetails}key={hotelDis.id}></HotelElem>
+              <HotelElem hotel={hotelDis} searchDetails={searchDetails} key={hotelDis.id} prices={data.hotels}></HotelElem>
             );
           })}
         </div></div>
     </div>
-  )
+  );
 }
 
 export default searchResults

@@ -1,6 +1,7 @@
 // React Component for individual hotels from results
 import Link from 'next/link';
 import styles from '../../../styles/searchResultsPage.module.css';
+
 /* 
 returns the HTML elements, displaying the information of each hotel, link to allow the hotel to be selected
 
@@ -8,50 +9,60 @@ returns the HTML elements, displaying the information of each hotel, link to all
 @returns - HTML to be displayed
 */
 
-function hotelElem({ hotel,searchDetails }) {
-    return (
-      <><div className='col-12 col-md-6 col-lg-4'>
-          <div className={styles.hotelCard+ " card text-left"}>
+function hotelElem({ hotel, searchDetails, prices }) {
+  let pricesObj = {}
+  prices.forEach(element => {
+    if (element.id == hotel.id) {
+      pricesObj= element;
+    }
+  });
+  console.log(pricesObj)
+  
+
+  return (
+    <><div className='col-12 col-md-6 col-lg-4'>
+        <div className={styles.hotelCard+ " card text-left"}>
+        
+        {/* <img className={styles.hotelPicture + " card-img-top"} src={hotel.image_details.prefix + hotel.default_image_index + hotel.image_details.suffix} alt="Failed to Load" data-testid='image'/> */}
           
-          <img className={styles.hotelPicture + " card-img-top"} src={hotel.image_details.prefix + hotel.default_image_index + hotel.image_details.suffix} alt="Failed to Load" data-testid='image'/>
+          <div className={styles.hotelBody+" card-body"}>
             
-            <div className={styles.hotelBody+" card-body"}>
-              
-              
+            
 
-              <div className={styles.hotelContent}>
-                <h4 className='card-title' id={styles.hotelName} data-testid='hotelName'>{hotel.name}</h4>
-                <div className='card-text' data-testid='hotelAddr'>{hotel.address}</div>
-                <div className='card-text' data-testid='rating'>Rated {hotel.trustyou.score.overall}/100</div>
-              </div>
-
-              {/* link to hotel details page with relevant hotelId */}
-              <div className={styles.buttonPrice+' card-text'}>
-                <span className='card-text'>
-                  Rooms from SGD $$.$$
-                </span>
-                <Link href={{
-                  pathname: "/hotelDetails",
-                  query: {
-                    hotelId: hotel.id,
-                    destination:searchDetails.destination,
-                    checkInDate: searchDetails.checkInDate,
-                    checkOutDate: searchDetails.checkOutDate,
-                    rooms: searchDetails.rooms,
-                    adults: searchDetails.adults,
-                    children: searchDetails.children
-                  }
-                }}>
-                  <a className={styles.selectButton+ " btn btn-outline-primary btn-lg"} data-testid='selectButton'>Select</a>
-                </Link>
-              </div>
-              
+            <div className={styles.hotelContent}>
+              <h4 className='card-title' id={styles.hotelName} data-testid='hotelName'>{hotel.name}</h4>
+              <div className='card-text' data-testid='hotelAddr'>{hotel.address}</div>
+              <div className='card-text' data-testid='rating'>Rated {hotel.trustyou.score.overall}/100</div>
             </div>
 
+            {/* link to hotel details page with relevant hotelId */}
+            <div className={styles.buttonPrice+' card-text'}>
+              <span className='card-text'>
+                Rooms from SGD {pricesObj.lowest_converted_price}
+              </span>
+              <Link href={{
+                pathname: "/hotelDetails",
+                query: {
+                  hotelId: hotel.id,
+                  destination:searchDetails.destination,
+                  checkInDate: searchDetails.checkInDate,
+                  checkOutDate: searchDetails.checkOutDate,
+                  rooms: searchDetails.rooms,
+                  adults: searchDetails.adults,
+                  children: searchDetails.children,
+                  guestQuery: searchDetails.guestQuery
+                }
+              }}>
+                <a className={styles.selectButton+ " btn btn-outline-primary btn-lg"} data-testid='selectButton'>Select</a>
+              </Link>
+            </div>
+            
           </div>
+
         </div>
-      </>
-    );
+      </div>
+    </>
+  );
 }
   
 export default hotelElem
