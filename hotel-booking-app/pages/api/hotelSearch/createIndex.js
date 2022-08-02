@@ -1,4 +1,4 @@
-import { createIndex } from '../../modules/hotelSearch/lib/redis.js'
+import { createIndex } from '../../../modules/hotelSearch/lib/redis.js'
 
 export default async function handler(req, res) {
     await createIndex();

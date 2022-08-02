@@ -1,1 +1,1 @@
-# SUTD_ESC_2022_Ascenda-Loyalty_Hotel-Booking
+# SUTD ESC 2022 Ascendas Loyalty Hotel Booking System

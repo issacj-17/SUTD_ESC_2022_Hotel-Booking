@@ -1,8 +1,8 @@
 import Head from 'next/head'
-import DisplayHotelDetails from '../../components/hotelDetails/displayHotelDetails'
+import DisplayHotelDetails from '../../modules/hotelDetails/components/displayHotelDetails'
 import { useState } from 'react'
 import styles from '../../styles/displayHotelDetails.module.css'
-import Router from 'next/router'
+import {getGuestReqString} from '../searchResults.js'
 
 //Nested routes, just name ur folder as the routename that you would like,
 // In this case, it would be localhost:3000/hotelDetails, then index.js in this folder would be the js script called at ../hotelDetails/
@@ -12,7 +12,8 @@ import Router from 'next/router'
 //Next.js will look for any specific pages before looking at the dynamic pages, so if u have option1 and [optionnumber] and u route to ../hotelDetails/option1,
 //option1.js will be displayed instead of the dynamic page.
 
-const hotelDetails = (props) => {
+const hotelDetails = ({hotelDetailData,searchDetails,hotelId,roomDetailData}) => {
+  
   
   return (
     <div style={{margin: '10px'}}>
@@ -21,7 +22,7 @@ const hotelDetails = (props) => {
         </Head>
         <h1>Hotel Details Page</h1>
         
-        <DisplayHotelDetails hotelMore={props.data}></DisplayHotelDetails>
+        <DisplayHotelDetails selectedHotelData={hotelDetailData} searchDetails={searchDetails} roomData={roomDetailData}></DisplayHotelDetails>
     </div>
   )
 }
@@ -29,20 +30,49 @@ export default hotelDetails
 
 export async function getServerSideProps(context){
   //Read hotelId attribute from query string
-  const {hotelId} = context.query
-  const response = await fetch(`https://hotelapi.loyalty.dev/api/hotels/${hotelId}`)
-  const data = await response.json()
-
-  if (!data){
-      return {
-          notFound: true
+  
+  const searchDetails= context.query //Taking all query and storing it into searchDetails
+  const {hotelId,destination,checkInDate,checkOutDate,rooms,adults,children} = searchDetails;
+  
+  let guest = parseInt(adults)+parseInt(children)
+  let guestString = getGuestReqString(rooms,guest)
+  try{
+    var hotelDetailData = await fetch(`https://hotelapi.loyalty.dev/api/hotels/${hotelId}`).then((response) => {
+    if (response.ok){
+      return response.json();
       }
+      throw new Error("Unable to fetch Hotel Endpoint");
+    })
+  } catch(err){
+     hotelDetailData = null;
   }
+  
+  try{
+      var roomDetailData = await fetch(`https://hotelapi.loyalty.dev/api/hotels/diH7/price?destination_id=RsBU&checkin=2022-09-14&checkout=2022-09-22&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=2`).then((response)=>{
+      if(response.ok){
+        return response.json();
+      }
+      throw new Error("Unable to fetch from Price Endpoint");
+    })
+  } catch(err){
+    roomDetailData=null;
+  }
+
+  
+  
+  //For future use
+  //console.log(`https://hotelapi.loyalty.dev/api/hotels/diH7/price?destination_id=RsBU&checkin=2022-08-28&checkout=2022-09-01&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=2`)
+  //console.log(`https://hotelapi.loyalty.dev/api/hotels/${hotelId}/price?destination_id=${destination}&checkin=${checkInDate}&checkout=${checkOutDate}&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=${guestString}`)
+
+  // console.log(roomDetailData.completed)
+  
   console.log("Fetch Successful!")
   return {
       props: {
-          data,
-          hotelId
+          hotelDetailData,
+          hotelId,
+          searchDetails,
+          roomDetailData
       }
     }
   }
