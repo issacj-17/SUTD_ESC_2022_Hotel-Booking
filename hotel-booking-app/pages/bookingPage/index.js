@@ -162,60 +162,73 @@ function bookingPage(props) {
 //   query:{}
 // } = router
 
-function sendProps(values){
+  function sendProps(values){
+    const postData = async () => {
+      console.log(submitAPIData)
+      const response = await fetch('http://localhost:8000/booking/create', {
+        method: 'POST',
+        body: JSON.stringify(submitAPIData),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      const data = await response.json()
+      console.log(data)
+    }
 
-  console.log(Date(props.queryResult.checkOutDate)-Date(props.queryResult.checkInDate))
-  Router.push({pathname:"/bookingPage/hotelReceipt",
-query:{
-  firstName:values.firstName,
-  lastName: values.lastName,
-  phoneNumber: values.phoneNumber,
-  email: values.email,
-  specialRequest: values.specialRequest,
-  billingAddress: values.billingAddress,
-  roomType: props.queryResult.roomType,
-  price: props.queryResult.price,
-  hotelId: props.queryResult.hotelId,
-  destination: props.queryResult.destination,
-  checkInDate: props.queryResult.checkInDate,
-  checkOutDate: props.queryResult.checkOutDate,
-  rooms: props.queryResult.rooms,
-  adults: props.queryResult.adults,
-  children: props.queryResult.children,
-}})
+    var submitAPIData = {
+      "destID": props.queryResult.destination,
+      "hotelID": props.queryResult.hotelId,
+      "price": props.queryResult.price,
+      "bookingRef": "string",
+      "supplierID": "string",
+      "supplierRes": [],
+      "display": {
+        "numOfNights": parseInt((new Date(props.queryResult.checkOutDate) - new Date(props.queryResult.checkInDate))/(1000 * 60 * 60 * 24)),
+        "startDate": props.queryResult.checkInDate,
+        "endDate": props.queryResult.checkOutDate,
+        "adults": props.queryResult.adults,
+        "children": props.queryResult.children,
+        "roomType": [
+          "string"
+        ],
+        "message": values.specialRequest
+      },
+      "guest": {
+        "salutation": "string",
+        "firstName": values.firstName,
+        "lastName": values.lastName,
+        "phone": values.phoneNumber,
+        "email": values.email
+      },
+      "payment": {
+        "paymentID": "string",
+        "payeeID": "string"
+      }
+    }
 
+    postData()
 
-var submitAPIData = {"destID": props.queryResult.destination,
-  "hotelID": props.queryResult.hotelID,
-  "price": props.queryResult.price,
-  "bookingRef": "string",
-  "supplierID": "string",
-  "supplierRes": [],
-  "display": {
-    "numOfNights": (Date(props.queryResult.checkOutDate) - Date(props.queryResult.checkInDate)),
-    "startDate": props.queryResult.checkInDate,
-    "endDate": props.queryResult.checkOutDate,
-    "adults": 0,
-    "children": 0,
-    "roomType": [
-      "string"
-    ],
-    "message": "string"
-  },
-  "guest": {
-    "salutation": "string",
-    "firstName": "string",
-    "lastName": "string",
-    "phone": "string",
-    "email": "user@example.com"
-  },
-  "payment": {
-    "paymentID": "string",
-    "payeeID": "string"
+    Router.push({pathname:"/bookingPage/hotelReceipt",
+  query:{
+    firstName:values.firstName,
+    lastName: values.lastName,
+    phoneNumber: values.phoneNumber,
+    email: values.email,
+    specialRequest: values.specialRequest,
+    billingAddress: values.billingAddress,
+    roomType: props.queryResult.roomType,
+    price: props.queryResult.price,
+    hotelId: props.queryResult.hotelId,
+    destination: props.queryResult.destination,
+    checkInDate: props.queryResult.checkInDate,
+    checkOutDate: props.queryResult.checkOutDate,
+    rooms: props.queryResult.rooms,
+    adults: props.queryResult.adults,
+    children: props.queryResult.children,
+  }})
+
   }
-
-}
-}
   return (
       <CONTAINER>
         <h1> Guest Information Collection Form </h1>
