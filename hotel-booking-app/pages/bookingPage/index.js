@@ -161,7 +161,10 @@ function bookingPage(props) {
 // const{
 //   query:{}
 // } = router
+
 function sendProps(values){
+
+  console.log(Date(props.queryResult.checkOutDate)-Date(props.queryResult.checkInDate))
   Router.push({pathname:"/bookingPage/hotelReceipt",
 query:{
   firstName:values.firstName,
@@ -180,6 +183,38 @@ query:{
   adults: props.queryResult.adults,
   children: props.queryResult.children,
 }})
+
+
+var submitAPIData = {"destID": props.queryResult.destination,
+  "hotelID": props.queryResult.hotelID,
+  "price": props.queryResult.price,
+  "bookingRef": "string",
+  "supplierID": "string",
+  "supplierRes": [],
+  "display": {
+    "numOfNights": (Date(props.queryResult.checkOutDate) - Date(props.queryResult.checkInDate)),
+    "startDate": props.queryResult.checkInDate,
+    "endDate": props.queryResult.checkOutDate,
+    "adults": 0,
+    "children": 0,
+    "roomType": [
+      "string"
+    ],
+    "message": "string"
+  },
+  "guest": {
+    "salutation": "string",
+    "firstName": "string",
+    "lastName": "string",
+    "phone": "string",
+    "email": "user@example.com"
+  },
+  "payment": {
+    "paymentID": "string",
+    "payeeID": "string"
+  }
+
+}
 }
   return (
       <CONTAINER>
