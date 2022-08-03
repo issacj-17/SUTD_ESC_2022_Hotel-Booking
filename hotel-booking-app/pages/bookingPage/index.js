@@ -272,6 +272,7 @@ function bookingPage(props) {
               <Form.Group as={Col} md="4" controlId="firstName">
                 <Form.Label> First Name</Form.Label>
                 <Form.Control
+                  data-testid="firstName"
                   type="text"
                   name="firstName"
                   placeholder="First Name"
@@ -287,6 +288,7 @@ function bookingPage(props) {
               <Form.Group as={Col} md="4" controlId="lastName">
                 <Form.Label> Last Name</Form.Label>
                 <Form.Control
+                  data-testid="lastName"
                   type="text"
                   name="lastName"
                   placeholder="Last Name"
@@ -304,6 +306,7 @@ function bookingPage(props) {
               <Form.Group as={Col} md="5" controlId="phoneNumber">
                 <Form.Label> Phone Number </Form.Label>
                 <Form.Control
+                  data-testid="phoneNumber"
                   type="text"
                   name="phoneNumber"
                   placeholder="Phone Number"
@@ -319,6 +322,7 @@ function bookingPage(props) {
               <Form.Group as={Col} md="7" controlId="email">
                 <Form.Label> Email </Form.Label>
                 <Form.Control
+                  data-testid="email"
                   type="text"
                   name="email"
                   placeholder="Email"
@@ -336,6 +340,7 @@ function bookingPage(props) {
               <Form.Group as={Col} md="12" controlId="specialRequest">
                 <Form.Label> Special Request </Form.Label>
                 <Form.Control
+                  data-testid="specialRequest"
                   type="text"
                   name="specialRequest"
                   placeholder="Special Request"
@@ -348,6 +353,7 @@ function bookingPage(props) {
               <Form.Group as={Col} md="6" controlId="bankCard">
                 <Form.Label> Bank Card Number </Form.Label>
                 <Form.Control
+                  data-testid="bankCard"
                   type="text"
                   name="bankCard"
                   placeholder="Bank Card Number"
@@ -363,6 +369,7 @@ function bookingPage(props) {
               <Form.Group as={Col} md="3" controlId="expiryDate">
                 <Form.Label> Expiry Date </Form.Label>
                 <Form.Control
+                data-testid="expiryDate"
                   type="text"
                   name="expiryDate"
                   placeholder="MM/YY"
@@ -396,6 +403,7 @@ function bookingPage(props) {
               <Form.Group as={Col} md="12" controlId="billingAddress">
                 <Form.Label> Billing Address </Form.Label>
                 <Form.Control
+                  data-testid="billingAddress"
                   type="text"
                   name="billingAddress"
                   placeholder="Billing Address"
@@ -409,9 +417,14 @@ function bookingPage(props) {
                   ): null}
               </Form.Group>
               </Row>
+              <Form.Group controlId="submitButton">
+                <Form.Control
+                data-testid="submitButton"
+                />
               <MYBUTTON variant="primary" type="submit" disabled={isSubmitting}>
                 Submit
               </MYBUTTON>
+              </Form.Group>
             </MYFORM>
           )}
         </Formik>
