@@ -6,6 +6,7 @@ import Router,{useRouter} from 'next/router' //Used to pass Props between pages
 export default function roomDetails({Room,searchDetails}) {
     
     const roomType = Room.roomNormalizedDescription;
+    const listSuppliers = Room.market_rates
     const price = Room.lowest_price;
     const imagesUrl = Room.images;
     
@@ -29,6 +30,7 @@ export default function roomDetails({Room,searchDetails}) {
         query: {
             roomType,
             price,
+            suppliers:listSuppliers,
             hotelId:searchDetails.hotelId,
             destination: searchDetails.destination,
             checkInDate: searchDetails.checkInDate,

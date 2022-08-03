@@ -24,7 +24,7 @@ const hotelDetails = ({hotelDetailData,searchDetails,hotelId,roomDetailData}) =>
     return await response.json();
   }
 
-  const { data ,error} = useSWR(url, fetcher,{refreshInterval:1000})
+  const { data ,error} = useSWR(url, fetcher,{refreshInterval:400})
   //
   if (error) {
     return <div>Failed To Load</div>}

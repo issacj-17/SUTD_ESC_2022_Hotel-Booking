@@ -83,11 +83,16 @@ const hotelDetailsComp = (props) => {
                     <div className={styles.card + ' col w-100'} data-testId="listOfHotelRoomBox"> 
                     
                     {
+                        listOfAvailableRooms.length>0 &&
                         listOfAvailableRooms.map((room,index)=>{
                             return(
                                 <RoomDetails Room={room} searchDetails={searchDetails} key={index}></RoomDetails>
                             )
                         })
+                    }
+                    {
+                        listOfAvailableRooms.length===0 &&
+                        <h1>No Available Rooms</h1>
                     }
                     
                     </div>
