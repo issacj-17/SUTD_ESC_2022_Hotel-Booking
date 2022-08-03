@@ -1,6 +1,5 @@
 import styles from '../../../styles/displayHotelDetails.module.css'
 import Link from 'next/link' //this is how to route in next.js instead of <a></a>
-
 import Slider from './imageCarousel'
 import RoomDetails from './roomDetails'
 
@@ -35,6 +34,7 @@ const hotelDetailsComp = (props) => {
     
     //Method: For loop to obtain extract the imageurl in batches of 5 and pushing them into
     // listOfHotelImagesUrl as a list of 5 Strings, each corresponding to an HotelImageUrl
+    
     
     
    
@@ -81,6 +81,7 @@ const hotelDetailsComp = (props) => {
                 </div>
                 <div className='row'>
                     <div className={styles.card + ' col w-100'} data-testId="listOfHotelRoomBox"> 
+                    
                     {
                         listOfAvailableRooms.map((room,index)=>{
                             return(

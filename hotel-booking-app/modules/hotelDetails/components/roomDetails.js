@@ -8,7 +8,7 @@ export default function roomDetails({Room,searchDetails}) {
     const roomType = Room.roomNormalizedDescription;
     const price = Room.lowest_price;
     const imagesUrl = Room.images;
-
+    
     
     
     //Using Router to receive unpack props received using Router(Next.js module)
