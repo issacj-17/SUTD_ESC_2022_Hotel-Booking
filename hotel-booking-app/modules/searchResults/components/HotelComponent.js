@@ -43,7 +43,7 @@ function hotelElem({ hotels, searchDetails, price }) {
             <div className={styles.hotelContent}>
               <h4 className='card-title' id={styles.hotelName} data-testid='hotelName'>{hotel.name}</h4>
               <div className='card-text' data-testid='hotelAddr'>{hotel.address}</div>
-              <div className='card-text' data-testid='rating'>Rated {hotel.rating}/5</div>
+              <div className='card-text' data-testid='rating'>Rated {hotel.trustyou.score.overall}/100</div>
             </div>
 
             {/* link to hotel details page with relevant hotelId */}
