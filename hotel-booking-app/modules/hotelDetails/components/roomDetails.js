@@ -6,9 +6,10 @@ import Router,{useRouter} from 'next/router' //Used to pass Props between pages
 export default function roomDetails({Room,searchDetails}) {
     
     const roomType = Room.roomNormalizedDescription;
+    const listSuppliers = Room.market_rates
     const price = Room.lowest_price;
     const imagesUrl = Room.images;
-
+    
     
     
     //Using Router to receive unpack props received using Router(Next.js module)
@@ -29,6 +30,7 @@ export default function roomDetails({Room,searchDetails}) {
         query: {
             roomType,
             price,
+            suppliers:listSuppliers,
             hotelId:searchDetails.hotelId,
             destination: searchDetails.destination,
             checkInDate: searchDetails.checkInDate,
@@ -40,12 +42,12 @@ export default function roomDetails({Room,searchDetails}) {
         })
     }
   return (
-        <div className={styles.card+' row w-80'} data-testId="RoomContainer">
+        <div className={styles.card+' row w-80'} data-testid="RoomContainer">
             
             <div className='col'>
                 
                     <h4 data-testId="RoomName">{roomType}</h4>
-                    <Carousel className={styles.roomImage} data-testId="RoomPictures">
+                    <Carousel className={styles.roomImage} data-testid="RoomPictures">
                         {
                             imagesUrl.map((object,index) => {return(
                                 <Carousel.Item>
@@ -57,7 +59,7 @@ export default function roomDetails({Room,searchDetails}) {
                 
             </div>
             <div className='col'>
-                <p data-testId="RoomPrice">Price of {roomType} is : {price}</p>
+                <p data-testid="RoomPrice">Price of {roomType} is : {price}</p>
 
                 <button type="button fixed-bottom" class="btn btn-outline-primary align-self-end" onClick={()=>sendProps()}>Select</button>            
             </div>

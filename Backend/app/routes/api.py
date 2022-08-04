@@ -6,11 +6,6 @@ import asyncio
 
 router = APIRouter()
 
-# @router.get("/hotels")
-# async def get_hotels(destination: str):
-#     res = requests.get(f"https://hotelapi.loyalty.dev/api/hotels?destination_id={destination}")
-#     return res.json()
-
 @router.get("/hotels")
 async def get_hotels(destination: str):
     async with httpx.AsyncClient() as client:

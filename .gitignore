@@ -5,3 +5,4 @@ hotel-booking-app/file.7z
 *.pyc
 /Backend/app/.env
 /Backend/.idea/
+Backend/app/.env

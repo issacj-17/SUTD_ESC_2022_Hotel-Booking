@@ -17,12 +17,12 @@ export default function mapDisplay({latitude,longitude}) {
     return null;
   }
   return (
-    <div className=" col" data-testId="MapContainer">
+    <div className=" col" data-testid="MapContainer">
     <MapContainer center={position} zoom={15} scrollWheelZoom={false} style={{width:'auto' ,height:'300px'}}>
       <TileLayer data-testId="TileLayer" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
       attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>
       contributors'/>
-      <Marker position={position} data-testId="Marker"></Marker>
+      <Marker position={position} data-testid="Marker"></Marker>
     </MapContainer>
     </div>
     

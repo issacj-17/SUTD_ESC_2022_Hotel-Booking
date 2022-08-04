@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException, Response
-from models.user import UserModel, UserOut, UserCreate, UserUpdate, UserAuth
+
+from app.models.user import UserModel, UserOut, UserCreate, UserUpdate, UserAuth
 
 
 router = APIRouter()
