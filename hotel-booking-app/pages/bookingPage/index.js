@@ -6,6 +6,9 @@ import {Form, Button, Row, Col} from "react-bootstrap";
 import styled from 'styled-components';
 import valid from 'card-validator';
 import Router,{useRouter} from 'next/router';
+import sha256 from 'crypto-js/sha256';
+import hmacSHA512 from 'crypto-js/hmac-sha512';
+import Base64 from 'crypto-js/enc-base64';
 
 
 const CONTAINER = styled.div`
@@ -163,6 +166,10 @@ function bookingPage(props) {
 // } = router
 
   function sendProps(values){
+    var bookingRefGen = Math.floor(100000 + Math.random() * 900000)
+    var supplierIDGen = Math.floor(10000 + Math.random() * 90000)
+    var paymentIDGen = Math.floor(100000 + Math.random() * 900000)
+    var payeeIDGen = Math.floor(10000 + Math.random() * 90000)
     const postData = async () => {
       console.log(submitAPIData)
       const response = await fetch('http://localhost:8000/booking/create', {
@@ -180,8 +187,8 @@ function bookingPage(props) {
       "destID": props.queryResult.destination,
       "hotelID": props.queryResult.hotelId,
       "price": props.queryResult.price,
-      "bookingRef": "string",
-      "supplierID": "string",
+      "bookingRef": bookingRefGen,
+      "supplierID": supplierIDGen,
       "supplierRes": [],
       "display": {
         "numOfNights": parseInt((new Date(props.queryResult.checkOutDate) - new Date(props.queryResult.checkInDate))/(1000 * 60 * 60 * 24)),
@@ -190,20 +197,20 @@ function bookingPage(props) {
         "adults": props.queryResult.adults,
         "children": props.queryResult.children,
         "roomType": [
-          "string"
+          props.queryResult.roomType
         ],
         "message": values.specialRequest
       },
       "guest": {
-        "salutation": "string",
+        "salutation": "Mr./Ms.",
         "firstName": values.firstName,
         "lastName": values.lastName,
         "phone": values.phoneNumber,
         "email": values.email
       },
       "payment": {
-        "paymentID": "string",
-        "payeeID": "string"
+        "paymentID": paymentIDGen,
+        "payeeID": paymentIDGen
       }
     }
 
@@ -226,6 +233,9 @@ function bookingPage(props) {
     rooms: props.queryResult.rooms,
     adults: props.queryResult.adults,
     children: props.queryResult.children,
+    bookingRef: bookingRefGen,
+    paymentID: payeeIDGen,
+    payeeID: payeeIDGen,
   }})
 
   }
@@ -246,6 +256,10 @@ function bookingPage(props) {
             billingAddress: "",
           }}
           onSubmit={(values, { setSubmitting, resetForm }) => {
+            var CryptoJS = require("crypto-js");
+            CryptoJS.AES.encrypt(values.phoneNumber)
+            CryptoJS.AES.encrypt(values.email)
+            CryptoJS.AES.encrypt(values.billingAddress)
             // When button submits form and form is in the process of submitting, submit button is disabled
             setSubmitting(true);
 
@@ -418,9 +432,6 @@ function bookingPage(props) {
               </Form.Group>
               </Row>
               <Form.Group controlId="submitButton">
-                <Form.Control
-                data-testid="submitButton"
-                />
               <MYBUTTON variant="primary" type="submit" disabled={isSubmitting}>
                 Submit
               </MYBUTTON>

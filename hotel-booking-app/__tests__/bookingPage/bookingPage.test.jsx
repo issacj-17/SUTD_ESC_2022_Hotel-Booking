@@ -2,7 +2,7 @@ import React from 'react'
 import {fireEvent, render, screen, waitFor} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import BookingForm from '../pages/bookingPage/index.js'
+import BookingForm from '../../pages/bookingPage/index.js'
 
 describe('BookingForm tests ', () => {
     test('Success test', async() => {
@@ -26,7 +26,7 @@ describe('BookingForm tests ', () => {
       fireEvent.change(input8,{target:{value:'123'}});
       const input9 = screen.getByTestId('billingAddress')
       fireEvent.change(input9,{target:{value:'Changi South Avenue 1, Singapore'}});
-      const submit = screen.getByTestId('submitButton');
+      const submit = screen.getByRole('button', {name: /Submit/i});
       expect(submit).toBeEnabled();
       fireEvent.click(submit);  
 
