@@ -107,8 +107,7 @@ export default function SearchForm() {
                                         id="destination"
                                         name="destination"
                                         type="text"
-                                        placeholder="Enter Your Destination"
-                                        data-testid="destination"/>
+                                        placeholder="Enter Your Destination"/>
                                     <FormErrorMessage>
                                         {errors.destination}
                                     </FormErrorMessage>
@@ -132,7 +131,7 @@ export default function SearchForm() {
                                             type="date"
                                             variant="filled"
                                             data-testid='checkIn'/>
-                                        <FormErrorMessage data-testid='test'>
+                                        <FormErrorMessage>
                                             {errors.checkInDate}
                                         </FormErrorMessage>
                                     </FormControl>
