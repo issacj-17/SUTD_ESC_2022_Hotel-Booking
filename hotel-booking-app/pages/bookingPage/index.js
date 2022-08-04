@@ -173,14 +173,18 @@ function bookingPage(props) {
       "salutation": "Mr./Ms.",
       "firstName": values.firstName,
       "lastName": values.lastName,
-      "phone": values.phoneNumber,
-      "email": values.email
+      "phone": values.phoneNumber
     };
-    guestinfo = CryptoJS.AES.encrypt(guest)
-    var bookingRefGen = Math.floor(100000 + Math.random() * 900000)
-    var supplierIDGen = Math.floor(10000 + Math.random() * 90000)
-    var paymentIDGen = Math.floor(100000 + Math.random() * 900000)
-    var payeeIDGen = Math.floor(10000 + Math.random() * 90000)
+    let guestinfo = {};
+    for ( var key in guest) {
+      guestinfo[key] = CryptoJS.AES.encrypt(guest[key], "ThisIsTheTrueKey").toString()
+    }
+    guestinfo.email=values.email;
+    // let guestinfo = CryptoJS.AES.encrypt(JSON.stringify(guest), "ThisIsTheTrueKey").toString()
+    var bookingRefGen = Math.floor(100000 + Math.random() * 900000).toString()
+    var supplierIDGen = Math.floor(10000 + Math.random() * 90000).toString()
+    var paymentIDGen = Math.floor(100000 + Math.random() * 900000).toString()
+    var payeeIDGen = Math.floor(10000 + Math.random() * 90000).toString()
     const postData = async () => {
       console.log(submitAPIData)
       const response = await fetch('http://localhost:8000/booking/create', {
@@ -218,7 +222,7 @@ function bookingPage(props) {
         "payeeID": paymentIDGen
       }
     }
-
+    console.log(submitAPIData)
     postData()
 
     Router.push({pathname:"/bookingPage/hotelReceipt",
