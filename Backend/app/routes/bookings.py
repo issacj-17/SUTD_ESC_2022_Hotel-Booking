@@ -34,3 +34,12 @@ async def add_booking(bookingRef: str, email:str):
     await userModel.save(link_rule=WriteRules.WRITE)
     return Response(status_code=200)
 
+@router.delete("/delete")
+async def delete_user(bookingRef: str):
+    booking = await BookingModel.find_one(BookingModel.bookingRef == bookingRef)
+    if booking is None:
+        raise HTTPException(status_code=404, detail="User Not Found")
+    else:
+        await BookingModel.find_one(BookingModel.bookingRef == bookingRef).delete()
+        return Response(status_code=204)
+
