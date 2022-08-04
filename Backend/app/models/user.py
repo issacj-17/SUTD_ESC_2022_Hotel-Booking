@@ -2,9 +2,10 @@ from beanie import Document, Link, Indexed
 from fastapi.security import HTTPBasicCredentials
 from typing import List, Optional
 from pydantic import BaseModel, EmailStr, SecretStr, Field
-from models.booking import BookingModel
 from datetime import datetime
 import orjson as json
+
+from app.models.booking import BookingModel
 
 class UserAuth(BaseModel):
     email: EmailStr

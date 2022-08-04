@@ -3,8 +3,8 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseSettings, BaseModel
 from decouple import config
 
-from models.user import UserModel
-from models.booking import BookingModel
+from app.models.user import UserModel
+from app.models.booking import BookingModel
 
 
 class Settings(BaseSettings):
