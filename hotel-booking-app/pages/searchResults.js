@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import HotelElem from '../modules/searchResults/components/HotelComponent';
 import styles from '../styles/searchResultsPage.module.css';
-import useSWRInfinite from 'swr/infinite';
 import useSWR from 'swr';
 
 
@@ -21,17 +20,17 @@ async function fetcher(url) {
 
 function searchResults ({ hotels, searchDetails }) {
 
-  searchDetails.guestQuery = getGuestReqString(searchDetails.rooms, searchDetails.adults+searchDetails.children)
+  searchDetails.guestQuery = getGuestReqString(searchDetails.rooms, parseInt(searchDetails.adults)+parseInt(searchDetails.children));
 
 
   const { data } = useSWR(`http://localhost:8000/api/prices?destination=${searchDetails.destination}&checkInDate=${searchDetails.checkInDate}&checkOutDate=${searchDetails.checkOutDate}&guestString=${searchDetails.guestQuery}`, fetcher, {refreshInterval: 200})
-  //
-  if(!data || data.hotels.length===0){
+  
+  if(!data){
     console.log("Revalidating")
-    return <h1>Loading...</h1>; 
-  } else if(data.hotels.length!=0) {
-    console.log(data.hotels.length);
-  }
+    return <h1>Loading...</h1>;}
+  // } else if(data.hotels.length!=0) {
+  //   console.log(data.hotels.length);
+  // }
 
 
   // const button = () => {setSize(size+1)}
@@ -53,10 +52,10 @@ function searchResults ({ hotels, searchDetails }) {
 
         {/* iterate through hotels, creating a HotelElem component for each hotel */}
         <div className='container'><div className='row g-3'>
-          {hotels.map((hotelDis) => {
+          {data.hotels.map((hotelDisplayed) => {
             return (
               // React component imported
-              <HotelElem hotel={hotelDis} searchDetails={searchDetails} key={hotelDis.id} prices={data.hotels}></HotelElem>
+              <HotelElem hotels={hotels} searchDetails={searchDetails} key={hotelDisplayed.id} price={hotelDisplayed}></HotelElem>
             );
           })}
         </div></div>
@@ -78,11 +77,6 @@ export async function getServerSideProps(context) {
   // object destructuring
   const searchDetails = context.query;
   const { destination,checkInDate,checkOutDate,rooms,adults,children } = searchDetails;
-  
-  // begin fetching from prices API
-
-  // const responsePrice = await fetch(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${destination}&checkin=${checkInDate}&checkout=${checkOutDate}&lang=en_US&currency=SGD&country_code=SG&guests=${getGuestReqString(rooms, adults+children)}&partner_id=1`);
-  // const prices = await responsePrice.json();
 
   // fetch all hotels for destination from static API
   let data;
