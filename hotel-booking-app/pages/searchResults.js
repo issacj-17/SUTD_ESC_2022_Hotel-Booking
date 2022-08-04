@@ -23,8 +23,11 @@ function searchResults ({ hotels, searchDetails }) {
   searchDetails.guestQuery = getGuestReqString(searchDetails.rooms, parseInt(searchDetails.adults)+parseInt(searchDetails.children));
 
 
-  const { data } = useSWR(`http://localhost:8000/api/prices?destination=${searchDetails.destination}&checkInDate=${searchDetails.checkInDate}&checkOutDate=${searchDetails.checkOutDate}&guestString=${searchDetails.guestQuery}`, fetcher, {refreshInterval: 200})
-  
+  const { data,error } = useSWR(`http://localhost:8000/api/prices?destination=${searchDetails.destination}&checkInDate=${searchDetails.checkInDate}&checkOutDate=${searchDetails.checkOutDate}&guestString=${searchDetails.guestQuery}`, fetcher, {refreshInterval: 200})
+  if(error){
+    console.log(error)
+    return <h1>Error in fetching Data</h1>
+  }
   if(!data){
     console.log("Revalidating")
     return <h1>Loading...</h1>;}
