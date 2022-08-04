@@ -32,7 +32,7 @@ describe('BookingForm tests ', () => {
 
 
     })
-    test('Failure test, credit card invalid input', async() => {
+    test('Failure test, credit card', async() => {
       const handleSubmit = jest.fn();
       render(<BookingForm onSubmit = {handleSubmit}/>)
       const input1 = screen.getByTestId('firstName');
@@ -48,6 +48,14 @@ describe('BookingForm tests ', () => {
       const input6 = screen.getByTestId('bankCard')
       fireEvent.change(input6,{target:{value:'1234123412341234'}});
       expect(screen.queryAllByText('Credit Card number is invalid')).not.toBeNull();
+    }
+    )
+    test('Failure test, first name', async() => {
+      const handleSubmit = jest.fn();
+      render(<BookingForm onSubmit = {handleSubmit}/>)
+      const input1 = screen.getByTestId('firstName');
+      fireEvent.change(input1,{target:{value:'12345'}});
+      expect(screen.queryAllByText('Name can only contain Latin letters')).not.toBeNull();
     }
     )
 });
