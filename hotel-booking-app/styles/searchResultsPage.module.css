@@ -22,7 +22,7 @@
 
 .hotelBody {
     margin-top: 10px;
-    display: inline-block !important;
+    display: inline !important;
 }
 
 .hotelCard {
@@ -62,12 +62,41 @@
 .hotelContent {
     color: #0B3837;
     margin: 0;
-    display: inline-block;
+    display: block;
 }
 #hotelName {
+    
+    font-family:'Franklin Gothic Medium';
     color: #24b9b6;
 }
 
 .buttonPrice {
     display: inline !important;
+}
+
+#priceText {
+    font-size: 11pt;
+}
+
+#priceValue {
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 26pt;
+    font-style: bold;
+    color:green;
+}
+
+#hotelAddr {
+    font-family:'Franklin Gothic Light', 'Arial Narrow', Arial, sans-serif;
+    font-size: 16pt;
+    padding-bottom: 10px;
+}
+
+#priceData {
+    display: block;
+}
+
+#hotelRating {
+    
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-style: italic;
 }

@@ -39,34 +39,40 @@ function hotelElem({ hotels, searchDetails, price }) {
           <div className={styles.hotelBody+" card-body"}>
             
             
-
+            
+          <h4 className='card-title' id={styles.hotelName} data-testid='hotelName'>{hotel.name}</h4>
             <div className={styles.hotelContent}>
-              <h4 className='card-title' id={styles.hotelName} data-testid='hotelName'>{hotel.name}</h4>
-              <div className='card-text' data-testid='hotelAddr'>{hotel.address}</div>
-              <div className='card-text' data-testid='rating'>Rated {hotel.trustyou.score.overall}/100</div>
+              <div className='card-text' id={styles.hotelAddr} data-testi d='hotelAddr'>{hotel.address}</div>
+              <div className='card-text' id={styles.hotelRating} data-testid='rating'>Rated {hotel.trustyou.score.overall}/100</div>
+              
+            </div>
+            <div className='card-text' id={styles.priceData}>
+              <span id={styles.priceText}>SGD </span><span id={styles.priceValue}>{price.lowest_converted_price}</span>
+              
+
+              {/* link to hotel details page with relevant hotelId */}
+              <span className={styles.buttonPrice+' card-text'}>
+                <Link href={{
+                  pathname: "/hotelDetails",
+                  query: {
+                    hotelId: hotel.id,
+                    destination:searchDetails.destination,
+                    checkInDate: searchDetails.checkInDate,
+                    checkOutDate: searchDetails.checkOutDate,
+                    rooms: searchDetails.rooms,
+                    adults: searchDetails.adults,
+                    children: searchDetails.children,
+                    guestQuery: searchDetails.guestQuery
+                  }
+                }}>
+                  <a className={styles.selectButton+ " btn btn-outline-primary btn-lg"} data-testid='selectButton'>Select</a>
+                </Link>
+              </span>
+
             </div>
 
-            {/* link to hotel details page with relevant hotelId */}
-            <div className={styles.buttonPrice+' card-text'}>
-              <span className='card-text'>
-                Rooms from SGD {price.lowest_converted_price}
-              </span>
-              <Link href={{
-                pathname: "/hotelDetails",
-                query: {
-                  hotelId: hotel.id,
-                  destination:searchDetails.destination,
-                  checkInDate: searchDetails.checkInDate,
-                  checkOutDate: searchDetails.checkOutDate,
-                  rooms: searchDetails.rooms,
-                  adults: searchDetails.adults,
-                  children: searchDetails.children,
-                  guestQuery: searchDetails.guestQuery
-                }
-              }}>
-                <a className={styles.selectButton+ " btn btn-outline-primary btn-lg"} data-testid='selectButton'>Select</a>
-              </Link>
-            </div>
+            
+            
             
           </div>
 
