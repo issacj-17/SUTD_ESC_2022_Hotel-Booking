@@ -15,7 +15,8 @@ import useSWR from 'swr'
 
 const hotelDetails = ({hotelDetailData,searchDetails,hotelId,roomDetailData}) => {
   const {destination,checkInDate,checkOutDate,rooms,adults,children,} = searchDetails;
-  const guestString = getGuestReqString(rooms,adults+children)
+  const guestString = getGuestReqString(rooms,parseInt(adults)+parseInt(children))
+  console.log(guestString)
   const url = `http://localhost:8000/api/hotels/prices?hotelId=${hotelId}&destination=${destination}&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&guestString=${guestString}`
 
 
