@@ -14,7 +14,6 @@ describe('Search Form', () => {
 
         render(<SearchForm onSubmit={handleSubmit} />);
 
-        // const destination = screen.getByTestId('destination');
         const checkIn = screen.getByTestId('checkIn');
         const checkOut = screen.getByTestId('checkOut');
         const rooms = screen.getByTestId('rooms');
@@ -22,7 +21,6 @@ describe('Search Form', () => {
         const children = screen.getByTestId('children');
         const submit = screen.getByTestId('submitButton');
 
-        // expect(destination).toBeInTheDocument();
         expect(checkIn).toBeInTheDocument();
         expect(checkOut).toBeInTheDocument();
         expect(rooms).toBeInTheDocument();
@@ -30,37 +28,24 @@ describe('Search Form', () => {
         expect(children).toBeInTheDocument();
         expect(submit).toBeInTheDocument();
 
-        // fireEvent.click(checkIn)
-        // fireEvent.change(checkIn, {target:{value:"2022-08-05"}});
-        // fireEvent.change(checkOut, {target:{value:"09/8/2022"}});
         act(()=>{
             fireEvent.focus(checkIn);
-            fireEvent.change(checkIn, {target:{value:"2022-08-05"}});
+            fireEvent.change(checkIn, {target:{value:"2022-09-05"}});
+            fireEvent.focus(checkOut);
+            fireEvent.change(checkOut, {target:{value:"2022-09-10"}});
             fireEvent.focus(rooms);
             fireEvent.change(rooms, {target:{value:"1"}});
+            fireEvent.focus(adults);
+            fireEvent.change(adults, {target:{value:"2"}});
+            fireEvent.focus(children);
+            fireEvent.change(children, {target:{value:"0"}});
         });
-        // fireEvent.change(adults, {target:{value:"2"}})
+        
+        expect(checkIn.value).toBe("2022-09-05");
+        expect(checkOut.value).toBe("2022-09-10");
         expect(rooms.value).toBe("1");
-        expect(checkIn.value).toBe("2022-08-05");
+        expect(adults.value).toBe("2");
+        expect(children.value).toBe("0");
         
-        // console.log(checkIn.innerHTML)
-        // expect(screen.getByText(/must be at least 3 days in advance/i)).toBeInTheDocument();
-        // await userEvent.type(checkIn, "2022-12-09");
-        // await userEvent.type(rooms, "1");
-        // await userEvent.type(adults, "2");
-        // await userEvent.type(children, "0");
-        // await userEvent.click(submit);
-        // handleSubmit();
-        // fireEvent.click(submit)
-        // fireEvent.click(submit)
-        // expect(await screen.findByText(/date is required/i)).toBeInTheDocument()
-        
-
-
-        // await waitFor(() => {
-        //     expect(handleSubmit).toHaveBeenCalledTimes(1)
-        // })
-
-
     })
 });
