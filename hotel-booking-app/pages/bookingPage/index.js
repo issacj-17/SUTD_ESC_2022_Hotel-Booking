@@ -73,16 +73,18 @@ const schema = Yup.object().shape({
     .typeError("Invalid name")
     .min(2, "*Names must have at least 2 characters")
     .max(100, "*Names can't be longer than 100 characters")
-    .required("Required"),
+    .required("Required")
+    .matches(/^([A-Za-z\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\s]*)$/gi,'Name can only contain Latin letters'),
   lastName: Yup.string()
     .typeError("Invalid name")
     .max(20, "Must be 20 characters or less")
-    .required("Required"),
-  phoneNumber: Yup.number()
+    .required("Required")
+    .matches(/^([A-Za-z\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\s]*)$/gi,'Name can only contain Latin letters'),
+  phoneNumber: Yup.string()
     .typeError("That does not look like a phone number")
-    .positive("A phone number cannot start with a minus")
     .min(8, "Your phone number is not valid")
-    .required("Required"),
+    .required("Required")
+    .matches(/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/, 'Phone number is not valid'),
   email: Yup.string()
     .email("Invalid email address")
     .required("Required"),
@@ -166,6 +168,15 @@ function bookingPage(props) {
 // } = router
 
   function sendProps(values){
+    var CryptoJS = require("crypto-js");
+    const guest = {
+      "salutation": "Mr./Ms.",
+      "firstName": values.firstName,
+      "lastName": values.lastName,
+      "phone": values.phoneNumber,
+      "email": values.email
+    };
+    guestinfo = CryptoJS.AES.encrypt(guest)
     var bookingRefGen = Math.floor(100000 + Math.random() * 900000)
     var supplierIDGen = Math.floor(10000 + Math.random() * 90000)
     var paymentIDGen = Math.floor(100000 + Math.random() * 900000)
@@ -201,13 +212,7 @@ function bookingPage(props) {
         ],
         "message": values.specialRequest
       },
-      "guest": {
-        "salutation": "Mr./Ms.",
-        "firstName": values.firstName,
-        "lastName": values.lastName,
-        "phone": values.phoneNumber,
-        "email": values.email
-      },
+      "guest": guestinfo,
       "payment": {
         "paymentID": paymentIDGen,
         "payeeID": paymentIDGen
@@ -256,10 +261,7 @@ function bookingPage(props) {
             billingAddress: "",
           }}
           onSubmit={(values, { setSubmitting, resetForm }) => {
-            var CryptoJS = require("crypto-js");
-            CryptoJS.AES.encrypt(values.phoneNumber)
-            CryptoJS.AES.encrypt(values.email)
-            CryptoJS.AES.encrypt(values.billingAddress)
+
             // When button submits form and form is in the process of submitting, submit button is disabled
             setSubmitting(true);
 
@@ -431,11 +433,9 @@ function bookingPage(props) {
                   ): null}
               </Form.Group>
               </Row>
-              <Form.Group controlId="submitButton">
               <MYBUTTON variant="primary" type="submit" disabled={isSubmitting}>
                 Submit
               </MYBUTTON>
-              </Form.Group>
             </MYFORM>
           )}
         </Formik>
