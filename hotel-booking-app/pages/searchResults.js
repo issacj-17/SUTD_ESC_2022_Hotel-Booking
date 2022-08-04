@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import HotelElem from '../modules/searchResults/components/HotelComponent';
 import styles from '../styles/searchResultsPage.module.css';
-// import useSWRInfinite from 'swr/infinite';
 import useSWR from 'swr';
 
 
@@ -12,8 +11,37 @@ returns the HTML elements, mapping each hotel in hotels to a HotelElem, and othe
                         destID is the destination ID of the current search
 @returns - HTML to be displayed
 */
+async function fetcher(url) {
+  let response = await fetch(url);
+  return await response.json();
+}
+
+
 
 function searchResults ({ hotels, searchDetails }) {
+
+  searchDetails.guestQuery = getGuestReqString(searchDetails.rooms, parseInt(searchDetails.adults)+parseInt(searchDetails.children));
+
+
+  const { data } = useSWR(`http://localhost:8000/api/prices?destination=${searchDetails.destination}&checkInDate=${searchDetails.checkInDate}&checkOutDate=${searchDetails.checkOutDate}&guestString=${searchDetails.guestQuery}`, fetcher, {refreshInterval: 200})
+  
+  if(!data){
+    console.log("Revalidating")
+    return <h1>Loading...</h1>;}
+  // } else if(data.hotels.length!=0) {
+  //   console.log(data.hotels.length);
+  // }
+
+
+  // const button = () => {setSize(size+1)}
+  
+  console.log(data)
+  // if (data.hotels.length!=10){
+  //   setSize(size+1);
+  // }
+  // if (!data.completed) setSize(size+1);
+  // console.log(data)
+
   return (
     <div className={styles.page}>
         <Head>
@@ -24,15 +52,15 @@ function searchResults ({ hotels, searchDetails }) {
 
         {/* iterate through hotels, creating a HotelElem component for each hotel */}
         <div className='container'><div className='row g-3'>
-          {hotels.map((hotelDis) => {
+          {data.hotels.map((hotelDisplayed) => {
             return (
               // React component imported
-              <HotelElem hotel={hotelDis} searchDetails={searchDetails}key={hotelDis.id}></HotelElem>
+              <HotelElem hotels={hotels} searchDetails={searchDetails} key={hotelDisplayed.id} price={hotelDisplayed}></HotelElem>
             );
           })}
         </div></div>
     </div>
-  )
+  );
 }
 
 export default searchResults
@@ -49,11 +77,6 @@ export async function getServerSideProps(context) {
   // object destructuring
   const searchDetails = context.query;
   const { destination,checkInDate,checkOutDate,rooms,adults,children } = searchDetails;
-  
-  // begin fetching from prices API
-
-  // const responsePrice = await fetch(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${destination}&checkin=${checkInDate}&checkout=${checkOutDate}&lang=en_US&currency=SGD&country_code=SG&guests=${getGuestReqString(rooms, adults+children)}&partner_id=1`);
-  // const prices = await responsePrice.json();
 
   // fetch all hotels for destination from static API
   let data;
