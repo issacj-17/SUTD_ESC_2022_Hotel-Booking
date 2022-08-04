@@ -15,8 +15,8 @@ const Nav = () => {
                     pathname: "/searchResults",
                     query: {
                         destination:"RsBU",
-                        checkInDate: "2022-07-28",
-                        checkOutDate: "2022-07-31",
+                        checkInDate: "2022-09-20",
+                        checkOutDate: "2022-09-25",
                         rooms: 1,
                         adults: 2,
                         children: 0

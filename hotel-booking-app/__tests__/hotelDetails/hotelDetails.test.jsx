@@ -11,7 +11,6 @@ describe('Test for HotelDetails Page', () => {
 
     it("Checks getServerSideProps fetches correctly", async ()=>{
         fetch.mockResponseOnce(JSON.stringify({id:123}))
-        fetch.mockResponseOnce(JSON.stringify({id:124}))
         const response = await getServerSideProps({
             query: {
                 hotelId:'diH7',
@@ -25,10 +24,8 @@ describe('Test for HotelDetails Page', () => {
         })
     
         expect(response.props.hotelDetailData).toEqual({id:123})
-        expect(response.props.roomDetailData).toEqual({id:124})
-        expect(fetch).toHaveBeenCalledTimes(2);
+        expect(fetch).toHaveBeenCalledTimes(1);
         expect(fetch).toHaveBeenCalledWith(`https://hotelapi.loyalty.dev/api/hotels/diH7`)
-        expect(fetch).toHaveBeenCalledWith(`https://hotelapi.loyalty.dev/api/hotels/diH7/price?destination_id=RsBU&checkin=2022-09-14&checkout=2022-09-22&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=2`)
     })
 
     it("Checks getServerSideProps catches error and returns null", async ()=>{
@@ -46,11 +43,9 @@ describe('Test for HotelDetails Page', () => {
             }
         })
     
-        expect(fetch).toHaveBeenCalledTimes(2);
+        expect(fetch).toHaveBeenCalledTimes(1);
         expect(fetch).toHaveBeenCalledWith(`https://hotelapi.loyalty.dev/api/hotels/diH7`)
-        expect(fetch).toHaveBeenCalledWith(`https://hotelapi.loyalty.dev/api/hotels/diH7/price?destination_id=RsBU&checkin=2022-09-14&checkout=2022-09-22&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=2`)
         expect(response.props.hotelDetailData).toEqual(null)
-        expect(response.props.roomDetailData).toEqual(null)
     })
 
     
