@@ -42,12 +42,12 @@ export default function roomDetails({Room,searchDetails}) {
         })
     }
   return (
-        <div className={styles.card+' row w-80'} data-testId="RoomContainer">
+        <div className={styles.card+' row w-80'} data-testid="RoomContainer">
             
             <div className='col'>
                 
                     <h4 data-testId="RoomName">{roomType}</h4>
-                    <Carousel className={styles.roomImage} data-testId="RoomPictures">
+                    <Carousel className={styles.roomImage} data-testid="RoomPictures">
                         {
                             imagesUrl.map((object,index) => {return(
                                 <Carousel.Item>
@@ -59,7 +59,7 @@ export default function roomDetails({Room,searchDetails}) {
                 
             </div>
             <div className='col'>
-                <p data-testId="RoomPrice">Price of {roomType} is : {price}</p>
+                <p data-testid="RoomPrice">Price of {roomType} is : {price}</p>
 
                 <button type="button fixed-bottom" class="btn btn-outline-primary align-self-end" onClick={()=>sendProps()}>Select</button>            
             </div>

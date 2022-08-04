@@ -47,7 +47,7 @@ const hotelDetailsComp = (props) => {
 
     return (
         <div>
-            <h1 className={styles.hotelName} data-testid="hotelName">Name of Hotel : {hotelName}</h1>
+            <h1 className={styles.hotelName} data-testid="hotelName">{hotelName}</h1>
             
             
             <Slider listOfImagesUrl={ listOfHotelImagesUrl }></Slider>
@@ -66,11 +66,11 @@ const hotelDetailsComp = (props) => {
 
                     <div className='col-3'> 
 
-                    <div className={styles.locationCard +" card w-100"} data-testId="locationBox">
+                    <div className={styles.locationCard +" card w-100"} data-testid="locationBox">
                         <div className=" card-body">
             
                                 <h5 className="card-title">Location</h5>
-                                <p className="card-text" data-testId="location">{location}</p>
+                                <p className="card-text" data-testid="location">{location}</p>
                                 <MapDisplay latitude={latitude} longitude={longitude}></MapDisplay>
                             
                             
@@ -80,7 +80,7 @@ const hotelDetailsComp = (props) => {
                     </div>
                 </div>
                 <div className='row'>
-                    <div className={styles.card + ' col w-100'} data-testId="listOfHotelRoomBox"> 
+                    <div className={styles.card + ' col w-100'} data-testid="listOfHotelRoomBox"> 
                     
                     {
                         listOfAvailableRooms.length>0 &&

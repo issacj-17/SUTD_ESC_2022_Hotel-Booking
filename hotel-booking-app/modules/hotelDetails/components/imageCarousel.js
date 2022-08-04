@@ -8,9 +8,9 @@ function imageCarousel({listOfImagesUrl}) {
       {listOfImagesUrl.map((listOfUrl,index) => {
             return (
               
-                <Carousel.Item>
+                <Carousel.Item key={index}>
                 
-                <div className={styles.hotelImageBox} data-testId="hotelImageBox">
+                <div className={styles.hotelImageBox} data-testid="hotelImageBox">
                     <div className='container-fluid'>
                       <div className='row'>
                         <div className='col'>
