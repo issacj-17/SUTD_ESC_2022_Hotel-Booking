@@ -6,3 +6,12 @@ hotel-booking-app/file.7z
 /Backend/app/.env
 /Backend/.idea/
 Backend/app/.env
+Backend/app/.env
+*.pyc
+Backend/app/models/__pycache__/__init__.cpython-310.pyc
+Backend/app/models/__pycache__/booking.cpython-310.pyc
+Backend/app/models/__pycache__/user.cpython-310.pyc
+Backend/app/routes/__pycache__/api.cpython-310.pyc
+Backend/app/routes/__pycache__/bookings.cpython-310.pyc
+Backend/app/routes/__pycache__/users.cpython-310.pyc
+Backend/.env
