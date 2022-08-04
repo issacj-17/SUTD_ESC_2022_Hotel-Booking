@@ -155,7 +155,7 @@ const schema = Yup.object().shape({
   ),
   CVV: Yup.number()
     .typeError("Invalid CVV/CVC")
-    .test('len', 'Must be exactly 3 characters', val => val && val.toString().length === 3 )
+    .test('len', 'Must be exactly 3/4 characters', val => val && (val.toString().length === 3 || val.toString().length === 4))
     .required("Required"),
   billingAddress: Yup.string()
     .typeError("Your address is not valid")
@@ -180,7 +180,6 @@ function bookingPage(props) {
       guestinfo[key] = CryptoJS.AES.encrypt(guest[key], "ThisIsTheTrueKey").toString()
     }
     guestinfo.email=values.email;
-    // let guestinfo = CryptoJS.AES.encrypt(JSON.stringify(guest), "ThisIsTheTrueKey").toString()
     var bookingRefGen = Math.floor(100000 + Math.random() * 900000).toString()
     var supplierIDGen = Math.floor(10000 + Math.random() * 90000).toString()
     var paymentIDGen = Math.floor(100000 + Math.random() * 900000).toString()
