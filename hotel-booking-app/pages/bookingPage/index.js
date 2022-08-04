@@ -155,7 +155,7 @@ const schema = Yup.object().shape({
   ),
   CVV: Yup.number()
     .typeError("Invalid CVV/CVC")
-    .test('len', 'Must be exactly 3 characters', val => val && val.toString().length === 3 )
+    .test('len', 'Must be exactly 3/4 characters', val => val && (val.toString().length === 3 || val.toString().length === 4))
     .required("Required"),
   billingAddress: Yup.string()
     .typeError("Your address is not valid")
