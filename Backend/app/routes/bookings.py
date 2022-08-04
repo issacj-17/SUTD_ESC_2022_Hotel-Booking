@@ -1,9 +1,10 @@
 from fastapi import APIRouter, Body, Depends, HTTPException, Response
 from typing import List
-from models.booking import BookingModel, BookingCreate, BookingOut
-from models.user import UserModel
 from datetime import date
 from beanie import WriteRules
+
+from app.models.booking import BookingModel, BookingCreate, BookingOut
+from app.models.user import UserModel
 
 
 router = APIRouter()

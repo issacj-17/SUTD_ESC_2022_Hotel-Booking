@@ -34,7 +34,7 @@ describe('Test for displayHotelDetails',()=>{
         //Hotel Name 
         const hotelName =  screen.getByTestId('hotelName');
         expect(hotelName).toBeInTheDocument();
-        expect(hotelName).toHaveTextContent("Name of Hotel : hayden's Hotel")
+        expect(hotelName).toHaveTextContent("hayden's Hotel")
         
         //HotelImagesBox (Inside Carousel so nonnid test here)
 

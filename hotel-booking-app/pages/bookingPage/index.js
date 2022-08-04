@@ -161,26 +161,74 @@ function bookingPage(props) {
 // const{
 //   query:{}
 // } = router
-function sendProps(values){
-  Router.push({pathname:"/bookingPage/hotelReceipt",
-query:{
-  firstName:values.firstName,
-  lastName: values.lastName,
-  phoneNumber: values.phoneNumber,
-  email: values.email,
-  specialRequest: values.specialRequest,
-  billingAddress: values.billingAddress,
-  roomType: props.queryResult.roomType,
-  price: props.queryResult.price,
-  hotelId: props.queryResult.hotelId,
-  destination: props.queryResult.destination,
-  checkInDate: props.queryResult.checkInDate,
-  checkOutDate: props.queryResult.checkOutDate,
-  rooms: props.queryResult.rooms,
-  adults: props.queryResult.adults,
-  children: props.queryResult.children,
-}})
-}
+
+  function sendProps(values){
+    const postData = async () => {
+      console.log(submitAPIData)
+      const response = await fetch('http://localhost:8000/booking/create', {
+        method: 'POST',
+        body: JSON.stringify(submitAPIData),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      const data = await response.json()
+      console.log(data)
+    }
+
+    var submitAPIData = {
+      "destID": props.queryResult.destination,
+      "hotelID": props.queryResult.hotelId,
+      "price": props.queryResult.price,
+      "bookingRef": "string",
+      "supplierID": "string",
+      "supplierRes": [],
+      "display": {
+        "numOfNights": parseInt((new Date(props.queryResult.checkOutDate) - new Date(props.queryResult.checkInDate))/(1000 * 60 * 60 * 24)),
+        "startDate": props.queryResult.checkInDate,
+        "endDate": props.queryResult.checkOutDate,
+        "adults": props.queryResult.adults,
+        "children": props.queryResult.children,
+        "roomType": [
+          "string"
+        ],
+        "message": values.specialRequest
+      },
+      "guest": {
+        "salutation": "string",
+        "firstName": values.firstName,
+        "lastName": values.lastName,
+        "phone": values.phoneNumber,
+        "email": values.email
+      },
+      "payment": {
+        "paymentID": "string",
+        "payeeID": "string"
+      }
+    }
+
+    postData()
+
+    Router.push({pathname:"/bookingPage/hotelReceipt",
+  query:{
+    firstName:values.firstName,
+    lastName: values.lastName,
+    phoneNumber: values.phoneNumber,
+    email: values.email,
+    specialRequest: values.specialRequest,
+    billingAddress: values.billingAddress,
+    roomType: props.queryResult.roomType,
+    price: props.queryResult.price,
+    hotelId: props.queryResult.hotelId,
+    destination: props.queryResult.destination,
+    checkInDate: props.queryResult.checkInDate,
+    checkOutDate: props.queryResult.checkOutDate,
+    rooms: props.queryResult.rooms,
+    adults: props.queryResult.adults,
+    children: props.queryResult.children,
+  }})
+
+  }
   return (
       <CONTAINER>
         <h1> Guest Information Collection Form </h1>
@@ -224,6 +272,7 @@ query:{
               <Form.Group as={Col} md="4" controlId="firstName">
                 <Form.Label> First Name</Form.Label>
                 <Form.Control
+                  data-testid="firstName"
                   type="text"
                   name="firstName"
                   placeholder="First Name"
@@ -239,6 +288,7 @@ query:{
               <Form.Group as={Col} md="4" controlId="lastName">
                 <Form.Label> Last Name</Form.Label>
                 <Form.Control
+                  data-testid="lastName"
                   type="text"
                   name="lastName"
                   placeholder="Last Name"
@@ -256,6 +306,7 @@ query:{
               <Form.Group as={Col} md="5" controlId="phoneNumber">
                 <Form.Label> Phone Number </Form.Label>
                 <Form.Control
+                  data-testid="phoneNumber"
                   type="text"
                   name="phoneNumber"
                   placeholder="Phone Number"
@@ -271,6 +322,7 @@ query:{
               <Form.Group as={Col} md="7" controlId="email">
                 <Form.Label> Email </Form.Label>
                 <Form.Control
+                  data-testid="email"
                   type="text"
                   name="email"
                   placeholder="Email"
@@ -288,6 +340,7 @@ query:{
               <Form.Group as={Col} md="12" controlId="specialRequest">
                 <Form.Label> Special Request </Form.Label>
                 <Form.Control
+                  data-testid="specialRequest"
                   type="text"
                   name="specialRequest"
                   placeholder="Special Request"
@@ -300,6 +353,7 @@ query:{
               <Form.Group as={Col} md="6" controlId="bankCard">
                 <Form.Label> Bank Card Number </Form.Label>
                 <Form.Control
+                  data-testid="bankCard"
                   type="text"
                   name="bankCard"
                   placeholder="Bank Card Number"
@@ -315,6 +369,7 @@ query:{
               <Form.Group as={Col} md="3" controlId="expiryDate">
                 <Form.Label> Expiry Date </Form.Label>
                 <Form.Control
+                data-testid="expiryDate"
                   type="text"
                   name="expiryDate"
                   placeholder="MM/YY"
@@ -348,6 +403,7 @@ query:{
               <Form.Group as={Col} md="12" controlId="billingAddress">
                 <Form.Label> Billing Address </Form.Label>
                 <Form.Control
+                  data-testid="billingAddress"
                   type="text"
                   name="billingAddress"
                   placeholder="Billing Address"
@@ -361,9 +417,14 @@ query:{
                   ): null}
               </Form.Group>
               </Row>
+              <Form.Group controlId="submitButton">
+                <Form.Control
+                data-testid="submitButton"
+                />
               <MYBUTTON variant="primary" type="submit" disabled={isSubmitting}>
                 Submit
               </MYBUTTON>
+              </Form.Group>
             </MYFORM>
           )}
         </Formik>

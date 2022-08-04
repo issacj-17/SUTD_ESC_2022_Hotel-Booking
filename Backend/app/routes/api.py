@@ -4,11 +4,6 @@ import requests
 
 router = APIRouter()
 
-# @router.get("/hotels")
-# async def get_hotels(destination: str):
-#     res = requests.get(f"https://hotelapi.loyalty.dev/api/hotels?destination_id={destination}")
-#     return res.json()
-
 @router.get("/hotels")
 def get_hotels(destination: str):
     response = requests.get(f"https://hotelapi.loyalty.dev/api/hotels", params={'destination_id':destination})
