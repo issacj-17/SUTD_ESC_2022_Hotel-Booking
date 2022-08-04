@@ -32,4 +32,22 @@ describe('BookingForm tests ', () => {
 
 
     })
+    test('Failure test, credit card invalid input', async() => {
+      const handleSubmit = jest.fn();
+      render(<BookingForm onSubmit = {handleSubmit}/>)
+      const input1 = screen.getByTestId('firstName');
+      fireEvent.blur(input1);
+      const input2 = screen.getByTestId('lastName');
+      fireEvent.blur(input2);
+      const input3 = screen.getByTestId('phoneNumber');
+      fireEvent.blur(input3);
+      const input4 = screen.getByTestId('email');
+      fireEvent.blur(input4);
+      const input5 = screen.getByTestId('specialRequest');
+      fireEvent.blur(input5);
+      const input6 = screen.getByTestId('bankCard')
+      fireEvent.change(input6,{target:{value:'1234123412341234'}});
+      expect(screen.queryAllByText('Credit Card number is invalid')).not.toBeNull();
+    }
+    )
 });
