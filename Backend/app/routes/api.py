@@ -2,7 +2,6 @@ from urllib import response
 from fastapi import APIRouter, Body, Depends, HTTPException, Response
 import requests
 import json
-import httpx
 import asyncio
 
 router = APIRouter()

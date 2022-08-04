@@ -1,5 +1,7 @@
 import Table from 'react-bootstrap/Table';
 import React from "react";
+import styled from 'styled-components';
+
 
     const unpackQueryData = (props) => {
     const firstName = props.queryData.firstName;
@@ -17,11 +19,52 @@ import React from "react";
     const rooms = props.queryData.rooms;
     const adults = props.queryData.adults;
     const children = props.queryData.children;
+    const bookingRef = props.queryData.bookingRef;
 }
+const CONTAINER = styled.div`
+  background: #f7f9fa;
+  height: auto;
+  width: auto;
+  color: snow;
+  -webkit-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.4);
+
+  label {
+    color: #24b9b6;
+    font-size: 1.2em;
+    font-weight: 300;
+  }
+
+  h1 {
+    color: #24b9b6;
+    text-align: center;
+    padding-top: 0.5em;
+  }
+
+  .form-group {
+    margin-top: 2.5em;
+    margin-bottom: 2.5em;
+  }
+
+  .error {
+    border: 2px solid #ff6565;
+  }
+    .error-message {
+    color: #FF6565;
+    padding: .2em .3em;
+    height: 1em;
+    font-size: .8em;
+  }
+`;
 
 function hotelReceipt(props){
+
     const {queryData} = props;
     return(
+        <CONTAINER>
+        <h1> Thank you for booking with us!</h1>
+        <h3>The following is your booking information</h3>
         <Table striped>
             <thead>
                 <tr>
@@ -37,6 +80,10 @@ function hotelReceipt(props){
                 <tr>
                 <td>Hotel ID </td>
                 <td>{queryData.hotelId}</td>
+                </tr>
+                <tr>
+                <td>Booking Reference </td>
+                <td>{queryData.bookingRef}</td>
                 </tr>
                 <tr>
                 <td>Start Date </td>
@@ -78,14 +125,9 @@ function hotelReceipt(props){
                 <td>Guest's Billing Address </td>
                 <td>{queryData.billingAddress}</td>
                 </tr>
-                <tr>
-                <td>Payment ID</td>
-                </tr>
-                <tr>
-                <td>Payee ID </td>
-                </tr>
             </tbody>
         </Table>
+        </CONTAINER>
     );
 }
 export default hotelReceipt;
