@@ -5,7 +5,24 @@ Accept: application/json
 
 ###
 
-GET http://127.0.0.1:8000/hello/User
+GET http://127.0.0.1:8000/api/hotels?destination=test
 Accept: application/json
+
+###
+
+POST http://127.0.0.1:8000/users/create
+Accept: application/json
+Content-Type: application/json
+
+{
+  "firstName": "name",
+  "lastName": "string",
+  "email": "user123@example.com",
+  "password": "string"
+}
+
+###
+
+
 
 ###

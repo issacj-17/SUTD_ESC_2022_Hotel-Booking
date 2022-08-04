@@ -8,7 +8,10 @@ router = APIRouter()
 @router.post("/create", response_model=UserOut)
 async def create_user(user: UserCreate):
     model = UserModel.parse_obj(user.dict(exclude_unset=True))
-    await model.create()
+    if await UserModel.by_email(model.email) is None:
+        await model.create()
+    else:
+        raise HTTPException(status_code=409, detail="User Exists in Database")
     return model
 
 @router.get("/get", response_model=UserModel)
@@ -30,5 +33,9 @@ async def update_user(update: UserUpdate, user: UserAuth):
 
 @router.delete("/delete")
 async def delete_user(email: str):
-    await UserModel.find_one(UserModel.email == email).delete()
-    return Response(status_code=204)
+    user = await UserModel.find_one(UserModel.email == email)
+    if user is None:
+        raise HTTPException(status_code=404, detail="User Not Found")
+    else:
+        await UserModel.find_one(UserModel.email == email).delete()
+        return Response(status_code=204)

@@ -11,7 +11,10 @@ class Settings(BaseSettings):
     """Server config settings"""
 
     # Mongo Engine settings
-    MONGO_URI = config("MONGO_URI")
+    if config("ENV") == "dev":
+        MONGO_URI = config("MONGO_DEV_URI")
+    else:
+        MONGO_URI = config("MONGO_PROD_URI")
 
     # Security settings
     authjwt_secret_key = config("SECRET_KEY")
@@ -25,11 +28,8 @@ class Settings(BaseSettings):
     # mail_password = config("MAIL_PASSWORD", default="")
     # mail_sender = config("MAIL_SENDER", default="noreply@myserver.io")
     # testing = config("TESTING", default=False, cast=bool)
-
-
-CONFIG = Settings()
-
-async def initiate_database():
-    print(CONFIG.MONGO_URI)
+async def initialize_database():
+    CONFIG = Settings()
+    # print(CONFIG.MONGO_URI)
     motorDB = AsyncIOMotorClient(CONFIG.MONGO_URI).Ascendas
-    await init_beanie(database=motorDB, document_models=[UserModel, BookingModel])
+    return await init_beanie(database=motorDB, document_models=[UserModel, BookingModel])
