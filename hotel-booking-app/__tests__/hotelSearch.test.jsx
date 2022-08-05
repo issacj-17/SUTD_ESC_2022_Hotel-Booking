@@ -15,12 +15,14 @@ describe('Search Form', () => {
         render(<SearchForm onSubmit={handleSubmit} />);
 
         const checkIn = screen.getByTestId('checkIn');
+        const destination = screen.getAllByRole('combobox')[0];
         const checkOut = screen.getByTestId('checkOut');
         const rooms = screen.getByTestId('rooms');
         const adults = screen.getByTestId('adults');
         const children = screen.getByTestId('children');
         const submit = screen.getByTestId('submitButton');
 
+        expect(destination).toBeInTheDocument();
         expect(checkIn).toBeInTheDocument();
         expect(checkOut).toBeInTheDocument();
         expect(rooms).toBeInTheDocument();

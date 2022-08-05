@@ -107,7 +107,8 @@ export default function SearchForm() {
                                         id="destination"
                                         name="destination"
                                         type="text"
-                                        placeholder="Enter Your Destination"/>
+                                        placeholder="Enter Your Destination"
+                                        data-testid="destination"/>
                                     <FormErrorMessage id="destinationError">
                                         {errors.destination}
                                     </FormErrorMessage>
