@@ -24,15 +24,13 @@ async def get_hotels(hotelId: str):
 @router.get("/hotels/prices", response_class=ORJSONResponse)
 async def get_hotels_prices(hotelId: str, destination: str, checkInDate: str, checkOutDate: str, guests: str):
     async with httpx.AsyncClient() as client:
-        completed = False
-        while completed != True:
-            req = httpx.Request("GET", f"https://hotelapi.loyalty.dev/api/hotels/{hotelId}/price", \
+        req = httpx.Request("GET", f"https://hotelapi.loyalty.dev/api/hotels/{hotelId}/price", \
                                 params={'destination_id': destination, 'checkin': checkInDate, 'checkout': checkOutDate, \
                                         'lang': 'en_US', 'currency': 'SGD', 'partner_id': 16, 'country_code': 'SG',
                                         'guests': guests})
-            print(req)
-            res = await client.send(req)
-            completed = res.json()['completed']
+        print(req)
+        res = await client.send(req)
+        completed = res.json()['completed']
         client.aclose()
         print(res.json())
     return res.json()
@@ -40,15 +38,14 @@ async def get_hotels_prices(hotelId: str, destination: str, checkInDate: str, ch
 @router.get("/prices", response_class=ORJSONResponse)
 async def get_prices(destination: str, checkInDate: str, checkOutDate: str, guests: str):
     async with httpx.AsyncClient() as client:
-        completed = False
-        while completed != True:
-            req = httpx.Request("GET", f"https://hotelapi.loyalty.dev/api/hotels/prices", \
+        req = httpx.Request("GET", f"https://hotelapi.loyalty.dev/api/hotels/prices", \
                              params={'destination_id':destination, 'checkin':checkInDate, \
                                      'checkout':checkOutDate, 'lang':'en_US', 'currency':'SGD', \
                                      'landing_page': '', 'partner_id': 16, 'country_code': 'SG', 'guests': guests})
-            print(req)
-            res = await client.send(req)
-            completed = res.json()['completed']
+        print(req)
+        res = await client.send(req)
+        print(res.json()['completed'])
+        completed = res.json()['completed']
         client.aclose()
         print(res.json())
     return res.json()
