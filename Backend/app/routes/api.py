@@ -1,25 +1,54 @@
-from urllib import response
-from fastapi import APIRouter, Body, Depends, HTTPException, Response
-import requests
+from fastapi import APIRouter, Body, Depends, HTTPException
+from fastapi.responses import ORJSONResponse
+import httpx
+import orjson as json
 
 router = APIRouter()
 
-@router.get("/hotels")
-def get_hotels(destination: str):
-    response = requests.get(f"https://hotelapi.loyalty.dev/api/hotels", params={'destination_id':destination})
-    return response.json()
+@router.get("/hotels", response_class=ORJSONResponse)
+async def get_hotels(destination: str):
+    async with httpx.AsyncClient() as client:
+        res = await client.get(f"https://hotelapi.loyalty.dev/api/hotels", params={'destination_id':destination})
+    client.aclose()
+    print(res.json())
+    return res.json()
 
-@router.get("/hotels/prices")
-def get_hotels(hotelId: str, destination: str, checkInDate: str, checkOutDate: str, guestString: str):
-    response = requests.get(f"https://hotelapi.loyalty.dev/api/hotels/{hotelId}/price", params={'destination_id':destination, 'checkin':checkInDate, 'checkout':checkOutDate, 'lang':'en_US', 'currency':'SGD', 'landing_page': '', 'partner_id': 1, 'country_code': 'SG', 'guests': guestString})
-    return response.json()
+@router.get("/hotels/id", response_class=ORJSONResponse)
+async def get_hotels(hotelId: str):
+    async with httpx.AsyncClient() as client:
+        res = await client.get(f"https://hotelapi.loyalty.dev/api/hotels/{hotelId}")
+    client.aclose()
+    print(res.json())
+    return res.json()
 
-@router.get("/prices")
-def get_hotels(destination: str, checkInDate: str, checkOutDate: str, guestString: str):
-    print("reached request")
-    response = requests.get(f"https://hotelapi.loyalty.dev/api/hotels/prices", params={'destination_id':destination, 'checkin':checkInDate, 'checkout':checkOutDate, 'lang':'en_US', 'currency':'SGD', 'landing_page': '', 'partner_id': 1, 'country_code': 'SG', 'guests': guestString})
-    print(response.status_code)
-    return response.json()
+@router.get("/hotels/prices", response_class=ORJSONResponse)
+async def get_hotels_prices(hotelId: str, destination: str, checkInDate: str, checkOutDate: str, guests: str):
+    async with httpx.AsyncClient() as client:
+        completed = False
+        while completed != True:
+            req = httpx.Request("GET", f"https://hotelapi.loyalty.dev/api/hotels/{hotelId}/price", \
+                                params={'destination_id': destination, 'checkin': checkInDate, 'checkout': checkOutDate, \
+                                        'lang': 'en_US', 'currency': 'SGD', 'partner_id': 16, 'country_code': 'SG',
+                                        'guests': guests})
+            print(req)
+            res = await client.send(req)
+            completed = res.json()['completed']
+        client.aclose()
+        print(res.json())
+    return res.json()
 
-
-
+@router.get("/prices", response_class=ORJSONResponse)
+async def get_prices(destination: str, checkInDate: str, checkOutDate: str, guests: str):
+    async with httpx.AsyncClient() as client:
+        completed = False
+        while completed != True:
+            req = httpx.Request("GET", f"https://hotelapi.loyalty.dev/api/hotels/prices", \
+                             params={'destination_id':destination, 'checkin':checkInDate, \
+                                     'checkout':checkOutDate, 'lang':'en_US', 'currency':'SGD', \
+                                     'landing_page': '', 'partner_id': 16, 'country_code': 'SG', 'guests': guests})
+            print(req)
+            res = await client.send(req)
+            completed = res.json()['completed']
+        client.aclose()
+        print(res.json())
+    return res.json()
