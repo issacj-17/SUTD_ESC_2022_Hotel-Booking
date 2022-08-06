@@ -41,6 +41,8 @@ export default function roomDetails({Room,searchDetails}) {
             }
         })
     }
+
+    
   return (
         <div className={styles.card+' row w-80'} data-testid="RoomContainer">
             

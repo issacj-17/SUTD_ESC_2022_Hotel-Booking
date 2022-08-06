@@ -7,6 +7,7 @@ import HotelComponent from '../modules/searchResults/components/HotelComponent';
 import fetchMock from 'jest-fetch-mock';
 
 fetchMock.enableMocks();
+jest.setTimeout(20000);
 
 describe('Search Results', () => {
   // Clear fetch API history
@@ -14,30 +15,77 @@ describe('Search Results', () => {
 
   // Sample Data
   const expectedSearchDetails = {
-    destination:"WD0M",
-    checkInDate:"2011-11-11",
-    checkOutDate:"2012-12-12",
+    destination:"RsBU",
+    checkInDate:"2022-09-20",
+    checkOutDate:"2022-09-25",
     rooms:"1",
     adults:"2",
-    children:"1"
+    children:"0"
   };
   const expectedHotels = [{id:"050G",imageCount:52,name:"The Forest by Wangz",address:"145A Moulmein Road",rating:4.0,image_details:{suffix:".jpg",count:52,prefix:"https://d2ey9sqrvkqdfs.cloudfront.net/050G/"},default_image_index:1,trustyou:{id:"dede9a48-2f7c-49ae-9bd0-942a40e245e7",score:{overall:94,kaligo_overall:4.7,solo:null,couple:94,family:93,business:null}}}];
+  const expectedPrice = {
+    "id": "050G",
+    "searchRank": 0.93,
+    "price_type": "multi",
+    "max_cash_payment": 646.38,
+    "coverted_max_cash_payment": 897.93,
+    "points": 22425,
+    "bonuses": 0,
+    "lowest_price": 646.38,
+    "price": 897.93,
+    "converted_price": 897.93,
+    "lowest_converted_price": 897.93,
+    "market_rates": [
+        {
+            "supplier": "expedia",
+            "rate": 790.2288709775
+        }
+    ]
+}
+
 
 
   // Test Main Page
-  test("should render Search Results properly", () => {
+  test("should render Search Results properly", async () => {
     render(<SearchResults hotels={expectedHotels} searchDetails={expectedSearchDetails}/>);
-
+    fetchMock.mockResponse(JSON.stringify({
+      "searchCompleted": null,
+      "completed": true,
+      "status": null,
+      "currency": "SGD",
+      "hotels": [
+        {
+            "id": "050G",
+            "searchRank": 0.93,
+            "price_type": "multi",
+            "max_cash_payment": 646.38,
+            "coverted_max_cash_payment": 897.93,
+            "points": 22425,
+            "bonuses": 0,
+            "lowest_price": 646.38,
+            "price": 897.93,
+            "converted_price": 897.93,
+            "lowest_converted_price": 897.93,
+            "market_rates": [
+                {
+                    "supplier": "expedia",
+                    "rate": 790.2288709775
+                }
+            ]
+        }
+      ]
+  }));
     // Heading of page
-    const header = screen.getByTestId('header');
-    expect(header).toBeInTheDocument();
-    expect(header).toHaveTextContent(`Search Results for ${expectedSearchDetails.destination}`);
+    const header = await screen.findByTestId('header', {},{timeout:15000, interval:1000});
+    await expect(header).toBeInTheDocument();
+    await expect(header).toHaveTextContent(`Search Results for ${expectedSearchDetails.destination}`);
   });
+
 
 
   // Test HotelComponent
   test('should render a HotelComponent properly', () => {
-    render(<HotelComponent hotel={expectedHotels[0]} searchDetails={expectedSearchDetails}/>);
+    render(<HotelComponent hotels={expectedHotels} searchDetails={expectedSearchDetails} price={expectedPrice}/>);
 
     // Image
     const image = screen.getByTestId('image');
@@ -64,6 +112,7 @@ describe('Search Results', () => {
     expect(button).toBeInTheDocument();
     // TODO: test router
   });
+
 
 
   // Test ServersideProps

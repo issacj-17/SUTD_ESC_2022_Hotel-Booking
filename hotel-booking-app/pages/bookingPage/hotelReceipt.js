@@ -1,7 +1,9 @@
 import Table from 'react-bootstrap/Table';
 import React from "react";
 import styled from 'styled-components';
-
+import {Button} from "react-bootstrap";
+import Router,{useRouter} from 'next/router' //Used to pass Props between pages
+import {getGuestReqString} from '../searchResults.js'
 
     const unpackQueryData = (props) => {
     const firstName = props.queryData.firstName;
@@ -61,6 +63,35 @@ const CONTAINER = styled.div`
 function hotelReceipt(props){
 
     const {queryData} = props;
+    console.log(queryData)
+    const {rooms,adults,children} = queryData
+    const router = useRouter()
+    if (parseInt(rooms)>1){
+      var guestQuery = getGuestReqString((parseInt(rooms)-1),parseInt(adults)+parseInt(children))
+    } 
+    console.log(guestQuery)
+    
+    function moreRoom() {
+      router.push({
+        pathname: "/hotelDetails",
+            query: {
+            hotelId: queryData.hotelId,
+            destination:queryData.destination,
+            checkInDate: queryData.checkInDate,
+            checkOutDate: queryData.checkOutDate,
+            rooms: (parseInt(rooms)-1),
+            adults: adults,
+            children: children,
+            guestQuery: guestQuery
+            }
+        })
+  }
+  function backHome() {
+    router.push({
+        pathname: "/"
+        })
+    
+  }
     return(
         <CONTAINER>
         <h1> Thank you for booking with us!</h1>
@@ -127,6 +158,11 @@ function hotelReceipt(props){
                 </tr>
             </tbody>
         </Table>
+        {
+          queryData.rooms==="1"
+          ? <Button style={{float:"right"}} onClick={()=>backHome()}>Go Back Home</Button>
+          : <Button style={{float:"right"}} onClick={()=>moreRoom()}>Book Next Room</Button>
+        }
         </CONTAINER>
     );
 }

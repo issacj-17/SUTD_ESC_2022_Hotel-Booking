@@ -19,6 +19,7 @@ port = config("PORT")
 
 origins = [
     f"http://{host}:{port}",
+    "http://localhost:3000"
 ]
 
 app.add_middleware(

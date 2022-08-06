@@ -184,6 +184,7 @@ function bookingPage(props) {
     var supplierIDGen = Math.floor(10000 + Math.random() * 90000).toString()
     var paymentIDGen = Math.floor(100000 + Math.random() * 900000).toString()
     var payeeIDGen = Math.floor(10000 + Math.random() * 90000).toString()
+
     const postData = async () => {
       console.log(submitAPIData)
       const response = await fetch('http://localhost:8000/booking/create', {
@@ -194,7 +195,7 @@ function bookingPage(props) {
         }
       })
       const data = await response.json()
-      console.log(data)
+      console.log("response",data)
     }
 
     var submitAPIData = {
