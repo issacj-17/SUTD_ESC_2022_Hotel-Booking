@@ -2,6 +2,7 @@ import Head from 'next/head';
 import HotelElem from '../modules/searchResults/components/HotelComponent';
 import styles from '../styles/searchResultsPage.module.css';
 import useSWR from 'swr';
+import axios from 'axios';
 
 
 /* 
@@ -23,7 +24,8 @@ function searchResults ({ hotels, searchDetails }) {
   searchDetails.guestQuery = getGuestReqString(searchDetails.rooms, parseInt(searchDetails.adults)+parseInt(searchDetails.children));
 
 
-  const { data,error } = useSWR(`http://localhost:8000/api/prices?destination=${searchDetails.destination}&checkInDate=${searchDetails.checkInDate}&checkOutDate=${searchDetails.checkOutDate}&guestString=${searchDetails.guestQuery}`, fetcher, {refreshInterval: 200})
+  const { data,error } = useSWR(`http://localhost:8000/api/prices?destination=${searchDetails.destination}&checkInDate=${searchDetails.checkInDate}&checkOutDate=${searchDetails.checkOutDate}&guests=${searchDetails.guestQuery}`, fetcher, {refreshInterval: 1000})
+  // const { data,error } = useSWR(`/prices?destination_id=PTbx&checkin=2022-08-31&checkout=2022-09-01&lang=en_US&currency=SGD&landing_page=&partner_id=16&country_code=SG&guests=2`, fetcher, {refreshInterval: 2000})
   if(error){
     console.log(error)
     return <h1>Error in fetching Data</h1>
