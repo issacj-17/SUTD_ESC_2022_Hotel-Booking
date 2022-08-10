@@ -13,12 +13,11 @@ import useSWR from 'swr'
 //Next.js will look for any specific pages before looking at the dynamic pages, so if u have option1 and [optionnumber] and u route to ../hotelDetails/option1,
 //option1.js will be displayed instead of the dynamic page.
 
-const hotelDetails = ({hotelDetailData,searchDetails,hotelId,roomDetailData}) => {
+const hotelDetails = ({hotelDetailData,searchDetails,hotelId}) => {
   const {destination,checkInDate,checkOutDate,rooms,adults,children,} = searchDetails;
   const guestString = getGuestReqString(rooms,parseInt(adults)+parseInt(children))
   console.log(guestString)
   const url = `http://localhost:8000/api/hotels/prices?hotelId=${hotelId}&destination=${destination}&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&guestString=${guestString}`
-
 
   async function fetcher(url) {
     let response = await fetch(url);
@@ -36,15 +35,14 @@ const hotelDetails = ({hotelDetailData,searchDetails,hotelId,roomDetailData}) =>
   console.log(data)
   
   
-  
   return (
     <div style={{margin: '10px'}}>
         <Head>
             <title>Hotel Details</title>
         </Head>
-        
-        
-        <DisplayHotelDetails selectedHotelData={hotelDetailData} searchDetails={searchDetails} roomData={data}></DisplayHotelDetails>
+
+        <h1 data-testid="HotelName">{hotelDetailData.name}</h1>
+        <DisplayHotelDetails data-testid="displayComponent" selectedHotelData={hotelDetailData} searchDetails={searchDetails} roomData={data}></DisplayHotelDetails>
     </div>
   )
 }
@@ -69,6 +67,18 @@ export async function getServerSideProps(context){
      hotelDetailData = null;
   }
 
+  // try{
+  //   var roomPrices = await fetch(`http://localhost:8000/api/hotels/prices?hotelId=${hotelId}&destination=${destination}&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&guestString=${guestString}`).then((response) => {
+  //   if (response.ok){
+  //     console.log("Price fetched")
+  //     return response.json();
+  //     }
+  //     throw new Error("Unable to fetch Price Endpoint");
+  //   })
+  // } catch(err){
+  //    roomPrices = null;
+  // }
+
   
   
   //console.log(`https://hotelapi.loyalty.dev/api/hotels/diH7/price?destination_id=RsBU&checkin=2022-08-28&checkout=2022-09-01&lang=en_US&currency=SGD&partner_id=16&country_code=SG&guests=2`)
@@ -78,7 +88,7 @@ export async function getServerSideProps(context){
       props: {
           hotelDetailData,
           hotelId,
-          searchDetails
+          searchDetails,
       }
     }
   }
