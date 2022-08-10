@@ -18,14 +18,10 @@ test('Full System Test', async () => {
   await page.locator('div[role="button"]:has-text("Salute Waterbus, Venice, Italy")').click();
 
 
-  let date2 = new Date();
-  date2.setDate(new Date().getDate() + 6);
 
-  let date1 = new Date();
-  date1.setDate(new Date().getDate() + 4);
 
-  let date1ISO = date1.toISOString().split('T')[0];
-  let date2ISO = date2.toISOString().split('T')[0];
+  let date1ISO = "2022-10-14"
+  let date2ISO = "2022-10-18"
 
 
 
@@ -43,11 +39,11 @@ test('Full System Test', async () => {
   await page.locator('[data-testid="submitButton"]').click();
   await expect(page).toHaveURL(`http://localhost:3000/searchResults?destination=AqIc&checkInDate=${date1ISO}&checkOutDate=${date2ISO}&rooms=2&adults=2&children=2`);
   // Click text=SGD 8782.99Select >> [data-testid="selectButton"]
-  await page.locator('[id="zs4j"]').click();
-  await expect(page).toHaveURL(`http://localhost:3000/hotelDetails?hotelId=pvlB&destination=AqIc&checkInDate=${date1ISO}&checkOutDate=${date2ISO}&rooms=2&adults=2&children=2&guestQuery=4%7C4`);
+  await page.locator('[id="pvlB"]').click();
+  await expect(page).toHaveURL(`http://localhost:3000/hotelDetails?hotelId=pvlB&destination=AqIc&checkInDate=2022-10-14&checkOutDate=2022-10-18&rooms=2&adults=2&children=2&guestQuery=4%7C4`);
   // Click text=Price of Junior Suite Capacity 4 is : 6316.44Select >> button
-  await page.locator('id=').click(); 
-  await expect(page).toHaveURL(`http://localhost:3000/bookingPage?roomType=Junior+Suite+Capacity+4&price=6316.44&hotelId=pvlB&destination=AqIc&checkInDate=${date1ISO}&checkOutDate=${date2ISO}&rooms=2&adults=2&children=2`);
+  await page.locator('[id="JUNIOR SUITE CAPACITY 4"]').click(); 
+  // await expect(page).toHaveURL(`http://localhost:3000/bookingPage?roomType=Junior+Suite+Capacity+4&price=6316.44&hotelId=pvlB&destination=AqIc&checkInDate=${date1ISO}&checkOutDate=${date2ISO}&rooms=2&adults=2&children=2`);
   // Click [data-testid="firstName"]
   await page.locator('[data-testid="firstName"]').click();
   // Fill [data-testid="firstName"]
@@ -98,9 +94,9 @@ test('Full System Test', async () => {
   await page.locator('text=SUTD').click();
   // Click text=Book Next Room
   await page.locator('text=Book Next Room').click();
-  await expect(page).toHaveURL('http://localhost:3000/hotelDetails?hotelId=pvlB&destination=AqIc&checkInDate=2022-08-10&checkOutDate=2022-08-18&rooms=1&adults=2&children=2&guestQuery=4');
-  // Click text=Price of Junior Suite Capacity 4 is : 3509.15Select >> button
-  await page.locator('text=Price of Junior Suite Capacity 4 is : 3509.15Select >> button').click();
+  await expect(page).toHaveURL(`http://localhost:3000/hotelDetails?hotelId=pvlB&destination=AqIc&checkInDate=2022-10-14&checkOutDate=2022-10-18&rooms=1&adults=2&children=2&guestQuery=4`);
+  // Click id="JSC 4" Select >> button
+  await page.locator('[id="JUNIOR SUITE CAPACITY 4"]').click(); 
   // Click [data-testid="firstName"]
   await page.locator('[data-testid="firstName"]').click();
   // Fill [data-testid="firstName"]

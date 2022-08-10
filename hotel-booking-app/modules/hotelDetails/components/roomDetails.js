@@ -63,7 +63,7 @@ export default function roomDetails({Room,searchDetails}) {
             <div className='col'>
                 <p data-testid="RoomPrice">Price of {roomType} is : {price}</p>
 
-                <button type="button fixed-bottom" className="btn btn-outline-primary align-self-end" onClick={()=>sendProps()}>Select</button>            
+                <button type="button fixed-bottom" className="btn btn-outline-primary align-self-end" id={Room.description} onClick={()=>sendProps()}>Select</button>            
             </div>
             
         </div>
