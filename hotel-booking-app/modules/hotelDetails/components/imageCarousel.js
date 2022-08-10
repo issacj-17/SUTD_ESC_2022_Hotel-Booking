@@ -19,6 +19,10 @@ function imageCarousel({listOfImagesUrl}) {
                           id="0"
                           src={listOfUrl[0]}
                           alt={`${index}`}
+                          onError={({currentTarget}) => {
+                            currentTarget.onerror = null;
+                            currentTarget.src = "https://via.placeholder.com/400x600.png?text=Image+Unavailable";
+                          }}
                           />
                         </div>
                         
@@ -29,6 +33,10 @@ function imageCarousel({listOfImagesUrl}) {
                           id="1"
                           src={listOfUrl[1]}
                           alt={`${index+1}`}
+                          onError={({currentTarget}) => {
+                            currentTarget.onerror = null;
+                            currentTarget.src = "https://via.placeholder.com/300x200.png?text=Image+Unavailable";
+                          }}
                           />
                         </div>
                         <div className='row'>
@@ -37,6 +45,10 @@ function imageCarousel({listOfImagesUrl}) {
                           id="2"
                           src={listOfUrl[2]}
                           alt={`${index+2}`}
+                          onError={({currentTarget}) => {
+                            currentTarget.onerror = null;
+                            currentTarget.src = "https://via.placeholder.com/300x200.png?text=Image+Unavailable";
+                          }}
                           />
                         </div>
                         </div>
@@ -47,6 +59,10 @@ function imageCarousel({listOfImagesUrl}) {
                           id="3"
                           src={listOfUrl[3]}
                           alt={`${index+3}`}
+                          onError={({currentTarget}) => {
+                            currentTarget.onerror = null;
+                            currentTarget.src = "https://via.placeholder.com/300x200.png?text=Image+Unavailable";
+                          }}
                           />
                         </div>
                         <div className='row'>   
@@ -55,6 +71,10 @@ function imageCarousel({listOfImagesUrl}) {
                           id="4"
                           src={listOfUrl[4]}
                           alt={`${index+4}`}
+                          onError={({currentTarget}) => {
+                            currentTarget.onerror = null;
+                            currentTarget.src = "https://via.placeholder.com/300x200.png?text=Image+Unavailable";
+                          }}
                           />
                         </div>
                         </div>

@@ -1,8 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import hotelDetails , {getServerSideProps} from '../../pages/hotelDetails/index'
+import HotelDetails , {getServerSideProps} from '../../pages/hotelDetails/index'
 
-jest.setTimeout(40000);
+jest.setTimeout(15000);
 describe('Test for HotelDetails Page', () => {
 
     beforeEach(() =>{
@@ -68,7 +68,7 @@ describe('Test for HotelDetails Page', () => {
       }
 
     it("Renders hotelDetail Page Successfully", async ()=>{
-        render(<hotelDetails hotelDetailData={hotelDetailData} searchDetails={searchData} ></hotelDetails>)
+        render(<HotelDetails hotelDetailData={hotelDetailData} searchDetails={searchData} hotelId={hotelDetailData.id}></HotelDetails>)
         fetch.mockResponse(JSON.stringify({
             "searchCompleted": null,
             "completed": true,
@@ -169,9 +169,9 @@ describe('Test for HotelDetails Page', () => {
             ]
         }))
 
-        const nameOfHotel = await screen.findByTestId('displayComponent', {},{timeout:25000, interval:1000});
+        const nameOfHotel = await screen.findByTestId('hotelName', {},{timeout:15000, interval:1000});
         await expect(nameOfHotel).toBeInTheDocument();
-        // await expect(nameOfHotel).toHaveTextContent(`Hotel Bencoolen`);
+        await expect(nameOfHotel).toHaveTextContent(`Hotel Bencoolen`);
     })
 
     it("Checks getServerSideProps fetches correctly", async ()=>{

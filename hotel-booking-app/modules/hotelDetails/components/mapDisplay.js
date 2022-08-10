@@ -18,7 +18,7 @@ export default function mapDisplay({latitude,longitude}) {
   }
   return (
     <div className=" col" data-testid="MapContainer">
-    <MapContainer center={position} zoom={15} scrollWheelZoom={false} style={{width:'auto' ,height:'300px'}}>
+    <MapContainer center={position} zoom={15} scrollWheelZoom={false} style={{width:'auto' ,height:'400px'}}>
       <TileLayer data-testId="TileLayer" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
       attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>
       contributors'/>

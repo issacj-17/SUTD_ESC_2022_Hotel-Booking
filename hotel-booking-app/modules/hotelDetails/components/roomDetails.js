@@ -48,7 +48,7 @@ export default function roomDetails({Room,searchDetails}) {
             
             <div className='col'>
                 
-                    <h4 data-testId="RoomName">{roomType}</h4>
+                    <h4 data-testid="RoomName">{roomType}</h4>
                     <Carousel className={styles.roomImage} data-testid="RoomPictures">
                         {
                             imagesUrl.map((object,index) => {return(
@@ -63,7 +63,7 @@ export default function roomDetails({Room,searchDetails}) {
             <div className='col'>
                 <p data-testid="RoomPrice">Price of {roomType} is : {price}</p>
 
-                <button type="button fixed-bottom" class="btn btn-outline-primary align-self-end" onClick={()=>sendProps()}>Select</button>            
+                <button type="button fixed-bottom" className="btn btn-outline-primary align-self-end" onClick={()=>sendProps()}>Select</button>            
             </div>
             
         </div>

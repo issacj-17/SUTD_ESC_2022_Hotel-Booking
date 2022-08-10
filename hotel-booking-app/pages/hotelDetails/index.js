@@ -17,7 +17,7 @@ const hotelDetails = ({hotelDetailData,searchDetails,hotelId}) => {
   const {destination,checkInDate,checkOutDate,rooms,adults,children,} = searchDetails;
   const guestString = getGuestReqString(rooms,parseInt(adults)+parseInt(children))
   console.log(guestString)
-  const url = `http://localhost:8000/api/hotels/prices?hotelId=${hotelId}&destination=${destination}&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&guestString=${guestString}`
+  const url = `http://localhost:8000/api/hotels/prices?hotelId=${hotelId}&destination=${destination}&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&guests=${guestString}`
 
   async function fetcher(url) {
     let response = await fetch(url);
@@ -32,16 +32,16 @@ const hotelDetails = ({hotelDetailData,searchDetails,hotelId}) => {
     console.log("Revalidating")
     return <h1>Loading...</h1>; 
   }
+  console.log("This is result of SWR")
   console.log(data)
   
   
   return (
-    <div style={{margin: '10px'}}>
+    <div data-testid="hotelDetailsPage" style={{margin: '10px'}}>
         <Head>
             <title>Hotel Details</title>
         </Head>
 
-        <h1 data-testid="HotelName">{hotelDetailData.name}</h1>
         <DisplayHotelDetails data-testid="displayComponent" selectedHotelData={hotelDetailData} searchDetails={searchDetails} roomData={data}></DisplayHotelDetails>
     </div>
   )
