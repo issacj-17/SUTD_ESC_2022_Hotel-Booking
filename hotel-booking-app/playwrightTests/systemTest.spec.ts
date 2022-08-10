@@ -3,9 +3,9 @@ import { test, expect, chromium } from '@playwright/test';
 test('Full System Test', async () => {
   const browser = await chromium.launch({headless:false});
   const context = await browser.newContext({
-    recordVideo: {
-        dir: "./videos/"
-    }
+    // recordVideo: {
+    //     dir: "./videos/"
+    // }
   })
   const page = await context.newPage();
   // Go to http://localhost:3000/
@@ -16,23 +16,38 @@ test('Full System Test', async () => {
   await page.locator('input[role="combobox"]').fill('Venice');
   // Click div[role="button"]:has-text("Salute Waterbus, Venice, Italy")
   await page.locator('div[role="button"]:has-text("Salute Waterbus, Venice, Italy")').click();
+
+
+  let date2 = new Date();
+  date2.setDate(new Date().getDate() + 6);
+
+  let date1 = new Date();
+  date1.setDate(new Date().getDate() + 4);
+
+  let date1ISO = date1.toISOString().split('T')[0];
+  let date2ISO = date2.toISOString().split('T')[0];
+
+
+
+
+
   // Fill [data-testid="checkIn"]
-  await page.locator('[data-testid="checkIn"]').fill('2022-08-10');
+  await page.locator('[data-testid="checkIn"]').fill(date1ISO);
   // Fill [data-testid="checkOut"]
-  await page.locator('[data-testid="checkOut"]').fill('2022-08-18');
+  await page.locator('[data-testid="checkOut"]').fill(date2ISO);
   // Select 2
   await page.locator('[data-testid="rooms"]').selectOption('2');
   // Select 2
   await page.locator('[data-testid="children"]').selectOption('2');
   // Click [data-testid="submitButton"]
   await page.locator('[data-testid="submitButton"]').click();
-  await expect(page).toHaveURL('http://localhost:3000/searchResults?destination=AqIc&checkInDate=2022-08-10&checkOutDate=2022-08-18&rooms=2&adults=2&children=2');
+  await expect(page).toHaveURL(`http://localhost:3000/searchResults?destination=AqIc&checkInDate=${date1ISO}&checkOutDate=${date2ISO}&rooms=2&adults=2&children=2`);
   // Click text=SGD 8782.99Select >> [data-testid="selectButton"]
-  await page.locator('text=SGD 8782.99Select >> [data-testid="selectButton"]').click();
-  await expect(page).toHaveURL('http://localhost:3000/hotelDetails?hotelId=pvlB&destination=AqIc&checkInDate=2022-08-10&checkOutDate=2022-08-18&rooms=2&adults=2&children=2&guestQuery=4%7C4');
+  await page.locator('[id="zs4j"]').click();
+  await expect(page).toHaveURL(`http://localhost:3000/hotelDetails?hotelId=pvlB&destination=AqIc&checkInDate=${date1ISO}&checkOutDate=${date2ISO}&rooms=2&adults=2&children=2&guestQuery=4%7C4`);
   // Click text=Price of Junior Suite Capacity 4 is : 6316.44Select >> button
-  await page.locator('text=Price of Junior Suite Capacity 4 is : 6316.44Select >> button').click();
-  await expect(page).toHaveURL('http://localhost:3000/bookingPage?roomType=Junior+Suite+Capacity+4&price=6316.44&hotelId=pvlB&destination=AqIc&checkInDate=2022-08-10&checkOutDate=2022-08-18&rooms=2&adults=2&children=2');
+  await page.locator('id=').click(); 
+  await expect(page).toHaveURL(`http://localhost:3000/bookingPage?roomType=Junior+Suite+Capacity+4&price=6316.44&hotelId=pvlB&destination=AqIc&checkInDate=${date1ISO}&checkOutDate=${date2ISO}&rooms=2&adults=2&children=2`);
   // Click [data-testid="firstName"]
   await page.locator('[data-testid="firstName"]').click();
   // Fill [data-testid="firstName"]

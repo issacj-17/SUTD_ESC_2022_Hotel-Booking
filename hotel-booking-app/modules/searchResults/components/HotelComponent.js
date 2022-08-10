@@ -65,7 +65,7 @@ function hotelElem({ hotels, searchDetails, price }) {
                     guestQuery: searchDetails.guestQuery
                   }
                 }}>
-                  <a className={styles.selectButton+ " btn btn-outline-primary btn-lg"} data-testid='selectButton'>Select</a>
+                  <a className={styles.selectButton+ " btn btn-outline-primary btn-lg"} data-testid='selectButton' id={hotel.id}>Select</a>
                 </Link>
               </span>
 
