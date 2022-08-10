@@ -47,28 +47,32 @@ function hotelElem({ hotels, searchDetails, price }) {
               
             </div>
             <div className='card-text' id={styles.priceData}>
-              <span id={styles.priceText}>SGD </span><span id={styles.priceValue}>{price.lowest_converted_price}</span>
-              
+              <div className='row'>
+                <div className='col'>
+                  <span id={styles.priceText}>SGD </span><span id={styles.priceValue}>{price.lowest_converted_price}</span>
+                </div>
 
-              {/* link to hotel details page with relevant hotelId */}
-              <span className={styles.buttonPrice+' card-text'}>
-                <Link href={{
-                  pathname: "/hotelDetails",
-                  query: {
-                    hotelId: hotel.id,
-                    destination:searchDetails.destination,
-                    checkInDate: searchDetails.checkInDate,
-                    checkOutDate: searchDetails.checkOutDate,
-                    rooms: searchDetails.rooms,
-                    adults: searchDetails.adults,
-                    children: searchDetails.children,
-                    guestQuery: searchDetails.guestQuery
-                  }
-                }}>
-                  <a className={styles.selectButton+ " btn btn-outline-primary btn-lg"} data-testid='selectButton' id={hotel.id}>Select</a>
-                </Link>
-              </span>
-
+                {/* link to hotel details page with relevant hotelId */}
+                <div className='col'>
+                  <span className={styles.buttonPrice+' card-text'}>
+                    <Link href={{
+                      pathname: "/hotelDetails",
+                      query: {
+                        hotelId: hotel.id,
+                        destination:searchDetails.destination,
+                        checkInDate: searchDetails.checkInDate,
+                        checkOutDate: searchDetails.checkOutDate,
+                        rooms: searchDetails.rooms,
+                        adults: searchDetails.adults,
+                        children: searchDetails.children,
+                        guestQuery: searchDetails.guestQuery
+                      }
+                    }}>
+                      <a className={styles.selectButton+ " btn btn-outline-primary btn-lg"} data-testid='selectButton' id={hotel.id}>Select</a>
+                    </Link>
+                  </span>
+                </div>
+              </div>
             </div>
 
             

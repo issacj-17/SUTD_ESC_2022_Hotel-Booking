@@ -3,6 +3,7 @@ import HotelElem from '../modules/searchResults/components/HotelComponent';
 import styles from '../styles/searchResultsPage.module.css';
 import useSWR from 'swr';
 import axios from 'axios';
+import { useState } from 'react';
 
 
 /* 
@@ -21,31 +22,27 @@ async function fetcher(url) {
 
 function searchResults ({ hotels, searchDetails }) {
 
+  const [numShown, setNumShown] = useState(12);
+
   searchDetails.guestQuery = getGuestReqString(searchDetails.rooms, parseInt(searchDetails.adults)+parseInt(searchDetails.children));
 
 
   const { data,error } = useSWR(`http://localhost:8000/api/prices?destination=${searchDetails.destination}&checkInDate=${searchDetails.checkInDate}&checkOutDate=${searchDetails.checkOutDate}&guests=${searchDetails.guestQuery}`, fetcher, {refreshInterval: 1000})
-  // const { data,error } = useSWR(`/prices?destination_id=PTbx&checkin=2022-08-31&checkout=2022-09-01&lang=en_US&currency=SGD&landing_page=&partner_id=16&country_code=SG&guests=2`, fetcher, {refreshInterval: 2000})
+  
+  
   if(error){
     console.log(error)
     return <h1>Error in fetching Data</h1>
   }
-  if(!data){
+  if(!data || data.hotels.length==0){
     console.log("Revalidating")
-    return <h1>Loading...</h1>;}
-  // } else if(data.hotels.length!=0) {
-  //   console.log(data.hotels.length);
-  // }
+    return <h3 className={styles.resultsHeader} data-testid="header">Loading Results</h3>;
+  }
 
 
-  // const button = () => {setSize(size+1)}
+  data.hotelsSlice = data.hotels.slice(0,numShown)
   
-  console.log(data)
-  // if (data.hotels.length!=10){
-  //   setSize(size+1);
-  // }
-  // if (!data.completed) setSize(size+1);
-  // console.log(data)
+
 
   return (
     <div className={styles.page}>
@@ -53,17 +50,21 @@ function searchResults ({ hotels, searchDetails }) {
             <title>Search Results</title>
         </Head>
 
-        <h3 className={styles.resultsHeader} data-testid="header">Search Results for {searchDetails.destination}</h3>
+        <h3 className={styles.resultsHeader} data-testid="header">Search Results</h3>
 
         {/* iterate through hotels, creating a HotelElem component for each hotel */}
-        <div className='container'><div className='row g-3'>
-          {data.hotels.map((hotelDisplayed) => {
-            return (
-              // React component imported
-              <HotelElem hotels={hotels} searchDetails={searchDetails} key={hotelDisplayed.id} price={hotelDisplayed}></HotelElem>
-            );
-          })}
-        </div></div>
+        <div className='container'>
+          <div className='row g-3'>
+            {data.hotelsSlice.map((hotelDisplayed) => {
+              return (
+                // React component imported
+                <HotelElem hotels={hotels} searchDetails={searchDetails} key={hotelDisplayed.id} price={hotelDisplayed}></HotelElem>
+              );
+            })}
+          </div>
+        </div>
+
+        <button onClick={() => {setNumShown(numShown + 9)}} className={styles.selectButton+ " btn btn-outline-primary btn-lg"} id={styles.loadButton}>   Load More   </button>
     </div>
   );
 }

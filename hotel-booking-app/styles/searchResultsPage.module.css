@@ -1,11 +1,21 @@
 .selectButton {
-    display: inline !important;
+    /* display: inline !important; */
     width: fit-content;
     float: right;
     color: white;
     border-color: #805ad5;
     background-color: #805ad5;
-    margin-top: 50px;
+    /* margin-top: 50px; */
+}
+
+#loadButton {
+    float: left !important; 
+    position: absolute;
+    left: 50%;
+    width: 20%;
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+    margin: 0;
 }
 
 .selectButton:hover {
@@ -22,13 +32,14 @@
 
 .hotelBody {
     margin-top: 10px;
-    display: inline !important;
+    /* display: inline !important; */
 }
 
 .hotelCard {
     padding-bottom: 10px;
     background-color: #f7f9fa;
     margin: 10px 5px;
+    /* height: 500px; */
 }
 
 .hotelCard:hover {
@@ -65,14 +76,14 @@
     display: block;
 }
 #hotelName {
-    
+    height: 3rem;
     font-family:'Franklin Gothic Medium';
     color: #24b9b6;
 }
 
-.buttonPrice {
+/* .buttonPrice {
     display: inline !important;
-}
+} */
 
 #priceText {
     font-size: 11pt;
