@@ -76,9 +76,8 @@ describe('Search Results', () => {
       ]
   }));
     // Heading of page
-    const header = await screen.findByTestId('header', {},{timeout:15000, interval:1000});
+    const header = await screen.findByText('Search Results', {},{timeout:15000, interval:1000});
     await expect(header).toBeInTheDocument();
-    await expect(header).toHaveTextContent(`Search Results for ${expectedSearchDetails.destination}`);
   });
 
 

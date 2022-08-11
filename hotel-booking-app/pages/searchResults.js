@@ -36,11 +36,13 @@ function searchResults ({ hotels, searchDetails }) {
   }
   if(!data || data.hotels.length==0){
     console.log("Revalidating")
+    console.log(data)
     return <h3 className={styles.resultsHeader} data-testid="header">Loading Results</h3>;
   }
 
 
   data.hotelsSlice = data.hotels.slice(0,numShown)
+  console.log(data)
   
 
 
