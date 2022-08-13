@@ -10,7 +10,7 @@ const Nav = () => {
             <li>
                 <Link href='/'>Home/Search</Link>
             </li>
-            <li>
+            {/* <li>
                 <Link href={{
                     pathname: "/searchResults",
                     query: {
@@ -41,7 +41,7 @@ const Nav = () => {
             </li>
             <li>
                 <Link href='/bookingPage'>Booking Page</Link>
-            </li>
+            </li> */}
         </ul>
     </nav>
 
